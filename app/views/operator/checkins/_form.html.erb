@@ -1,0 +1,18 @@
+<%= javascript_pack_tag "stripe_handler.js" %>
+
+<%= form_for(checkin, remote: true, html: {id: "stripe-form" }) do |f| %>
+  <%= render "shared/error_messages", model: checkin %>
+
+  <% if cc %>
+    <div class="form-group row">
+      <div class="col-1"></div>
+      <%= render "shared/billing" %>
+      <div class="col-1"></div>
+    </div>
+  <% end %>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.submit "Check in now", id: 'stripe-submit', class: "form-control btn btn-primary col", data: { acc: 'add-payment' } %>
+    <div class="col-1"></div>
+  </div>
+<% end %>

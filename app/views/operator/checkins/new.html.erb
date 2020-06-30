@@ -1,0 +1,16 @@
+<% title "Check in" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">Check in</h4>
+  <p>
+    <%= current_location.name %> costs <%= number_to_currency(current_location.hourly_rate_in_cents.to_f / 100.0) %> / hr. You will be billed automatically after you check out.
+  </p>
+  <% if active_working_hours?(current_location) %>
+    <%= render "form", checkin: @checkin, cc: !current_user.has_billing? %>
+  <% else %>
+    <%= render "shared/closed", location: location %>
+  <% end %>
+  <p class="text-muted">
+    <%= link_to "Go Back", choose_path, data: {"turbolinks-action" => "restore"} %>
+  </p>
+<% end %>

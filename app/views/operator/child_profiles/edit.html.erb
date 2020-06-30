@@ -1,0 +1,11 @@
+<% title "Edit Child Profile" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      Edit child profile
+    </h4>
+
+    <%= render "edit_form", child_profile: @child_profile %>
+  <% end %>
+<% end %>

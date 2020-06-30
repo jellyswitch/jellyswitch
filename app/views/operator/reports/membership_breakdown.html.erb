@@ -1,0 +1,31 @@
+<% title "Membership Breakdown" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Membership Breakdown</h4>
+  <div class="row">
+    <div class="col">
+      <%= pie_chart @report.membership_breakdown_count %>
+    </div>
+  </div>
+<% end %>
+
+<% @report.membership_breakdown_plan_count.keys.each do |plan| %>
+  <%= wide_card do %>
+    <h4 class="display-4 text-center"><%= plan.pretty_name %></h4>
+
+    <div class="row">
+      <div class="col">
+        <p>
+          <%= plan.subscriptions.active.count %> members
+        </p>
+        <table class="table">
+          <% plan.subscriptions.active.each do |subscription| %>
+            <tr>
+              <td><%= link_to subscription.subscribable.name, user_path(subscription.subscribable) %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  <% end %>
+<% end %>

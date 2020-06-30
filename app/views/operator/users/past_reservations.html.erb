@@ -1,0 +1,22 @@
+<% title "My Reservations" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "My Reservations", user_reservations_path(@user) %></li>
+  <li class="breadcrumb-item">Past Reservations</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Past Reservations</h4>
+  <% end %>
+
+  <% if @reservations.count < 1 %>
+    <%= list_item do %>
+      <p class="lead text-center">No past reservations.</p>
+    <% end %>
+  <% else %>
+    <% @reservations.each do |res_hash| %>
+      <%= render Reservations::DayList, reservation_hash: res_hash %>
+    <% end %>
+  <% end %>
+<% end %>

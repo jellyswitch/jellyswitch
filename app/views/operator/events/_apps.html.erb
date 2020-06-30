@@ -1,0 +1,31 @@
+<% if !mobile_app_request? && current_tenant.has_mobile_app_links? %>
+
+<div class="row mb-0 mt-0 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+
+        <div class="row mt-2">
+          <div class="col-lg-2 col-1"></div>
+          <div class="col-lg-4 col-5">
+            <a href="<%= current_tenant.ios_url %>">
+              <img alt="Get it on the app store" src="<%= image_path('appstore.png') %>" width="135" height="40">
+            </a>
+          </div>
+
+          <div class="col-lg-4 col-5">
+            <a href="<%= current_tenant.android_url %>">
+              <img alt='Get it on Google Play' src="<%= image_path('playstore.png') %>" width="135" height="40">
+            </a>
+          </div>
+          <div class="col-lg-2 col-1"></div>
+        </div>
+      
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+
+<% end %>

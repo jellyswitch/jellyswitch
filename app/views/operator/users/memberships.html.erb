@@ -1,0 +1,18 @@
+<% title "My Membership" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "My Account", user_path(@user) %></li>
+  <li class="breadcrumb-item">My Membership</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">My Membership</h4>
+  <% end %>
+
+  <% @user.subscriptions.order('created_at DESC').each do |subscription| %>
+    <%= list_item do %>
+      <%= render "operator/subscriptions/membership_card", subscription: subscription %>
+    <% end%>
+  <% end %>
+<% end %>

@@ -1,0 +1,18 @@
+<% title "New Day Pass" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to @user.name, user_path(@user) %></li>
+  <li class="breadcrumb-item active" aria-current="page">New Day Pass</li>
+<% end %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <%= render "operator/admin/day_passes/form", day_pass: DayPass.new, label: "Add day pass", user: @user %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

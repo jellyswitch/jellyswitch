@@ -1,0 +1,25 @@
+<% title "Revenue" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Revenue</h4>
+  <p>
+    Based on paid invoices
+  </p>
+  <div class="row">
+    <div class="col">
+      <%= column_chart @report.revenue_by_month, xtitle: "Revenue", ytitle: "Month", prefix: "$", thousands: "," %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= column_chart @report.revenue_by_week, xtitle: "Revenue", ytitle: "Week", prefix: "$", thousands: "," %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= column_chart @report.revenue_by_day, xtitle: "Revenue", ytitle: "Day", prefix: "$", thousands: "," %>
+    </div>
+  </div>
+<% end %>

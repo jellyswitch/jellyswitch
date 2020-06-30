@@ -1,0 +1,10 @@
+<% title @post.title %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Bulletin Board", posts_path %></li>
+  <li class="breadcrumb-item active" aria-current="page"><%= @post.title %></li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= render Posts::Post, post: @post %>
+<% end %>

@@ -1,0 +1,119 @@
+<% title @organization.name %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Members & Groups", members_groups_path %></li>
+  <li class="breadcrumb-item"><%= link_to "Groups", organizations_path %></li>
+  <li class="breadcrumb-item active" aria-current="page"><%= @organization.name %></li>
+<% end %>
+
+
+<div class="row mt-0 mb-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 pl-0 pr-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center"><%= @organization.name %></h4>
+
+        <dl class="row">
+          <dt class="col-sm-3">Owner</dt>
+          <dd class="col-sm">
+            <%= link_to @organization.owner.name, user_path(@organization.owner) %>
+          </dd>
+        </dl>
+
+        <dl class="row">
+          <dt class="col-sm-3">Created</dt>
+          <dd class="col-sm">
+            <%= time_ago_in_words(@organization.created_at) %> ago
+          </dd>
+        </dl>
+
+        <% if superadmin? %>
+          <dl class="row">
+            <dt class="col-sm-3">Stripe Customer ID</dt>
+            <dd class="col-sm">
+              <pre><%= @organization.stripe_customer_id %></pre>
+            </dd>
+          </dl>
+        <% end %>
+
+        <%= link_to "Edit group info", edit_organization_path(@organization), class: "btn btn-block btn-primary" %>
+
+      <% end %>
+
+      <%= link_to organization_members_path(@organization), class: "list-group-item list-group-item-action m-0" do %>
+        <div class="row">
+          <div class="col-lg-10 col-11">
+            <i class="fas fa-users"></i>
+            &nbsp;
+            Add or remove members
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+
+      <%= link_to organization_ltv_path(@organization), class: "list-group-item list-group-item-action m-0" do %>
+        <div class="row">
+          <div class="col-lg-10 col-11">
+            <i class="far fa-chart-bar"></i>
+            &nbsp;
+            Lifetime Value (LTV)
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+
+      <% if policy(:payment).enabled? %>
+        <%= link_to organization_invoices_path(@organization), class: "list-group-item list-group-item-action m-0" do %>
+          <div class="row">
+            <div class="col-lg-10 col-11">
+              <i class="fas fa-dollar-sign"></i>
+              &nbsp;
+              &nbsp;
+              Invoices (<%= @organization.invoices.count %>)
+            </div>
+            <div class="col-1">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        <% end %>
+
+        <%= link_to organization_payment_method_path(@organization), class: "list-group-item list-group-item-action m-0" do %>
+          <div class="row">
+            <div class="col-lg-10 col-11">
+              <i class="fas fa-credit-card"></i>
+              &nbsp;
+              Update payment method
+            </div>
+            <div class="col-1">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if policy(:office).enabled? %>
+        <%= link_to organization_leases_path(@organization), class: "list-group-item list-group-item-action m-0" do %>
+          <div class="row">
+            <div class="col-lg-10 col-11">
+              <i class="fas fa-file-alt"></i>
+              &nbsp;
+              &nbsp;
+              Leases (<%= @organization.office_leases.active.count %>)
+            </div>
+            <div class="col-1">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+

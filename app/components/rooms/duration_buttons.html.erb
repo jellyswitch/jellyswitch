@@ -1,0 +1,24 @@
+
+<% if room.available_at?(datetime_in) %>
+  <%= render Rooms::DurationButton, room: room, day: day, hour: hour, user: user, duration: 30 %>
+
+  <% if room.available_at?(datetime_in + 30.minutes) %>
+    <%= render Rooms::DurationButton, room: room, day: day, hour: hour, user: user, duration: 60 %>
+
+    <% if room.available_at?(datetime_in + 60.minutes) %>
+      <%= render Rooms::DurationButton, room: room, day: day, hour: hour, user: user, duration: 90 %>
+
+      <% if room.available_at?(datetime_in + 90.minutes) %>
+        <%= render Rooms::DurationButton, room: room, day: day, hour: hour, user: user, duration: 120 %>
+
+        <% if room.available_at?(datetime_in + 120.minutes) && room.available_at?(datetime_in + 150.minutes) %>
+          <%= render Rooms::DurationButton, room: room, day: day, hour: hour, user: user, duration: 180 %>
+
+          <% if room.available_at?(datetime_in + 150.minutes) && room.available_at?(datetime_in + 180.minutes) %>
+            <%= render Rooms::DurationButton, room: room, day: day, hour: hour, user: user, duration: 240 %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

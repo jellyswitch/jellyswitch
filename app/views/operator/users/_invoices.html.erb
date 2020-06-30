@@ -1,0 +1,5 @@
+<% if @user.invoices.count < 1 %>
+  No invoices
+<% else %>
+  <%= render @user.invoices %>
+<% end %>

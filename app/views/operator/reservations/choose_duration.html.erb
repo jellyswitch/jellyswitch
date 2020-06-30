@@ -1,0 +1,36 @@
+<% title "How long?" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Choose a day", choose_day_reservations_path(room_id: @room.id) %></li>
+  <li class="breadcrumb-item"><%= link_to "Choose a time", choose_time_reservations_path(room_id: @room.id, day: @day) %></li>
+  <li class="breadcrumb-item active" aria-current="page">How long?</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">How long?</h4>
+
+    <dl class="row">
+      <dt class="col-6">Room</dt>
+      <dd class="col"><%= @room.name %></dd>
+
+      <dt class="col-6">Day</dt>
+      <dd class="col"><%= short_date(@day) %></dd>
+
+      <dt class="col-6">Time</dt>
+      <dd class="col"><%= pretty_time(@hour) %></dd>
+
+      <% if policy(:credit).enabled? && !current_user.admin? %>
+        <dt class="col-6">Hourly Credit Cost</dt>
+        <dd class="col"><%= @room.credit_cost %></dd>
+
+        <dt class="col-6">Your credit balance</dt>
+        <dd class="col"><%= current_user.credit_balance %></dd>
+      <% end %>
+    </dl>
+
+    <%= render Rooms::DurationButtons, room: @room, day: @day, hour: @hour, datetime_in: @datetime_in, user: current_user %>
+
+    
+  <% end %>
+<% end %>

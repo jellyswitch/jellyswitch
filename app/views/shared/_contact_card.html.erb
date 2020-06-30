@@ -1,0 +1,7 @@
+<h5 class="card-title">
+  Contact Us
+</h5>
+<p class="card-text">
+  <%= current_location.name %> can be reached by emailing <%= mail_to current_location.contact_email, current_location.contact_name %>
+  or calling <%= link_to number_to_phone(current_location.contact_phone), "tel:#{number_to_phone(current_location.contact_phone)}" %>.
+</p>

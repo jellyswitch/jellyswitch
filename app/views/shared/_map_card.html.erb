@@ -1,0 +1,8 @@
+<div class="row mt-3">
+  <div class="col">
+    <%= image_tag google_map(center: current_location.full_address), class: "img-fluid" %>
+  </div>
+  <div class="col">
+    <%= current_location.name %> is located at <%= link_to current_location.full_address, "https://maps.google.com/?q=#{current_location.building_address}", target: "_blank" %>.
+  </div>
+</div>

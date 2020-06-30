@@ -1,0 +1,23 @@
+<% title "Active Leases" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Active Leases</h4>
+  <p class="lead">Total: <%= @report.active_lease_count %></p>
+
+  <table class="table">
+    <tr>
+      <th>Group</th>
+      <th>Office</th>
+      <th>Monthly revenue per member</th>
+    </tr>
+    <% @report.active_leases.each do |office_lease| %>
+      <tr>
+        <td><%= link_to office_lease.organization.name, organization_path(office_lease.organization) %></td>
+        <td><%= link_to office_lease.office.name, office_path(office_lease.office) %></td>
+        <td>
+          <%= number_to_currency((office_lease.subscription.plan.amount_in_cents.to_f) / 100 / (office_lease.organization.users.count.to_f)) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

@@ -1,0 +1,24 @@
+<div class="row mt-2">
+  <div class="col">
+    <%= render(Buttons::NewDayPass, user: user, classes: "btn btn-primary btn-block") do %>
+      Add day pass
+    <% end %>
+  </div>
+</div>
+
+<% if @user.day_passes.count < 1 %>
+  <div class="row">
+    <div class="col text-center">
+      No day passes.
+    </div>
+  </div>
+<% else %>
+  <h5 class="display-5 text-center mt-3">Past Day Passes:</h5>
+  <ul class="list-group list-group-flush">
+    <% user.day_passes.order('day DESC').each do |day_pass| %>
+      <li class="list-group-item text-center">
+        <%= day_pass.pretty_day %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

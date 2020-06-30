@@ -1,0 +1,37 @@
+<% title "Onboarding" %>
+
+<%= render(Layout::Freola::FlatIcon, 
+  title: "Let's get started!", 
+  body: "Just a couple things to make your app beautiful...", 
+  footer_text: nil, 
+  footer_link: nil,
+  icon: :group) do %>
+  <%= form_with(url: create_user_and_locations_onboarding_index_path, method: :post, remote: true) do |f| %>
+    <div class="row mb-3">
+      <%= f.text_field :operator_name, placeholder: "Your company name", class: "form-control col" %>
+    </div>
+
+    <div class="row mb-3">
+      <%= f.text_field :name, placeholder: "Your name", class: "form-control col" %>
+    </div>
+
+    <div class="row mb-3">
+      <%= f.password_field :password, placeholder: "Create a password here...", class: "form-control col" %>
+    </div>
+
+    <div class="row mb-3">
+      <%= f.text_field :phone, placeholder: "Your phone number (optional)", class: "form-control col" %>
+    </div>
+
+    <div class="row">
+      <div class="form-group custom-file mb-3">
+        <label class="custom-file-label" for="customFile">Upload your logo</label>
+        <%= f.file_field :logo_image, placeholder: "Logo File Path", class: "custom-file-input" %>
+      </div>
+    </div>
+    
+    <div class="row">
+      <%= f.submit "Next", class: "btn btn-block btn-primary", data: {disable_with: "Building..."} %>
+    </div>
+  <% end %>
+<% end %>

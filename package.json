@@ -1,0 +1,24 @@
+{
+  "name": "bristlecone",
+  "private": true,
+  "dependencies": {
+    "@rails/actiontext": "^6.0.2-1",
+    "@rails/activestorage": "^6.0.2-1",
+    "@rails/ujs": "^6.0.2-1",
+    "@rails/webpacker": "4.2.2",
+    "ahoy.js": "^0.3.4",
+    "bootstrap": "^4.4.1",
+    "chart.js": "^2.9.3",
+    "chartkick": "^3.2.0",
+    "jquery": "^3.4.1",
+    "moment": "^2.24.0",
+    "popper.js": "^1.16.0",
+    "rails-erb-loader": "^5.5.2",
+    "tempusdominus-bootstrap-4": "^5.1.2",
+    "trix": "^1.0.0",
+    "turbolinks": "^5.2.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.10.1"
+  }
+}

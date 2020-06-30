@@ -1,0 +1,23 @@
+<%- title "Edit Plan" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Plans", plans_path %></li>
+  <li class="breadcrumb-item"><%= link_to @plan.name, plans_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Edit</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center mt-4">Edit Plan</h4>
+    <%= render "edit_form", plan: @plan, url: plan_path(@plan) %>
+    <div class="row mt-3">
+      <div class="col-12">
+        <%= link_to plan_path(@plan), class: "btn btn-block btn-warning" do %>
+          <i class="fas fa-times"></i>
+          &nbsp;
+          Cancel
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

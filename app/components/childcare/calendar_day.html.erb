@@ -1,0 +1,14 @@
+<% if spots_available < 1 || past? %>
+  <span class="text-secondary">
+    <%= date.mday %>
+  </span>
+  <br />
+  <small class="<%= spots_available_class %>"><%= spots_available %></small>
+<% else %>
+  <%= link_to select_slot_childcare_reservations_path(date: date), class: "text-secondary stretched-link" do %>
+    <%= date.mday %>
+    <br />
+    <small class="<%= spots_available_class %>"><%= spots_available %></small>
+  <% end %>
+<% end %>
+

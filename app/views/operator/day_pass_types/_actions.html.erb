@@ -1,0 +1,4 @@
+<%= link_to 'View', day_pass_type, class: "btn btn-primary btn-sm" %>
+<%- if day_pass_type.available? %>
+  <%= link_to 'Archive', day_pass_type, method: :delete, remote: true, class: "btn btn-sm btn-danger" %>
+<%- end %>

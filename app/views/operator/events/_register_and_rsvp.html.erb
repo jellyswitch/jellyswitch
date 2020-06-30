@@ -1,0 +1,11 @@
+<div id="register-body" class="mt-3">
+  <%= render "layouts/flash" %>
+  <%= form_with(method: :get, url: register_event_rsvps_path(event), remote: true) do |f| %>
+
+    <div class="form-group">
+      <%= f.label :email, "Enter your email address to RSVP" %>
+      <%= f.text_field :email, placeholder: "Email address...", class: "form-control" %>
+    </div>
+    <%= f.submit "Register and RSVP", class: "btn btn-block btn-primary" %>
+  <% end %>
+</div>

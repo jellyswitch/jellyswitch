@@ -1,0 +1,26 @@
+
+<%- title 'Plans' %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Plans & Day Passes", plans_day_passes_path %></li>
+  <li class="breadcrumb-item"><%= link_to "Plans", plans_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Archived</li>
+<% end %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= list_wrapper do %>
+
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Archived Plans</h4>
+
+      <% if @plans.unavailable.count < 1 %>
+        <i>All plans are available.</i>
+      <% else %>
+        <div class="list-group list-group-flush mt-4">
+          <%= render @plans.unavailable %>
+        </div>
+      <% end %>
+    <% end %>
+
+  <% end %>
+<% end %>

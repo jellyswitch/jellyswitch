@@ -1,0 +1,21 @@
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="<%= feed_items_path %>" data-turbolinks-action="restore">
+    <%- if current_tenant.logo_image.attached? %>
+      <%= image_tag current_tenant.logo_image, width: 30, height: 30 %>
+    <%- end %>
+    <%= current_tenant.name %>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% paths.each do |path| %>
+        <%= link_to path[:title], path[:path], class: "nav-link", data: { "turbolinks-action" => "restore"} %>
+      <% end %>
+    </ul>
+
+  </div>
+</nav>
+
+

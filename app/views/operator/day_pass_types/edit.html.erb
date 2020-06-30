@@ -1,0 +1,8 @@
+<%- title "Edit Day Pass Type" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center mt-4">Edit Day Pass Type</h4>
+    <%= render 'edit_form', day_pass_type: @day_pass_type, url: day_pass_type_path(@day_pass_type) %>
+  <% end %>
+<% end %>

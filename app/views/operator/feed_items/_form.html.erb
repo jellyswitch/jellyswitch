@@ -1,0 +1,30 @@
+<%= form_for(feed_item, html: {multipart: true}, local: mobile_app_request? && ios_request?, data: { type: :html }) do |f| %>
+  <%= render "shared/error_messages" , model: feed_item %>
+  <div class="form-group row m-0 p-0 mt-0">
+    <%= f.text_area :text, placeholder: "Type a new management note...", class: "form-control form-control-lg col", rows: "6", id: "text" %>
+  </div>
+  <div class="form-group row m-0 p-0 mt-2">
+    
+    <div class="col pl-0 m-0">
+      <%= f.label :photos, "Attach photos" do %>
+        <span class="btn btn-sm btn-info">Attach photos</span>
+        <%= f.file_field :photos,
+                         multiple: true,
+                         direct_upload: false,
+                         accept: 'image/png,image/gif,image/jpeg,image/jpg',
+                         class: "form-control-file d-none"
+        %>
+      <%- end %>
+    </div>
+    
+  </div>
+  <div class="form-group row m-0 p-0">
+    <button class="form-control btn btn-primary col" id="submit" data-disable-with="Posting...">
+      <i class="fas fa-edit"></i>
+      &nbsp;
+      Post management note
+    </button>
+  </div>
+<%- end %>
+
+<%= render "shared/disable_button", submit_id: "#submit", text_id: "#text" %>

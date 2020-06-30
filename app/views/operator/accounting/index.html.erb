@@ -1,0 +1,17 @@
+<%- title "Invoices & Expenses" %>
+
+<%= wide_card do %>
+  <h4 class="display-4">Expenses</h4>
+
+  <%= link_to "View expenses", expenses_accounting_index_path, class: "btn btn-block btn-primary" %>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4">Invoices</h4>
+
+  <p class="card-text">
+    <%= current_tenant.name %> has <%= current_tenant.invoices.count %> invoices.
+  </p>
+  <%= link_to "View invoices", open_invoices_path, class: "btn btn-block btn-primary" %>
+<% end %>
+

@@ -1,0 +1,15 @@
+<dl class="row">
+  <dt class="col-6">
+    Amount:
+  </dt>
+  <dd class="col">
+    <%= number_to_currency(feed_item.invoice.amount_due.to_f / 100.0) %>
+  </dd>
+
+  <dt class="col-6">
+    Description:
+  </dt>
+  <dd class="col">
+    <%= feed_item.invoice.description %>
+  </dd>
+</dl>

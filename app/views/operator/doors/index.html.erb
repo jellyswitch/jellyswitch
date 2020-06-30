@@ -1,0 +1,22 @@
+<%- title "Building Access" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Building Access</h4>
+  <%= render "operator/doors/keys", doors: @doors %>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Add a door</h4>
+
+  <p>
+    Showing doors for <strong><%= current_location.name %></strong>. Switch locations to manage doors at other locations.
+  </p>
+
+  <%= link_to "Add a Door", new_door_path, class: "btn btn-block btn-primary" %>
+<% end %>
+
+<% @doors.each do |door| %> 
+  <%= wide_card do %>
+    <%= render door %>
+  <% end %>
+<% end %>

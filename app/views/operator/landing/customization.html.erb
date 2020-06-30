@@ -1,0 +1,43 @@
+<% title "Customization" %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= list_wrapper do %>
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Modules</h4>
+      <p>
+        Enable and disable various modules of your Jellyswitch app.
+      </p>
+      <%= link_to "View Modules", modules_path, class: "btn btn-block btn-primary" %>
+    <% end %>
+
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Global Settings</h4>
+
+      <p>
+        Set up your account name, homepage description, enable the approval queue, required check-ins, and more.
+      </p>
+
+      <%= link_to "Customize Jellyswitch", operator_path(current_tenant, subdomain: current_tenant.subdomain), class: "btn btn-block btn-primary" %>
+    <% end %>
+
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Notification Settings</h4>
+
+      <p>
+        Customize what shows up in your team's feed and which events trigger push notifications.
+      </p>
+
+      <%= link_to "Configure Notifications", notifications_path, class: "btn btn-block btn-primary" %>
+    <% end %>
+  
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Location Settings</h4>
+
+      <p>
+        Add, remove, and update settings on a per-location basis.
+      </p>
+
+      <%= link_to "Customize Locations", locations_path, class: "btn btn-primary btn-block" %>
+    <% end %>
+  <% end %>
+<% end %>

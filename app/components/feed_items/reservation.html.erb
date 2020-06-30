@@ -1,0 +1,38 @@
+<dl class="row">
+  <dt class="col-6">
+    Room
+  </dt>
+  <dd class="col">
+    <%= link_to feed_item.reservation.room.name, room_path(feed_item.reservation.room) %>
+  </dd>
+
+  <dt class="col-6">
+    Location
+  </dt>
+  <dd class="col">
+    <%= feed_item.reservation.room.location.name %>
+  </dd>
+
+  <dt class="col-6">
+    When
+  </dt>
+  <dd class="col">
+    <%= link_to feed_item.reservation.pretty_datetime, reservation_path(feed_item.reservation) %>
+  </dd>
+  
+  <dt class="col-6">
+    Length
+  </dt>
+  <dd class="col">
+    <%= feed_item.reservation.minutes %> <%= quantize(feed_item.reservation.minutes, "minute") %>
+  </dd>
+
+  <% if credits_enabled? %>
+    <dt class="col-6">
+      Credits Used
+    </dt>
+    <dd class="col">
+      <%= render CreditAmount, amount: feed_item.reservation.credit_cost %>
+    </dd>
+  <% end %>
+</dl>

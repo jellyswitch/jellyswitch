@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col d-flex justify-content-around">
+    <%= link_to feed_item_path(feed_item), method: :delete, remote: true, data: {"turbolinks-action" => "restore"} do %>
+      <i class="far fa-trash-alt" style="opacity: 0.6;"></i>
+    <% end %>
+  
+    <% if feed_item.expense? %>
+      <%= link_to unset_expense_status_feed_item_path(feed_item, comments: comments), method: :post,remote: true, class: "ml-3" do %>
+        <i class="fas fa-dollar-sign"></i>
+      <% end %>
+    <% else %>
+      <%= link_to set_expense_status_feed_item_path(feed_item, comments: comments), method: :post,remote: true, class: "ml-3" do %>
+        <i class="fas fa-dollar-sign" style="opacity: 0.6;"></i>
+      <% end %>
+    <% end %>
+    <div class="d-flex justify-content-center">
+      <%= render "operator/feed_items/comment_count", feed_item: feed_item %>
+    </div>
+  </div>
+  <div class="col-3 d-flex justify-content-center">
+    <% if feed_item.requires_approval? %>
+      <%= render "operator/feed_items/feed_approval_toggle", user: feed_item.user, feed_item: feed_item  %>  
+    <% end %>
+  </div>
+</div>
+
+<% if comments %>
+  <%= render "operator/feed_items/comments", feed_item: feed_item, show_comments: comments %>
+<% end %>

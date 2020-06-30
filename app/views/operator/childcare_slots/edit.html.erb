@@ -1,0 +1,18 @@
+<% title "Add Availability" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Childcare", childcare_index_path %></li>
+  <li class="breadcrumb-item"><%= link_to "Availability", childcare_slots_path %></li>
+  <li class="breadcrumb-item"><%= link_to @childcare_slot.pretty_name, childcare_slot_path(@childcare_slot) %></li>
+  <li class="breadcrumb-item active" aria-current="page">Edit</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      Edit Childcare Availability
+    </h4>
+
+    <%= render "form", childcare_slot: @childcare_slot, label: "Update availability", url: childcare_slot_path(@childcare_slot) %>
+  <% end %>
+<% end %>

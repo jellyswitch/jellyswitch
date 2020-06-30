@@ -1,0 +1,9 @@
+<% if user.approved? %>
+  <%= link_to user_unapprove_path(user), class: "btn btn-sm btn-outline-danger", data: {acc: 'unapprove-member', remote: true} do %>
+    <i class="fas fa-times"></i>
+  <% end %>
+<% else %>
+  <%= link_to user_approve_path(user), class: "btn btn-sm btn-outline-success", data: {acc: 'approve-member', remote: true} do %>
+    <i class="fas fa-check"></i>
+  <% end %>
+<% end %>

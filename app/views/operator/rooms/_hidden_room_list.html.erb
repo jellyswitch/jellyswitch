@@ -1,0 +1,10 @@
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Hidden Rooms</h4>
+    <% if rooms.count < 1 %>
+      <i>All rooms are visible.</i>
+    <% else %>
+      <%= render rooms %>
+    <% end %>
+  <% end %>
+<% end %>

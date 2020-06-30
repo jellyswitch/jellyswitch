@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col">
+    <h5><%= subscription.plan.name %></h5>
+  </div>
+</div>
+
+<dl class="row mt-3">
+  <dt class="col-6">Status</dt>
+  <dd class="col">
+    <% if subscription.active? %>
+      <span class="badge badge-success">Active</span>
+    <% else %>
+      <span class="badge badge-warning">
+        Canceled
+        <% if subscription.has_canceled_at? %>  
+          <%= short_date(subscription.canceled_at) %>
+        <% end %>
+      </span>
+    <% end %>  
+  </dd>
+</dl>
+
+
+<dl class="row mt-3">
+  <dt class="col-6">Price</dt>
+  <dd class="col">
+    <%= subscription.plan.pretty_price %>
+  </dd>
+</dl>
+
+<dl class="row mt-3">
+  <dt class="col-6">Start Date</dt>
+  <dd class="col">
+    <%= short_date(subscription.start_date) %>
+  </dd>
+</dl>
+
+<dl class="row mt-3">
+  <dt class="col-6">End Date</dt>
+  <dd class="col">
+    <% if subscription.has_end_date? %>
+      <%= short_date(subscription.end_date) %>
+    <% else %>
+      None
+    <% end %>
+  </dd>
+</dl>
+
+<% if policy(:credit).enabled? && subscription.subscribable.class == User %>
+  <dl class="row mt-3">
+    <dt class="col-6">Current credit balance</dt>
+    <dd class="col">
+      <%= number_with_delimiter(subscription.subscribable.credit_balance) %>
+    </dd>
+  </dl>
+<% end %>
+
+<% if policy(:childcare).enabled? && subscription.subscribable.class == User %>
+  <dl class="row mt-3">
+    <dt class="col-6">Current childcare reservation balance</dt>
+    <dd class="col">
+      <%= number_with_delimiter(subscription.subscribable.childcare_reservation_balance) %>
+    </dd>
+  </dl>
+<% end %>
+
+<% if subscription.active? %>
+  <% if policy(:credit).enabled? %>
+    <div class="row mt-3">
+      <div class="col">
+        <%= link_to "Buy more credits", new_credit_purchase_path, class: "btn btn-block btn-success" %>
+      </div>
+    </div>
+  <% end %>
+  <% if !subscription.has_stripe_subscription? %>
+    <div class="row">
+      <div class="col">
+        <span class="text-danger">
+          <strong>Stripe sync error</strong>
+          <br />
+          <p>This membership is not in sync with Stripe. Please email <%= mail_to "hello@jellyswitch.com", "hello@jellyswitch.com" %> to resolve.
+        </span>
+      </div>
+    </div>
+  <% else %>
+    <div class="row mt-3">
+      <div class="col">
+        <%= link_to "Change membership", edit_subscription_path(subscription), class: "btn btn-block btn-primary" %>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <%= link_to "Cancel membership", subscription_path(subscription), method: :delete, remote: true, class: "btn btn-block btn-danger" %>
+      </div>
+    </div>
+  <% end %>  
+<% end %>

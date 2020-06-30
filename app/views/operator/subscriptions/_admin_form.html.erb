@@ -1,0 +1,20 @@
+<%= form_with(model: Subscription.new, url: confirm_operator_admin_subscriptions_path, html: {id: "stripe-form" }) do |f| %>
+  <%= f.hidden_field :subscribable_id, value: user.id %>
+
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <div class="col">
+      Pick a plan:
+      <%= f.collection_select :plan_id, Plan.available.individual.order(:name), :id, :pretty_name, {}, { class: "form-control form-control-sm" } %>
+    </div>
+    <div class="col-1"></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <div class="col">
+      <%= f.submit "Next", id: 'stripe-submit', class: "form-control btn btn-primary btn-block", data: { acc: 'add-payment' } %>
+    </div>
+    <div class="col-1"></div>
+  </div>
+<% end %>

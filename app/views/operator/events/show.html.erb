@@ -1,0 +1,67 @@
+<% title @event.title %>
+
+<%= breadcrumb do %>
+  <% if current_location.present? %>
+    <li class="breadcrumb-item"><%= link_to "What's Happening?", events_path %></li>
+  <% else %>
+    <li class="breadcrumb-item"><%= link_to "What's Happening?", events_path(location_id: @event.location.id) %></li>
+  <% end %>
+  <li class="breadcrumb-item active" aria-current="page"><%= @event.title %></li>
+<% end %>
+
+<%= content_for :head do %>
+  <meta name="description" content="<%= @event.description.slice(0, 155) %>" />
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="<%= @event.title %> at <%= current_tenant.name %>">
+  <meta name="twitter:description" content="<%= @event.description.slice(0, 255) %>">
+  <meta name="twitter:label1" content="Location" />
+  <meta name="twitter:data1" content="<%= pretty_location(@event) %>" />
+  <meta name="twitter:label1" content="When" />
+  <meta name="twitter:data1" content="<%= long_date(@event.starts_at) %>" />
+  
+  <!-- Twitter Summary card images must be at least 120x120px -->
+  <% if @event.image.attached? %>
+    <meta name="twitter:image" content="<%= polymorphic_url(@event.social_image) %>">
+  <% end %>
+
+  <!-- Facebook -->
+  <meta property="og:title" content="<%= @event.title %> at <%= current_tenant.name %>" />
+  <% if @event.image.attached? %>
+    <meta property="og:image" content="<%= polymorphic_url(@event.image) %>" />
+  <% end %>
+  <meta property="og:url" content="<%= event_url(@event) %>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="<%= current_tenant.name %>" />
+  <meta property="og:description" content="<%= @event.description %>" />
+
+
+
+<% end %>
+
+<%= render @event %>
+
+<% if !logged_in? %>
+  <div class="row mt-1 mb-0 p-0">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 m-0 p-0">
+      <%= list_wrapper do %>
+        <%= link_to events_path(location_id: @event.location), class: "list-group-item list-group-item-action m-0", style: "border-top: 0px;" do %>
+          <div class="row">
+            <div class="col-2">
+              <%= image_tag current_tenant.logo_image, width: 50, height: 50 if current_tenant.logo_image.attached? %>
+            </div>
+            <div class="col-9">
+              See what else is happening at <%= current_tenant.name %>!
+            </div>
+            <div class="col-1">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+<% end %>

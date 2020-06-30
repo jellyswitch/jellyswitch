@@ -1,0 +1,13 @@
+<% if credits_enabled? %>
+  <% if user.admin? %>
+    <%= link_to label, confirm_reservations_path(room_id: room.id, day: day, hour: pretty_time(hour), duration: duration), class: "btn btn-block btn-primary" %>
+  <% else %>
+    <% if has_enough_credits? %>
+      <%= link_to positive_label, confirm_reservations_path(room_id: room.id, day: day, hour: pretty_time(hour), duration: duration), class: "btn btn-block btn-primary" %>
+    <% else %>
+      <%= link_to negative_label, confirm_reservations_path(room_id: room.id, day: day, hour: pretty_time(hour), duration: duration), class: "btn btn-block btn-danger disabled" %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= link_to label, confirm_reservations_path(room_id: room.id, day: day, hour: pretty_time(hour), duration: duration), class: "btn btn-block btn-primary" %>
+<% end %>

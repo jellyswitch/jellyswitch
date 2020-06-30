@@ -1,0 +1,19 @@
+<div class="form-group">
+  <%= f.label :name %>
+  <%= f.text_field :name, placeholder: "Name", class: "form-control" %>
+</div>
+
+<div class="form-group">
+  <%= f.label :birthday %>
+  <%= f.date_select :birthday, {order: [:month, :day, :year], start_year: Date.today.year - 18}, class: "form-control form-control-sm" %>
+</div>
+
+<div class="form-group">
+  <%= f.label :photo %>
+  <%= f.file_field :photo, class: "form-control-file" %>
+</div>
+
+<div class="form-group">
+  <%= f.label :notes, "Please tell us about your child below (anything we should know?)" %>
+  <%= f.rich_text_area :notes %>
+</div>

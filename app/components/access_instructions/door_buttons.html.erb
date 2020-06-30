@@ -1,0 +1,20 @@
+<h5 class="card-title">Building Access</h5>
+
+<% if !mobile_app_request && operator.has_mobile_app_links? %>
+  <div class="row mt-4">
+    <div class="col text-center">
+      <p>To open the door, please download our mobile app below and sign in:</p>
+    </div>
+  </div>
+  <%= render(AppLinks, operator: operator) %>
+<% else %>
+  <% if has_access %>
+    <%= render "operator/doors/keys", doors: doors %>
+  <% else %>
+    <div class="row mt-4">
+      <div class="col text-center">
+        <p>Building access is only available between <%= format_working_hours(location, "and") %></p>
+      </div>
+    </div>
+  <% end %>
+<% end %>    

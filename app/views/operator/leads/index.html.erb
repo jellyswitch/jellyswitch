@@ -1,0 +1,21 @@
+<% title "Leads" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="dislay-4 text-center">Leads</h4>
+  <% end %>
+
+  <% @leads.each do |lead| %>
+    <%= link_to lead_path(lead), class: "list-group-item list-group-item-action" do %>
+      <div class="row">
+        <div class="col-lg-10 col-11">
+          <%= lead.user.name %>
+          <span class="badge badge-info ml-3"><%= short_date(lead.created_at) %></span>
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

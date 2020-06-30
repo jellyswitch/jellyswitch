@@ -1,0 +1,59 @@
+<% title "Child Profile" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Childcare", childcare_index_path %></li>
+  <li class="breadcrumb-item"><%= link_to "Profiles", child_profiles_path %></li>
+  <li class="breadcrumb-item active" aria-current="page"><%= @child_profile.name %></li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      Child Profile
+    </h4>
+
+    <dl>
+      <dt>Name</dt>
+      <dd><%= @child_profile.name %>
+
+      <% if admin? %>
+        <dt>Parent</dt>
+        <dd><%= link_to @child_profile.user.name, user_path(@child_profile.user) %></dd>
+      <% end %>
+
+      <dt>Birthday</dt>
+      <dd><%= short_date(@child_profile.birthday) %></dd>
+
+      <dt>Photo</dt>
+      <dd>
+        <% if @child_profile.photo.attached? %>
+          <%= image_tag(@child_profile.thumbnail) %>
+        <% else %>
+          <i>None</i>
+        <% end %>
+      </dd>
+
+      <dt>Notes</dt>
+      <dd>
+        <%= @child_profile.notes %>
+      </dd>
+    </dl>
+
+    <%= link_to "Edit this profile", edit_child_profile_path(@child_profile), class: "btn btn-info btn-block" %>
+  <% end %>
+
+  <% if @child_profile.childcare_reservations.count > 0 %>
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Reservations</h4>
+    <% end %>
+    <% @child_profile.childcare_reservations.each do |res| %>
+      <%= list_item do %>
+        <%= render Childcare::Reservation, childcare_reservation: res %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= list_item do %>
+      <p>No reservations on file.</p>
+    <% end %>
+  <% end %>
+<% end %>

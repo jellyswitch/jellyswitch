@@ -1,0 +1,26 @@
+  <div class="row">
+    <div class="col">
+      <% if user == current_user %>
+        My
+      <% else %>
+        <%= user.name %> has 
+      <% end %>
+      usage activity for <%= usage_report.days_used_count %> <%= quantize(usage_report.days_used, "day") %> this month:
+    </div>
+  </div>
+  <dl class="row">
+    <dt class="col-6">Day Passes</dt>
+    <dd class="col"><%= usage_report.day_passes.keys.count %> <%= quantize(usage_report.day_passes.keys, "day") %></dd>
+  </dl>
+  <dl class="row">
+    <dt class="col-6">Reservations</dt>
+    <dd class="col"><%= usage_report.reservations.keys.count %> <%= quantize(usage_report.reservations.keys, "day") %></dd>
+  </dl>
+  <dl class="row">
+    <dt class="col-6">Check-ins</dt>
+    <dd class="col"><%= usage_report.checkins.keys.count %> <%= quantize(usage_report.checkins.keys, "day") %></dd>
+  </dl>
+  <dl class="row">
+    <dt class="col-6">Door Punches</dt>
+    <dd class="col"><%= usage_report.door_punches.keys.count %> <%= quantize(usage_report.door_punches.keys, "day") %></dd>
+  </dl>

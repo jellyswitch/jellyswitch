@@ -1,0 +1,47 @@
+<%= list_item do %>
+  <div class="row">
+    <div class="col">
+      <h5><%= plan.name %></h5>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col">
+      <%= render "operator/plans/price", plan: plan %>
+    </div>
+  </div>
+
+  <% if policy(:credit).enabled? %>
+    <div class="row">
+      <div class="col">
+        Includes <strong><%= render CreditAmount, amount: plan.credits %></strong>
+      </div>
+    </div>
+  <% end %>
+
+  <% if policy(:childcare).enabled? %>
+    <div class="row">
+      <div class="col">
+        Includes <strong><%= plan.childcare_reservations %></strong> childcare reservations
+      </div>
+    </div>
+  <% end %>
+  
+  <% plan.locations.each do |location| %>
+    <%= render "operator/plans/location_check", location: location %>
+  <% end %>
+
+  <div class="row">
+      <div class="col">
+        <%= plan.description %>
+      </div>
+    </div>
+
+
+  <div class="row">
+    <div class="col">
+      <%= link_to 'View', plan, class: "btn btn-block btn-primary mt-3" %>
+    </div>
+  </div>
+
+<% end %>

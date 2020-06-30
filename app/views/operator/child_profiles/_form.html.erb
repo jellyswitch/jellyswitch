@@ -1,0 +1,5 @@
+<%= form_with(model: child_profile, url: child_profiles_path, html: {multipart: true}, remote: true, data: { type: :html }) do |f| %>
+  <%= render "form_fields", f: f, child_profile: child_profile %>
+
+  <%= f.submit "Add profile", class: "btn btn-block btn-primary" %>
+<% end %>

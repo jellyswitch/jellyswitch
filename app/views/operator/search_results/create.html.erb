@@ -1,0 +1,32 @@
+<%- title "Search Results" %>
+<div class="row">
+  <div class="col p-0 m-0">
+  
+    <%= card_wrapper do %>
+      <%= render "form" %>
+    <% end %>
+
+    <%= card_wrapper do %>
+      <%- @results.each do |item| %>
+        <% case item.class.name %>
+          <% when "Announcement" %>
+            <%= render "operator/announcements/announcement", announcement: item %>
+          <% when "FeedItem" %>
+            <%= render "operator/feed_items/feed_item", feed_item: item, comments: item.feed_item_comments.count > 0 %>
+          <% when "User" %>
+            <%= render "operator/users/user", user: item, view: true %>
+          <% when "Organization" %>
+            <%= render "operator/organizations/organization", organization: item, view: true %>        
+          <% when "Room" %>
+            <%= render "operator/rooms/room", room: item %>
+          <% when "Door" %>
+            <%= card do %>
+              <%= render "operator/doors/door", door: item %>        
+            <% end %>
+          <% when "Location" %>
+            <%= render "operator/locations/location", location: item, label: "Switch to" %>
+        <% end %>
+      <%- end %>
+    <% end %>
+  </div>
+</div>

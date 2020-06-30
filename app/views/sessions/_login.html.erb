@@ -1,0 +1,15 @@
+<%= render(Layout::Freola::FlatIcon, 
+  title: "Sign In", 
+  body: "Enter your email address to sign into your Jellyswitch instance.", 
+  footer_text: "Not a member?", 
+  footer_link: link_to("Sign up", operator_signup_path),
+  icon: :group) do %>
+  <%= form_for(:session, url: operator_login_create_path, remote: true) do |f| %>
+    <div class="input-group">
+      <%= f.email_field :email, placeholder: "Enter your email address", class: "form-control" %>
+      <div class="input-group-append">
+        <%= f.submit "Next", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

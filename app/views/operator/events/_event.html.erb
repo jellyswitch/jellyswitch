@@ -1,0 +1,136 @@
+<%= render "operator/events/apps" %>
+
+<div class="row mt-0 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <div class="row">
+          <h6 class="text-danger col">
+            <i class="fas fa-clock"></i>
+            &nbsp;
+            <%= human_time_from_now(event.starts_at) %>
+            <%= render "timestamp", event: event %>
+          </h6>
+        </div>
+
+        <div class="row">
+          <div class="col-4">
+            <% if event.image.attached? %>
+              <%= image_tag event.thumbnail, class: "rounded img-fluid" %>
+            <% else %>
+              <%= image_tag "profile-125x125.jpg", class: "rounded img-fluid" %>
+            <% end %>
+          </div>
+
+          <div class="col-8">
+            <div class="row">
+              <h4 class="display-4 col"><%= event.title %></h4>
+            </div>
+          </div>
+        </div>
+
+        <% if policy(event).edit? %>
+          <div class="row mt-2 mb-2">
+            <div class="col">
+              <%= link_to edit_event_path(event), class: "btn btn-block btn-light" do %>
+                <i class="fas fa-pencil-alt"></i>
+                &nbsp;
+                Edit
+              <% end %>
+            </div>
+
+            <div class="col">
+              <%= link_to event_analytics_path(event), class: "btn btn-block btn-light" do %>
+                <i class="fas fa-chart-line"></i>
+                &nbsp;
+                Analytics
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <%= render "operator/events/rsvp", event: event %>
+
+        <hr />
+
+        <div class="row mt-3">
+          <div class="col-1">
+            <span class="fas fa-user-alt"></span>
+          </div>
+          <div class="col-11">
+            Hosted by <%= event.user.name.titleize %>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-1">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="col-11">
+            <div class="row">
+              <div class="col">
+                <%= long_date(event.starts_at) %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <%= render "timestamp", event: event %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-1">
+            <i class="fas fa-map-pin"></i>
+          </div>
+          <div class="col-11">
+            <%= pretty_location(event) %>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col">
+            <h4 class="display-4">Details</h4>
+            <p>
+              <%= simple_format(auto_link(event.description)) %>
+            </p>
+          </div>
+        </div>
+
+        <div class="row mt-3 d-flex">
+          <%= image_tag google_map(center: @event.location.full_address), class: "w-100 h-100" %>
+        </div>
+
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+
+<%= render Bootstrap::Modal, id: "goingModal" do %>
+  <ul class="nav nav-tabs" id="goingModalTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="true">Register</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Log In</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="register" role="tabpanel" aria-labelledby="register-tab">
+      <%= render "operator/events/register_and_rsvp", event: @event %>
+    </div>
+
+    <div class="tab-pane" id="login" role="tabpanel" aria-labelledby="login-tab">
+      <%= render "operator/events/login_and_rsvp", event: @event %>
+    </div>
+      
+    
+  </div>
+<% end %>
+
+

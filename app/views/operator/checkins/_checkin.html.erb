@@ -1,0 +1,15 @@
+<li class="list-group-item">
+  <div class="d-flex w-100 justify-content-between">
+    <p>
+      <%= link_to checkin.user.name, user_path(checkin.user) %>
+      checked into <%= checkin.location.name %>
+      <% if !checkin.open? %>
+        for <%= distance_of_time_in_words(checkin.datetime_in, checkin.datetime_out) %>
+      <% end %>
+    </p>
+
+    <small>
+      <%= distance_of_time_in_words(checkin.created_at, Time.current) %> ago
+    </small>
+  </p>
+</li>

@@ -1,0 +1,24 @@
+<% title "Purchase Credits" %>
+
+<div id="fullwidth">
+  <%= render Layout::FullWidth do %>
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Purchase Credits</h4>
+
+      <div class="row">
+        <div class="col">
+          Credits cost <strong class="text-success"><%= number_to_currency(dollar_amount(current_location.credit_cost_in_cents)) %></strong> each. How many would you like to purchase?
+        </div>
+      </div>
+
+      <%= form_with(url: confirm_credit_purchases_path, method: :get) do |f| %>
+
+        <div class="form-group mt-3 mb-3">
+          <%= f.number_field :amount, placeholder: 10, class: "form-control" %>
+        </div>
+      
+        <%= f.submit "Next", class: "btn btn-block btn-primary" %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

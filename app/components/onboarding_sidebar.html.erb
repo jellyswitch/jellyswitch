@@ -1,0 +1,100 @@
+
+
+    
+  <li class="list-group-item m-0 pt-3 pb-2" style="border-bottom: 0px;">
+    <h5>Onboarding Checklist</h5>  
+  </li>
+
+  <% if billing_enabled? %>
+    <% if operator.plans.count < 1 %>
+      <%= link_to new_membership_plan_operator_onboarding_index_path, class: "list-group-item list-group-item-action m-0" do %>
+        <div class="row">
+          <div class="col-lg-10 col-11">
+            <i class="fas fa-users"></i>
+            &nbsp;
+            Membership plans
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if show_day_pass_types? %>
+      <%= link_to new_day_pass_type_operator_onboarding_index_path, class: "list-group-item list-group-item-action m-0" do %>
+        <div class="row">
+          <div class="col-lg-10 col-11">
+            <i class="fas fa-ticket-alt"></i>
+            &nbsp;
+            Day passes
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>  
+      <% end %>
+    <% end %>
+
+    <% if show_rooms? %>
+      <%= link_to new_room_operator_onboarding_index_path, class: "list-group-item list-group-item-action m-0" do %>
+        <div class="row">
+          <div class="col-lg-10 col-11">
+            <i class="fas fa-briefcase"></i>
+            &nbsp;
+            Reservable rooms
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if show_doors? %>
+      <%= link_to new_kisi_operator_onboarding_index_path, class: "list-group-item list-group-item-action m-0" do %>
+        <div class="row">
+          <div class="col-lg-10 col-11">
+            <i class="fas fa-door-open"></i>
+            &nbsp;
+            Building access setup
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if show_members? %>
+      <%= link_to add_members_operator_onboarding_index_path, class: "list-group-item list-group-item-action m-0" do %>
+        <div class="row">
+          <div class="col-lg-10 col-11">
+            <i class="fas fa-users"></i>
+            &nbsp;
+            Onboard your members
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+  <% else %>
+    <%= link_to "#", class: "list-group-item list-group-item-action m-0", data: {target: "#exampleModalCenter", toggle: "modal"} do %>
+      <div class="row">
+        <div class="col-lg-10 col-11 text-success">
+          <strong>Enable billing & payments</strong>
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+
+    <%= render "shared/stripe_connect_modal" %>
+
+    <small class="list-group-item">After you connect a Stripe account, you can sell memberships, day passes, and more!</small>
+  <% end %>
+

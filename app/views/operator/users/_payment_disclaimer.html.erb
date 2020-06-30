@@ -1,0 +1,5 @@
+<% if user.has_billing? || user.out_of_band? || user.bill_to_organization? %>    
+  <small><strong>NOTE</strong>: This user will be invoiced according to their payment method on file.</small>
+<% else %>
+  <small><strong>NOTE</strong>: This user does not have a credit card on file. They will be required to enter a valid credit card number upon next login.</small>
+<% end %>

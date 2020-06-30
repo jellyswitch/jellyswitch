@@ -1,0 +1,67 @@
+<% title "Data" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 mb-5 text-center">Data Reports</h4>
+
+  <dl class="row">
+    <dt class="col-lg-6">Weekly Updates</dt>
+    <dd class="col"><%= link_to "View Weekly Updates", weekly_updates_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+  <dl class="row">
+    <dt class="col-lg-6"><%= @report.active_member_count %> active members</dt>
+    <dd class="col"><%= link_to "View Data", active_members_reports_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+  <dl class="row">
+    <dt class="col-lg-6"><%= @report.active_lease_count %> active leases</dt>
+    <dd class="col"><%= link_to "View Data", active_leases_reports_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+  <dl class="row">
+    <dt class="col-lg-6"><%= @report.active_lease_member_count %> members on active leases</dt>
+    <dd class="col"><%= link_to "View Data", active_lease_members_reports_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+  <dl class="row">
+    <dt class="col-lg-6"><%= @report.last_30_day_pass_count %> day passes (last 30 days)</dt>
+    <dd class="col"><%= link_to "View Data", last_30_day_passes_reports_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+  <dl class="row">
+    <dt class="col-lg-6"><%= @report.all_member_count %> total members</dt>
+    <dd class="col"><%= link_to "View Data", total_members_reports_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+  <dl class="row">
+    <dt class="col-lg-6">Membership Breakdown</dt>
+    <dd class="col"><%= link_to "View Data", membership_breakdown_reports_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+  <dl class="row">
+    <dt class="col-lg-6">Revenue</dt>
+    <dd class="col"><%= link_to "View Data", revenue_reports_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+  <dl class="row">
+    <dt class="col-lg-6">Check-ins</dt>
+    <dd class="col"><%= link_to "View Data", checkins_reports_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+  <dl class="row">
+    <dt class="col-lg-6">Download Member CSV</dt>
+    <dd class="col"><%= link_to "Download", member_csv_reports_path, class: "btn btn-primary btn-block" %></dd>
+  </dl>
+
+ <% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 mb-5 text-center">Monetization</h4>
+
+  <% current_tenant.locations.each do |location| %>
+    <dl class="row">
+      <dt class="col-lg-6"><%= location.name %></dt>
+      <dd class="col"><%= link_to "View Data", monetization_reports_path(location_id: location.id), class: "btn btn-primary btn-block" %></dd>
+    </dl>
+  <% end %>
+<% end %>

@@ -1,0 +1,25 @@
+<% lead.lead_notes.each do |lead_note| %>
+  <div class="row mt-3">
+    <div class="col-2">
+      <%= render "shared/small_profile_photo", user: lead_note.user %>
+    </div>
+    <div class="col bg-light shadow-sm rounded pl-4 pr-4 pt-2 pb-3">
+      <strong><%= lead_note.user.name %></strong>
+      <small class="text-muted"><%= time_ago_in_words(lead_note.created_at) %> ago</small>
+      <%= lead_note.content %>
+    </div>
+  </div>
+<% end %>
+
+<div class="row mt-4">
+  <div class="col">
+    <%= form_with(model: lead.lead_notes.new, url: lead_notes_path(lead_id: lead.id), method: :post, remote: true) do |f| %>
+      <%= f.rich_text_area :content, placeholder: "Add a note...", class: "mb-3" %>
+
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.hidden_field :lead_id, value: lead.id %>
+
+      <%= f.submit "Add a note", class: "btn btn-block btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<%- title @door.name %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Doors", doors_path %></li>
+  <li class="breadcrumb-item active"> <%= @door.name %></li>
+<% end %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center mt-4">Access Log</h4>
+    <p class="lead text-center"><%= @door.name %></p>
+    <%= column_chart @door.door_punches.group_by_day(:created_at, last: 30).count, label: "Punches" %>
+    <p>Kisi ID: <pre><%= @door.kisi_id %></pre></p>
+  <% end %>
+  <% @punches.each do |punch| %>
+    <%= link_to door_punch_path(punch), class: "list-group-item list-group-item-action m-0" do %>
+      <div class="row">
+        <div class="col-lg-10 col-11">
+          <%= punch.pretty_datetime %>
+          &nbsp;
+          <strong><%= punch.user.name %></strong>
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <%== pagy_bootstrap_responsive_nav(@pagy) %>
+<% end %>

@@ -1,0 +1,13 @@
+<p>Hey <%= @user.name %>,</p>
+
+<p>Thanks for requesting a demo of Jellyswitch!</p>
+
+<p>Your demo is ready. We've added a whole bunch of example members, plans, day passes, rooms that can be reserved, and much more. Please note that your demo will expire in 24 hours, and all notifications and billing functionality has been disabled.</p>
+
+<p><%= link_to "Take me to my Jellyswitch!", landing_url(subdomain: @operator.subdomain) %></p>
+
+<p>If you have any questions whatsoever, please reply to this email or send us a message at <%= mail_to "dave@jellyswitch.com" %>.</p>
+
+<p>Cheers,</p>
+<p>Dave Paola</p>
+<p>CEO, Jellyswitch</p>

@@ -1,0 +1,28 @@
+<% title "My Day Passes" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "My Account", user_path(@user) %></li>
+  <li class="breadcrumb-item">My Day Passes</li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">My Day Passes</h4>
+  <% if policy(DayPass.new).new? %>
+    <p>
+      <%= link_to "Buy a day pass", new_day_pass_path, class: "btn btn-block btn-primary" %>
+    </p>
+  <% end %>
+
+  <table class="table table-sm">
+    <% if @user.day_passes.count < 1 %>
+      <p class="lead">(None)</p>
+    <% end %>
+    <% @user.day_passes.each do |day_pass| %>
+      <tr>
+        <td>
+          <%= link_to day_pass.pretty_day, day_pass_path(day_pass) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

@@ -1,0 +1,10 @@
+<% title "Day Pass" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center mt-4">Confirm Day Pass</h4>
+    <p class="lead text-center mb-3 mt-3">When would you like to use your day pass?</p>
+    <%= render "form", day_pass: @day_pass, label: "Confirm and purchase", user: current_user %>
+    <%= render "shared/terms_of_service" %>
+  <% end %>
+<% end %>

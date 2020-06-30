@@ -1,0 +1,32 @@
+<% title "Members" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to @organization.name, organization_path(@organization) %></li>
+  <li class="breadcrumb-item active" aria-current="page">Members</li>
+<% end %>
+
+<div class="row mt-0 mb-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 pl-0 pr-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Add Members</h4>
+
+        <p class="text-muted text-center">(Right-click or CMD-click to select multiple)</p>
+
+        <%= render 'add_members', organization: @organization %>
+      <% end %>
+
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Current Members</h4>
+
+        <% @organization.users.each do |member| %>
+          <%= render "operator/users/member_card", member: member %>
+        <% end %>
+      <% end %>
+
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+

@@ -1,0 +1,26 @@
+<% title "Child Profiles" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Childcare", childcare_index_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Child Profiles</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      Child Profiles
+    </h4>
+
+    <%= link_to new_child_profile_path, class: "btn btn-primary btn-block" do %>
+      <i class="fas fa-child"></i>
+      &nbsp;
+      Add a child profile
+    <% end %>
+  <% end %>
+
+  <% @child_profiles.each do |child_profile| %>
+    <%= link_to child_profile_path(child_profile), class: "list-group-item list-group-item-action" do %>
+      <%= child_profile.name %>
+    <% end %>
+  <% end %>
+<% end %>

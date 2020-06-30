@@ -1,0 +1,31 @@
+<% title "Childcare Slot" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Childcare", childcare_index_path %></li>
+  <li class="breadcrumb-item"><%= link_to "Availability", childcare_slots_path %></li>
+  <li class="breadcrumb-item active" aria-current="page"><%= @childcare_slot.pretty_name %></li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      Childcare Slot
+    </h4>
+
+    <%= render(Childcare::Slot, childcare_slot: @childcare_slot) %>
+
+    <div class="row mt-2">
+      <div class="col">
+        <%= link_to "Edit", edit_childcare_slot_path(@childcare_slot), class: "btn btn-block btn-info" %>
+      </div>
+    </div>
+
+    <% if @childcare_slot.visible? %>
+      <div class="row mt-2">
+        <div class="col">
+          <%= link_to "Delete", childcare_slot_path(@childcare_slot), method: :delete, class: "btn btn-block btn-danger" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

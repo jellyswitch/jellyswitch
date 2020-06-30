@@ -1,0 +1,45 @@
+<%= javascript_pack_tag "stripe_handler.js" %>
+
+<%= form_for(day_pass, html: { class: "form", id: "stripe-form"}, remote: true) do |f| %>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.date_select :day, { default: Time.zone.today, order: [:month, :day, :year]}, class: "form-control form-control-sm col ml-1 mr-1" %>
+    <div class="col-1"></div>
+  </div>
+
+  <% if @day_pass_type %>
+    <dl class="row">
+      <dt class="col-6">Selected day pass:</dt>
+      <dd class="col-6"><%= @day_pass_type.name.capitalize %></dd>
+    </dl>
+    
+    <dl class="row">
+      <dt class="col-6">Price:</dt>
+      <dd class="col-6">
+        <span class="text-success font-weight-bold"><%= number_to_currency(dollar_amount(@day_pass_type.amount_in_cents)) %></span>
+      </dd>
+    </dl>
+    <%= f.hidden_field :day_pass_type, value: @day_pass_type.id %>
+  <% else %>
+    <div class="form-group row">
+      <div class="col-1"></div>
+        <%= f.select :day_pass_type, day_pass_type_options(DayPassType.options_for_select(current_tenant)), {}, { class: "form-control form-control-sm col ml-1 mr-1" } %>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :user_id, value: user.id %>
+
+  <% if !user.has_billing? && !user.bill_to_organization? %>
+    <div class="form-group row">
+      <div class="col-1"></div>
+      <%= render "shared/billing" %>
+      <div class="col-1"></div>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+    <%= f.submit label, id: 'stripe-submit', class: "form-control btn btn-primary col ml-3 mr-3", data: { acc: 'add-payment', disable_with: "Processing..." } %>
+  </div>
+<% end %>

@@ -1,0 +1,38 @@
+<%= form_with(model: subscription, url: operator_admin_subscriptions_path, remote: true, html: {id: "stripe-form" }) do |f| %>
+  <%= render "shared/error_messages", model: subscription %>
+
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <div class="col">
+      <%= f.collection_select :plan_id, Plan.available.individual, :id, :pretty_name, {}, { class: "form-control form-control-sm col" } %>
+    </div>
+    <div class="col-1"></div>
+  </div>
+  <% if defined?(user_id) %>
+    <%= f.hidden_field :subscribable_id, value: user_id %>
+  <% end %>
+
+  <% if defined?(show_start_day) && show_start_day %>
+    <div class="form-group row">
+      <div class="col-1"></div>
+      <div class="col">
+        Starts on
+        <%= select "subscription", "start_day", options_for_select(days_option_for_current_month), {},  { class: "form-control form-control-sm" } %>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  <% end %>
+
+  <% if cc %>
+    <div class="form-group row">
+      <div class="col-1"></div>
+      <%= render "shared/billing" %>
+      <div class="col-1"></div>
+    </div>
+  <% end %>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.submit label, id: 'stripe-submit', class: "form-control btn btn-primary col", data: { acc: 'add-payment' } %>
+    <div class="col-1"></div>
+  </div>
+<% end %>

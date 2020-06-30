@@ -1,0 +1,78 @@
+<%- title "My Account" %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">My Account</h4>
+
+    <p class="lead text-center">Quick Actions</p>
+    <% if policy(:payment).enabled? %>
+      <%= link_to "View my membership", user_memberships_path(current_user), class: "btn btn-block btn-primary" %>
+      <%= link_to "View my day passes", user_day_passes_path(current_user), class: "btn btn-block btn-primary" %>
+      <%= link_to "View my invoices", user_invoices_path(current_user), class: "btn btn-block btn-primary" %>
+    <% end %>
+    <% if policy(:room).enabled? %>
+      <%= link_to "View my reservations", user_reservations_path(current_user), class: "btn btn-block btn-primary" %>
+    <% end %>
+    <% if current_user.organization_owner? %>
+      <%= link_to "View my group", organization_path(current_user.owned_organization), class: "btn btn-block btn-primary" %>
+    <% end %>
+    <%= link_to "Change my password", user_change_password_path(current_user), class: "btn btn-block btn-info" %>
+    <%= link_to "Log out", logout_path, method: :delete, remote: true, class: "btn btn-block btn-warning" %>
+  <% end %>
+
+  <%= list_item do %>
+    <h4 class="display-4 text-center">My Usage</h4>
+    <%= render "usage", user: @user, usage_report: @usage_report %>
+  <% end %>
+
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Personal Information</h4>
+
+    <dl class="row">
+      <dt class="col-6">Name</dt>
+      <dd class="col"><%= @user.name %></dd>
+
+      <dt class="col-6">Email address</dt>
+      <dd class="col"><%= @user.email %></dd>
+
+      <dt class="col-6">Phone number</dt>
+      <dd class="col">
+        <% if @user.phone.present? %>
+          <%= number_to_phone(@user.phone) %>
+        <% else %>
+          <i>Not set</i>
+        <% end %>
+      </dd>
+
+      <dt class="col-6">Profile Photo</dt>
+      <dd class="col">
+        <%- if @user.has_profile_photo? %>
+          <%= image_tag @user.square_profile_photo, class: "img-thumbnail" %>
+        <%- else %>
+          (none set)
+        <%- end %>
+      </dd>
+
+      <dt class="col-6">Bio</dt>
+      <dd class="col"><%= @user.bio %></dd>
+
+      <dt class="col-6">Linkedin</dt>
+      <dd class="col"><%= @user.linkedin %></dd>
+
+      <dt class="col-6">Twitter</dt>
+      <dd class="col"><%= @user.twitter %></dd>
+
+      <dt class="col-6">Website</dt>
+      <dd class="col"><%= @user.website %></dd>
+    </dl>
+    <%= link_to "Update personal information", edit_user_path(@user), class: "btn btn-block btn-primary" %>
+  <% end %>
+
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Payment Information</h4>
+
+    <%= render "payment_method_user", user: @user %>
+    <hr />
+    <%= link_to "Update payment information", user_billing_path(current_user), class: "btn btn-block btn-primary" %>
+  <% end %>
+<% end %>

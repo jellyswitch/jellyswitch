@@ -1,0 +1,14 @@
+<ul class="list-group list-group-flush">
+  <% working_hours_options.each do |day| %>
+    <li class="list-group-item">
+      <%= day.to_s.split("_").last.humanize %>
+      <% if current_location.send("#{day.to_s}?".to_sym) == true %>
+        <small class="float-right">
+          <%= format_working_hours(current_location, "-") %>
+        </small>
+      <% else %>
+        <span class="badge badge-light float-right">CLOSED</span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,175 @@
+<% title current_location.name %>
+
+<div class="row mt-0 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+    
+      <% if current_location.building_access_instructions.present? %>
+        <%= list_item do %>
+          <%= render(AccessInstructions::CheckinInstructions, operator: current_tenant, location: current_location) %>
+        <% end %>
+      <% end %>
+
+      <% if policy(:door).enabled? %>
+        <%= list_item do %>
+          <%= render(AccessInstructions::DoorButtons, 
+            operator: current_tenant, 
+            location: current_location, 
+            mobile_app_request: mobile_app_request?,
+            has_access: active_working_hours?(current_location) || has_building_access?(current_user), 
+            doors: @doors) %>
+        <% end %>
+      <% end %>
+
+      <div class="list-group-item m-0" style="border-top: 0px; border-bottom: 0px;">
+        <h5 class="card-title">Quick Actions</h5>
+      </div>
+
+      <% if current_user.has_active_subscription? %>
+        <%= link_to user_memberships_path(current_user), class: "list-group-item list-group-item-action m-0", style: "border-top: 0px;" do %>
+          <div class="row">
+            <div class="col-11">
+              <i class="fas fa-users-cog"></i>
+              &nbsp;
+              Manage my membership
+            </div>
+            <div class="col-1">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <%= link_to subscriptions_path, class: "list-group-item list-group-item-action m-0", style: "border-top: 0px;" do %>
+          <div class="row">
+            <div class="col-11">
+              <i class="fas fa-users-cog"></i>
+              &nbsp;
+              Upgrade to a membership
+            </div>
+            <div class="col-1">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+
+        <% end %>
+      <% end %>
+
+      <% if policy(:room).enabled? %>
+        <%= link_to user_reservations_path(current_user), class: "list-group-item list-group-item-action m-0", style: "border-top: 0px;" do %>
+          <div class="row">
+            <div class="col-11">
+              <i class="fas fa-briefcase"></i>
+              &nbsp;
+              See my room reservations
+            </div>
+            <div class="col-1">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if policy(:childcare).enabled? %>
+        <%= link_to user_childcare_path(current_user), class: "list-group-item list-group-item-action m-0", style: "border-top: 0px;" do %>
+          <div class="row">
+            <div class="col-11">
+              <i class="fas fa-child"></i>
+              &nbsp;
+              &nbsp;
+              See my childcare
+            </div>
+            <div class="col-1">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if policy(:payment).enabled? %>
+        <%= link_to  user_invoices_path(current_user), class: "list-group-item list-group-item-action m-0", style: "border-top: 0px; border-bottom: 0px;" do %>
+          <div class="row">
+            <div class="col-11">
+              <i class="fas fa-dollar-sign"></i>
+              &nbsp;
+              <span class="ml-2">
+                See my invoices
+              </span>
+            </div>
+            <div class="col-1">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% policy(:announcement).enabled? && if current_tenant.announcements.count > 0 %>
+        <%= list_item do %>
+          <%= render "shared/announcements_card" %>
+        <% end %>
+      <% end %>
+
+      <% if policy(:event).enabled? && current_location.events.future.count > 0 %>
+        <%= list_item do %>
+          <div class="row">
+            <div class="col">
+              <%= render "operator/events/time_bucket_header", date: @events.first.first %>
+            </div>
+          </div>
+
+          <div class="row mt-2 mb-5">
+            <div class="col">
+              <%= render "operator/events/event_item", event: @events.first.last.first %>
+            </div>
+          </div>
+
+          <%= link_to "View all events", events_path, class: "btn btn-block btn-primary" %>
+        <% end %>
+      <% end %>
+
+      <% if policy(:room).enabled? && current_location.rooms.visible.count > 0 %>
+        <%= list_item do %>
+          <%= render "shared/reservations_card" %>
+        <% end %>
+      <% end %>
+
+      <% if policy(:post).enabled? && current_tenant.posts.count > 0 %>
+        <%= list_item do %>
+          <h5 class="card-title">
+            Bulletin Board
+          </h5>
+        <% end %>
+        
+        <% current_tenant.posts.order("created_at DESC").limit(2).each do |post| %>
+          <%= render Posts::PostLink, post: post %>
+        <% end %>
+
+        <%= list_item do %>
+          <%= link_to "Read the bulletin board", posts_path, class: "btn btn-block btn-primary" %>
+        <% end %>
+      <% end %>
+
+      <%= list_item do %>
+        <%= render "shared/send_feedback_card" %>
+      <% end %>
+
+      <%= list_item do %>
+        <%= render "shared/wifi" %>
+      <% end %>
+
+      <%= list_item do %>
+        <%= render "shared/map_card" %>
+      <% end %>
+
+      <% if current_location.has_contact_info? %>
+        <%= list_item do %>
+          <%= render "shared/contact_card" %>
+        <% end %>
+      <% end %>
+
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+
+

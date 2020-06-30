@@ -1,0 +1,12 @@
+<% title "Add Membership Plan" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Onboarding", new_operator_onboarding_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Add Membership Plan</li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">New Plan</h4>
+
+  <%= render "operator/plans/form", plan: @plan, url: create_membership_plan_operator_onboarding_index_path %>
+<% end %>

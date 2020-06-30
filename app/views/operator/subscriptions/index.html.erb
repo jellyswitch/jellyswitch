@@ -1,0 +1,22 @@
+<%- title "Memberships" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      <i class="fas fa-users"></i>
+      &nbsp;
+      Memberships
+    </h4>
+  <% end %>
+  <% if current_location.plans.individual.visible.available.count == 1 %>
+    <%= list_item do %>
+      <%= render(MemberOnboarding::Membership, plan: current_location.plans.individual.visible.available.first) %>
+    <% end %>
+  <% else %>
+    <% current_location.plans.individual.visible.available.order("amount_in_cents ASC").each do |plan| %>
+      <%= list_item do %>
+        <%= render(MemberOnboarding::Membership, plan: plan) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,117 @@
+<%= form_with(model: operator, url: url, remote: true) do |f| %>
+  <%= render "shared/error_messages" , model: operator %>
+
+  <h4 class="display-4 mt-3">Customize Jellyswitch</h4>
+
+  <div class="form-group ">
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: "Name", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :snippet, "Homepage Description" %>
+    <%= f.text_area :snippet, placeholder: "Description", class: "form-control" %>
+  </div>
+
+    <div class="form-group">
+    <%= f.label :membership_text, "Membership Text" %>
+    <%= f.text_area :membership_text, placeholder: "Membership Text", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :contact_name, "Contact Name (for members)" %>
+    <%= f.text_field :contact_name, placeholder: "Contact Name", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :contact_email, "Contact email (for members)" %>
+    <%= f.text_field :contact_email, placeholder: "Contact Email", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :contact_phone, "Contact phone number (for members)" %>
+    <%= f.text_field :contact_phone, placeholder: "Contact Phone Number", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :square_footage %>
+    <%= f.number_field :square_footage, placeholder: "Square Footage", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :wifi_name %>
+    <%= f.text_field :wifi_name, placeholder: "WiFi Name", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :wifi_password %>
+    <%= f.text_field :wifi_password, placeholder: "WiFi Password", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :building_address %>
+    <%= f.text_field :building_address, placeholder: "Building Address", class: "form-control" %>
+  </div>
+
+  <h4 class="display-4 mt-3">Jellyswitch Customization</h4>
+
+  <div class="form-group">
+    <%= f.label :subdomain %>
+    <%- if editable_subdomain %>
+      <%= f.text_field :subdomain, placeholder: "Subdomain", class: "form-control" %>
+    <%- else %>
+      <%= f.text_field :subdomain, placeholder: "Subdomain", class: "form-control", readonly: true %>
+      <small class="form-text text-muted">Please contact us to update your subdomain.</small>
+    <%- end %>
+  </div>
+
+   <div class="form-group">
+    <%= f.label :ios_url, "iOS App Store URL" %>
+    <%- if editable_app_links %>
+      <%= f.text_field :ios_url, placeholder: "iOS App Store URL", class: "form-control" %>
+    <%- else %>
+      <%= f.text_field :ios_url, placeholder: "iOS App Store URL", class: "form-control", readonly: true %>
+    <%- end %>
+  </div>
+
+    <div class="form-group">
+    <%= f.label :android_url, "Google Play Store URL" %>
+    <%- if editable_app_links %>
+      <%= f.text_field :android_url, placeholder: "Google Play Store URL", class: "form-control" %>
+    <%- else %>
+      <%= f.text_field :android_url, placeholder: "Google Play Store URL", class: "form-control", readonly: true %>
+    <%- end %>
+  </div>
+
+  <div class="form-group custom-file mb-3">
+    <label class="custom-file-label" for="customFile">Upload Terms of Service</label>
+    <%= f.file_field :terms_of_service, placeholder: "Terms of Service", class: "custom-file-input" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :kisi_api_key %>
+    <%= f.text_field :kisi_api_key, placeholder: "Kisi API Key", class: "form-control" %>
+  </div>
+
+  <div class="form-group custom-file mb-3">
+    <label class="custom-file-label" for="customFile">Choose logo image</label>
+    <%= f.file_field :logo_image, placeholder: "Logo File Path", class: "custom-file-input" %>
+  </div>
+
+  <div class="form-group custom-file mb-3">
+    <label class="custom-file-label" for="customFile">Choose background image</label>
+    <%= f.file_field :background_image, placeholder: "Background Image File Path", class: "custom-file-input" %>
+  </div>
+
+  <%- if editable_subdomain %>
+    <div class="form-group custom-file mb-3">
+      <label class="custom-file-label" for="customFile">Choose push notification certificate (PEM)</label>
+      <%= f.file_field :push_notification_certificate, placeholder: "Push Notification Certificate PEM", class: "custom-file-input" %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= f.label :android_server_key %>
+      <%= f.text_field :android_server_key, placeholder: "Android Server Key", class: "form-control" %>
+    </div>
+  <%- end %>
+
+  <%= f.submit "Save/Update", class: "btn btn-primary" %>
+<%- end %>

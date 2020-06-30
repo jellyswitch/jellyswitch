@@ -1,0 +1,10 @@
+
+<% if feed_item.type == "reservation" %>
+  <% if policy(:notification).reservations? %>
+    <%= render(FeedItemComponent, feed_item: feed_item, comments: comments) %>
+  <% end %>
+<% else %>
+  <% if feed_item.type != "new-user"%>
+    <%= render(FeedItemComponent, feed_item: feed_item, comments: comments) %>
+  <% end %>
+<% end %>

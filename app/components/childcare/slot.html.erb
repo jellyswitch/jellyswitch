@@ -1,0 +1,12 @@
+<dl>
+  <dt>Day of Week</dt>
+  <dd><%= childcare_slot.weekday_name %></dd>
+
+  <dt>Slot</dt>
+  <dd><%= childcare_slot.name %></dd>
+
+  <dt>Capacity</dt>
+  <dd>
+    <%= childcare_slot.capacity %> <%= quantize(childcare_slot.capacity, "spot") %>
+  </dd>
+</dl>

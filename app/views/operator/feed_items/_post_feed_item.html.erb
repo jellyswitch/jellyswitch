@@ -1,0 +1,26 @@
+<dl class="row">
+  <% if feed_item.expense? %>
+    <dt class="col-6">
+      Amount:
+    </dt>
+    <dd class="col">
+      <span class="text-danger">
+        <%= number_to_currency(feed_item.amount.to_f/100.0)  %>
+      </span>
+    </dd>
+  <% end %>
+</dl>
+
+<p style="overflow-wrap: break-word;">
+  <%= simple_format(auto_link(feed_item.text)) %>
+</p>
+
+<%- if feed_item.has_photos? %>
+  <div class="row mt-1 mb-3">
+    <div class="col">
+    <%- feed_item.feed_photos.each do |photo| %>
+      <%= image_tag photo, class: "img-fluid" %>
+    <%- end %>
+    </div>
+  </div>
+<%- end %>

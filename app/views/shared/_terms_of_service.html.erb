@@ -1,0 +1,5 @@
+<%- if current_tenant.terms_of_service.attached? %>
+  <p class="text-muted text-center">
+    By joining <%= current_tenant.name %>, you agree to the <%= link_to "Terms of Service", rails_blob_path(current_tenant.terms_of_service, disposition: "attachment") %>.
+  </p>
+<%- end %>

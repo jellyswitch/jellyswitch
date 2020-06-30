@@ -1,0 +1,16 @@
+<% title "Add Doors" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Onboarding", new_operator_onboarding_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Add Doors</li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">We found these doors:</h4>
+
+  <ul class="list-group list-group-flush">
+    <% @doors.each do |door| %>
+      <%= render "operator/onboarding/door", door: door %>
+    <% end %>
+  </ul>
+<% end %>

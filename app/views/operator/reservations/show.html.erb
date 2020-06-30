@@ -1,0 +1,10 @@
+<%- title "Reservation Confirmation" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Reservation Confirmation</h4>
+    <ul class="list-group list-group-flush">
+      <%= render "reservation_card", reservation: @reservation %>
+    </ul>
+  <% end %>
+<% end %>

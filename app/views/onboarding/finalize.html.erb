@@ -1,0 +1,30 @@
+<% title "That's it!" %>
+
+<section class="fdb-block fp-active" data-block-type="contents" data-id="1" draggable="true">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-10 col-sm-6 m-auto col-md-4 pb-4 pb-md-0">
+        <img alt="image" class="img-fluid rounded-0" src="https://cdn.jsdelivr.net/gh/froala/design-blocks@2.0.1/dist/imgs//draws/chatting.svg">
+      </div>
+
+      <div class="col-12 ml-auto col-md-6 col-lg-5">
+        <h1>That's it!</h1>
+        <p class="lead">
+          We've got everything we need to start building your mobile app. We'll get in touch when it's ready! In the meantime...
+        </p>
+        <div class="row">
+          <div class="col">
+            <%= link_to "Take me to my Jellyswitch", landing_url(subdomain: current_user.operator.subdomain), action: "replace", class: "btn btn-block btn-success" %>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col">
+            <%= link_to "Show me what my members will see", home_url(subdomain: current_user.operator.subdomain), class: "btn btn-block btn-info" %>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>

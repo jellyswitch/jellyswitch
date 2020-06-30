@@ -1,0 +1,35 @@
+<% title "Leases" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to @organization.name, organization_path(@organization) %></li>
+  <li class="breadcrumb-item active" aria-current="page">Leases</li>
+<% end %>
+
+<div class="row mt-0 mb-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 pl-0 pr-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Leases</h4>
+
+        <% if @organization.has_active_lease? %>
+          <% @organization.active_leases.each do |lease| %>
+            <div class="row">
+              <p>
+                Leased <%= link_to lease.office_name, office_path(lease.office) %> (<%= pretty_price(lease) %> until <%= short_date(lease.end_date) %>)
+              </p>
+              <%= link_to "View Lease", office_lease_path(lease), class: "btn btn-block btn-primary" %>
+            </div>      
+          <% end %>
+        <% else %>
+          No active leases.
+        <% end %>
+
+      <% end %>
+
+
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+

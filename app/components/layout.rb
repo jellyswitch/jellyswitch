@@ -1,0 +1,2 @@
+module Layout
+end

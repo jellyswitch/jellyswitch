@@ -1,0 +1,7 @@
+<h4 class="display-4 text-center"><%= door.name %></h4>
+<p>
+  <%= door.name %> has been opened <%= door.door_punches.this_month.count %> times this month.
+</p>
+<%= link_to "Open #{door.name}", door_open_path(door), class: "btn btn-block btn-success", data: {"turbolinks-action" => "restore"} %>
+<%= link_to "View Access Log", door_path(door), class: "btn btn-block btn-primary" %>
+<%= link_to "Configure", edit_door_path(door), class: "btn btn-block btn-info" %>

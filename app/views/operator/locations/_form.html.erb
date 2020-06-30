@@ -1,0 +1,119 @@
+<%= form_for(location, html: {multipart: true}, remote: true) do |f| %>
+  <%= render "shared/error_messages" , model: location %>
+
+  <div class="form-group ">
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: "Name", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :snippet, "Homepage Description" %>
+    <%= f.text_area :snippet, placeholder: "Description", class: "form-control" %>
+  </div>
+
+  <% if location.allow_hourly? %>
+    <div class="form-group">
+      <%= f.label :hourly_rate_in_cents %>
+      <%= f.number_field :hourly_rate_in_cents, placeholder: "300", class: "form-control" %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :contact_name, "Contact Name (for members)" %>
+    <%= f.text_field :contact_name, placeholder: "Contact Name", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :contact_email, "Contact email (for members)" %>
+    <%= f.text_field :contact_email, placeholder: "Contact Email", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :contact_phone, "Contact phone number (for members)" %>
+    <%= f.text_field :contact_phone, placeholder: "Contact Phone Number", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :square_footage %>
+    <%= f.number_field :square_footage, placeholder: "Square Footage", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :flex_square_footage %>
+    <%= f.number_field :flex_square_footage, placeholder: "Flex Square Footage", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :common_square_footage %>
+    <%= f.number_field :common_square_footage, placeholder: "Common Square Footage", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :wifi_name %>
+    <%= f.text_field :wifi_name, placeholder: "WiFi Name", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :wifi_password %>
+    <%= f.text_field :wifi_password, placeholder: "WiFi Password", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :building_access_instructions %>
+    <%= f.text_field :building_access_instructions, placeholder: "Please see a host for your key...", class: "form-control" %>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.label :building_address %>
+    <%= f.text_field :building_address, placeholder: "Building Address", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :city %>
+    <%= f.text_field :city, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :state %>
+    <%= f.select :state, state_options, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :zip %>
+    <%= f.text_field :zip, class: "form-control" %>
+  </div>
+
+  <div class="form-group custom-file mb-3">
+    <label class="custom-file-label" for="customFile">Choose background image</label>
+    <%= f.file_field :background_image, placeholder: "Background Image File Path", class: "custom-file-input" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :time_zone %>
+    <%= f.time_zone_select(:time_zone, nil, {},  {class: "form-control form-control-sm"}) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :working_day_start %>
+    <%= f.select :working_day_start, @hourly_options %>    
+  </div>
+
+  <div class="form-group">
+    <%= f.label :working_day_end %>
+    <%= f.select :working_day_end, @hourly_options %>    
+  </div>
+
+  <div class="form-group">
+    <label>Working Days</label>
+  </div>
+  <% [:open_sunday, :open_monday, :open_tuesday, :open_wednesday, :open_thursday, :open_friday, :open_saturday].each do |day| %>
+    <div class="form-check">
+      <%= f.check_box day, class: "form-check-input" %>
+      <%= f.label :day, "#{day.to_s.humanize.titleize}?", class: "form-check-label" %>
+    </div>
+  <% end %>
+
+  <div class="mt-3"></div>
+  <%= f.submit label, class: "form-control btn btn-primary" %>
+<% end %>

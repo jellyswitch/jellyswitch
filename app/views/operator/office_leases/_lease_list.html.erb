@@ -1,0 +1,7 @@
+<ul class="list-group mt-3">
+  <% leases.each do |lease| %>
+    <a class="list-group-item list-group-item-action" href="<%= office_lease_path(lease) %>">
+      <%= lease.organization.name %> (<%= lease.office_name %>) ending <%= short_date(lease.end_date) %> <small>(<%= pretty_price(lease) %>)</small>
+    </a>
+  <% end %>
+</ul>

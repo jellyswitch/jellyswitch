@@ -1,0 +1,12 @@
+<% title "Payment Method" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to @organization.name, organization_path(@organization) %></li>
+  <li class="breadcrumb-item active" aria-current="page">Payment Method</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <%= render(PaymentMethodComponent, billable: @organization) %>
+  <% end %>
+<% end %>

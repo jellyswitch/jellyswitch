@@ -1,0 +1,59 @@
+<dl class="mt-3">
+  <hr />
+  <i>Properties</i>
+  <hr />
+
+  <dt>Status</dt>
+  <dd><%= lead.status %></dd>
+
+  <dt>Source</dt>
+  <dd>
+    <% if lead.source.present? %>
+      <%= lead.source %>
+    <% else %>
+      <i>None</i>
+    <% end %>
+  </dd>
+
+  <hr />
+  <i>Computed Properties</i>
+  <hr />
+
+  <dt>Became a lead</dt>
+  <dd>
+    <% if lead.ahoy_visit.present? %>
+      <%= short_date(lead.ahoy_visit.started_at) %>
+    <% elsif lead.user.present? %>
+      <%= short_date(lead.ahoy_visit.created_at) %>
+    <% else %>
+      <%= short_date(lead.created_at) %>
+    <% end %>
+  </dd>
+
+  <dt>Name</dt>
+  <dd><%= link_to lead.user.name, user_path(lead.user) %></dd>
+
+  <dt>Email</dt>
+  <dd><%= link_to lead.user.email, user_path(lead.user) %>
+
+  <dt>City</dt>
+  <dd>
+    <%= ahoy_property(lead, :city) %>
+  </dd>
+
+  <dt>Region</dt>
+  <dd>
+    <%= ahoy_property(lead, :region) %>
+  </dd>
+
+  <dt>Referrer</dt>
+  <dd><%= ahoy_property(lead, :referrer) %></dd>
+
+  <dt>Landing page</dt>
+  <dd><%= ahoy_property(lead, :landing_page) %></dd>
+
+  <dt>Device / OS</dt>
+  <dd>
+    <%= ahoy_property(lead, :device_type) %> / <%= ahoy_property(lead, :os) %>
+  </dd>
+</dl>

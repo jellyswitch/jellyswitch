@@ -1,0 +1,16 @@
+<% title "Weekly Update" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Weekly Updates", weekly_updates_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Weekly Update</li>
+<% end %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <%= render @weekly_update %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<table class="table">
+  <%- expenses.each do |expense| %>
+    <tr>
+      <td><small><%= link_to expense.text, feed_item_path(expense) %></small></td>
+      <td class="text-right"><%= number_to_currency(expense.amount.to_f / 100.0) %></td>
+    </tr>
+  <%- end %>
+  <tr>
+    <td class="text-right"><strong>Total</strong></td>
+    <td class="text-right">
+      <%= number_to_currency(@expenses.sum {|e| e.amount }.to_f / 100.0) %>
+    </td>
+  </tr>
+</table>

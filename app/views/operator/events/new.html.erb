@@ -1,0 +1,31 @@
+
+<% title "New Event" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "What's Happening?", events_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">New Event</li>
+<% end %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">New Event</h4>
+
+        <%= form_with(model: @event, remote: true, html: {class: "form", multipart: true}, data: {type: :html}) do |f| %>
+          <%= render "form", event: @event, f: f %>
+
+          <div class="form-group row m-0 p-0">
+            <button class="form-control btn btn-primary col" id="submit" data-disable-with="Creating...">
+              <i class="far fa-calendar-alt"></i>      
+              &nbsp;
+              Create event
+            </button>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

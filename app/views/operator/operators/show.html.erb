@@ -1,0 +1,10 @@
+<% title "Customize Jellyswitch" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Customization", customization_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Customize Jellyswitch</li>
+<% end %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= render "settings", operator: @operator %>
+<% end %>

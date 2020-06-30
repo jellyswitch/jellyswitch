@@ -1,0 +1,18 @@
+<% title "Onboarding" %>
+
+<%= render(Layout::Freola::ColorfulBackgroundCard, title: "Almost done...", body: "What is your favorite part of your space?") do %>
+  <%= form_with(url: create_favorite_parts_onboarding_index_path, method: :post, remote: true) do |f| %>
+    <% @favorite_parts.each do |part| %>
+      <div class="form-check">
+        <%= f.radio_button "favorite_part", part.first, class: "form-check-input" %>
+        <%= f.label part.first, part.last, class: "form-check-label" %>  
+      </div>
+    <% end %>
+
+    <div class="form-group row m-0 mt-3 p-0">
+      <button class="form-control btn btn-primary col" id="submit" data-disable-with="Adding...">
+        Next
+      </button>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,66 @@
+<div class="row mt-3 mb-3">
+  <div class="col-sm-3"></div>
+  <div class="card col-sm bg-light p-3">
+    <div class="card-body">
+      <h1>My Account <span><%= link_to "Edit my account details", edit_user_path(@user), class: "btn btn-sm btn-primary" %></span></h1>
+
+      <table class="table table-bordered">
+        <tr>
+          <th colspan=2>Basic Information</th>
+        </tr>
+        <tr>
+          <th>Name</th>
+          <td><%= @user.name %></td>
+        </tr>
+        <tr>
+          <th>Email address</th>
+          <td><%= @user.email %></td>
+        </tr>
+        <tr>
+          <th>Password</th>
+          <td><%= link_to "Change Password", user_change_password_path(current_user), class: 'btn-sm btn-primary' %></td>
+        </tr>
+        <tr>
+          <th>Profile Photo</th>
+          <td>
+            <%- if @user.has_profile_photo? %>
+              <%= image_tag @user.square_profile_photo, class: "img-thumbnail" %>
+            <%- else %>
+              (none set)
+            <%- end %>
+          </td>
+        </tr>
+        <tr>
+          <th>Billing Info</th>
+          <td><%= link_to "Update billing info", user_billing_path(current_user), class: "btn-sm btn-primary" %></td>
+        </tr>
+        <tr>
+          <th>Bio</th>
+          <td><%= @user.bio %></td>
+        </tr>
+        <tr>
+          <th colspan=2>Contact Information</th>
+        </tr>
+        <tr>
+          <th>LinkedIn</th>
+          <td><%= @user.linkedin %></td>
+        </tr>
+        <tr>
+          <th>Twitter</th>
+          <td><%= @user.twitter %></td>
+        </tr>
+        <tr>
+          <th>Website</th>
+          <td><%= @user.website %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="col-sm-3"></div>
+</div>
+
+
+
+
+
+

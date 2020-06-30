@@ -1,0 +1,29 @@
+<% title "Approval Queue" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Members & Groups", members_groups_path %></li>
+  <li class="breadcrumb-item"><%= link_to "Member Directory", users_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Approval Queue</li>
+<% end %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Approval Queue</h4>
+      <% end %>
+
+      <% if @users.count < 1 %>
+        <%= list_item do %>
+          <p class="text-center text-muted">Your approval queue is empty.</p>
+        <% end %>
+      <% else %>
+        <% @users.each do |user| %>
+          <%= render "approval_card", user: user %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

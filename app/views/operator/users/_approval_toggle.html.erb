@@ -1,0 +1,5 @@
+<% if user.approved? %>
+  <%= link_to "Unapprove", user_unapprove_path(user), class: "btn btn-block btn-sm btn-outline-danger", data: {acc: 'unapprove-member', remote: true} %>
+<% else %>
+  <%= link_to "Approve", user_approve_path(user), class: "btn btn-block btn-sm btn-outline-success", data: {acc: 'approve-member', remote: true} %>
+<% end %>

@@ -1,0 +1,11 @@
+<% title "Add Child Profile" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      Add child profile
+    </h4>
+
+    <%= render "form", child_profile: @child_profile %>
+  <% end %>
+<% end %>

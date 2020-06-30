@@ -1,0 +1,20 @@
+<%= form_with(model: announcement, remote: true, html: {multipart: true}, data: { type: :html }) do |f| %>
+  <%= render "shared/error_messages" , model: announcement %>
+  <div class="form-group row m-0 p-0 mt-0">
+    <%= f.text_area :body, placeholder: "Type a new announcement...", class: "form-control form-control-lg col", rows: "6", id: "text" %>
+  </div>
+
+  <div class="form-group row m-0 p-0 mt-1">
+    <% if mobile_app_request? %>
+      <%= f.submit "Post Announcement", class: "form-control btn btn-primary col", id: "submit", data: {disable_with: "Posting..."} %>
+    <% else %>
+      <button class="form-control btn btn-primary col" id="submit" data-confirm="This will send an announcement to all of your members. Are you sure?" data-disable-with="Posting...">
+        <i class="fas fa-bullhorn"></i>
+        &nbsp;
+        Post announcement
+      </button>
+    <% end %>
+  </div>
+<% end %>
+
+<%= render "shared/disable_button", submit_id: "#submit", text_id: "#text" %>

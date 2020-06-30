@@ -1,0 +1,19 @@
+<%= form_for(@organization, remote: true) do |f| %>
+  <%= render "shared/error_messages" , model: @organization %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :website %>
+    <%= f.text_field :website, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :owner %>
+    <%= f.select :owner_id, User.lease_options_for_select(current_tenant), class: "form-control" %>
+  </div>
+
+  <%= f.submit label, class: "form-control btn btn-primary" %>
+<% end %>

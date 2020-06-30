@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-4">
+    <% if office.photo.attached? %>
+      <%= image_tag office.thumbnail, class: "rounded img-fluid" %>
+    <% else %>
+      <%= image_tag "profile-125x125.jpg", class: "rounded img-fluid" %>
+    <% end %>
+  </div>
+  <div class="col-7">
+    <div class="row">
+      <h5 class="col"><%= office.name %></h5>
+    </div>
+    <div class="row">
+      <%= render "operator/offices/subheader", office: office %>
+    </div>
+  </div>
+  <div class="col-1">
+    <i class="fas fa-chevron-right"></i>
+  </div>
+</div>

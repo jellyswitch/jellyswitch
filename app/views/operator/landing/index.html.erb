@@ -1,0 +1,53 @@
+<% title "Locations" %>
+
+<div class="row mt-0 mb-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 pl-0 pr-0">
+    <%= list_wrapper do %>
+      <% if current_location %>
+        <%= list_item do %>
+          <div class="row">
+            <div class="col">
+              <h1 class="display-4 mt-1">Welcome to <%= current_location.name %>!</h1>
+              <p class="lead mt-3">
+                <%= render "snippet", location: current_location %>
+              </p>
+              <p class="lead mt-3">
+                <%= render "hours", location: current_location %>
+              </p>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <%= image_tag google_map(center: current_location.full_address), class: "img-fluid" %>
+            </div>
+            <p class="col small">
+              <%= current_location.name %> is located at <%= link_to current_location.full_address, "https://maps.google.com/?q=#{current_location.building_address}", target: "_blank" %>.
+            </p>
+          </div>
+          <div class="row mt-3">
+            <%= link_to "Sign Up to get started", signup_path, class: "btn btn-block btn-primary m-1", data: { acc: 'signup' } %>
+            <%= link_to "Sign in", login_path, class: "btn btn-block btn-info m-1", data: { acc: 'signin' } %>
+          </div>
+        <% end %>
+      <% else %>
+        <%= list_item do %>
+          <h4 class="display-4 text-center">Select a location</h4>
+          <div class="row">
+            <div class="col">
+              <p>Please select a location to continue at <%= current_tenant.name %>.
+            </div>
+          </div>
+        <% end %>
+        <%= render Location.visible, label: "Take me to" %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+
+<% if current_location %>
+  <%= super_wide_card do %>
+    <%= render "shared/contact_card" %>
+  <% end %>
+<% end %>

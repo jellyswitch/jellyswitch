@@ -1,0 +1,7 @@
+<% if hours.to_i == hours %>
+  <%= number_with_precision(hours, precision: 0) %>
+<%  else %>
+  <%= number_with_precision(hours, precision: 1) %>
+<% end %>
+
+<%= quantize(hours, "hour") %>

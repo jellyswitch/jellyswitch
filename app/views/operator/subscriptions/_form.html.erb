@@ -1,0 +1,60 @@
+<%= javascript_pack_tag "stripe_handler.js" %>
+
+<%= form_for(subscription, remote: true, html: {id: "stripe-form" }) do |f| %>
+  <%= render "shared/error_messages", model: subscription %>
+
+  <% if defined?(plan) %>
+    <dl class="row">
+      <dt class="col-6">Selected plan:</dt>
+      <dd class="col-6"><%= plan.name.capitalize %> / <%= plan.short_interval %></dd>
+    </dl>
+    
+    <dl class="row">
+      <dt class="col-6">Price:</dt>
+      <dd class="col-6">
+        <span class="text-success font-weight-bold"><%= number_to_currency(dollar_amount(plan.amount_in_cents)) %></span>
+      </dd>
+    </dl>
+    <%= f.hidden_field :plan_id, value: plan.id %>
+  <% else %>
+    <div class="form-group row">
+
+      <div class="col-1"></div>
+      <%= f.collection_select :plan_id, current_location.plans.for_individuals, :id, :pretty_name, {}, { class: "form-control form-control-sm col" } %>
+      <div class="col-1"></div>
+    </div>
+  <% end %>
+
+  <% if defined?(user_id) %>
+    <%= f.hidden_field :subscribable_id, value: user_id %>
+  <% end %>
+
+  <% if defined?(show_start_day) && show_start_day %>
+    <div class="form-group row">
+      <div class="col-1"></div>
+      <div class="col">
+        Starts on
+        <%= select "subscription", "start_day", options_for_select(days_option_for_current_month), {}, {class: "form-control form-control-sm" } %>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  <% end %>
+
+  <% if cc %>
+    <div class="form-group row">
+      <div class="col-1"></div>
+      <%= render "shared/billing" %>
+      <div class="col-1"></div>
+    </div>
+  <% end %>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.submit label, id: 'stripe-submit', class: "form-control btn btn-primary col", data: { acc: 'add-payment' } %>
+    <div class="col-1"></div>
+  </div>
+  <div class="row">
+    <small class="text-center col">
+      Note: You will be automatically charged monthly for this membership
+    </small>
+  </div>
+<% end %>

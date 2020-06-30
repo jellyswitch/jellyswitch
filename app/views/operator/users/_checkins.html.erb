@@ -1,0 +1,9 @@
+<% if @user.checkins.count < 1 %>
+  No check-ins.
+<% else %>
+  <ul class="list-group list-group-flush">
+    <% user.checkins.each do |checkin| %>
+      <%= render "checkin", checkin: checkin %>
+    <% end %>
+  </ul>
+<% end %>

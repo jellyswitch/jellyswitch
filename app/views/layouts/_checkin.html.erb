@@ -1,0 +1,6 @@
+<% if logged_in? && current_location.present? && current_user.checked_in?(current_location) %>
+  <div class="alert alert-success" role="alert">
+    You're checked in (for <%= time_ago_in_words(current_checkin.datetime_in) %>).
+    <%= link_to "Check out", checkin_path(current_checkin), method: :delete, remote: true, class: "mt-3 btn btn-block btn-outline-primary" %>
+  </div>
+<% end %>

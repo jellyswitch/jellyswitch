@@ -1,0 +1,27 @@
+<% title "Total Members" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Total Members</h4>
+  <p class="lead">Total: <%= @report.all_member_count %></p>
+
+  <table class="table">
+    <tr>
+      <th>Member</th>
+      <th>Join Date</th>
+      <th>Membership</th>
+    </tr>
+    <% @report.all_members.each do |user| %>
+      <tr>
+        <td><%= link_to user.name, user_path(user) %></td>
+        <td><%= short_date(user.created_at) %></td>
+        <td>
+          <% user.subscriptions.active.each do |subscription| %>
+            <span class="badge badge-primary">
+              <%= subscription.pretty_name %>
+            </span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

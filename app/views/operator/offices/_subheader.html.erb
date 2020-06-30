@@ -1,0 +1,7 @@
+<% if office.has_active_lease? %>
+  <h6 class="text-info col">
+    <%= office.active_lease.group_name %>
+  </h6>
+<% else %>
+  <h6 class="text-success col">Available</h6>
+<% end %>

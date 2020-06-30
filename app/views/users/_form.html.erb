@@ -1,0 +1,28 @@
+<%= form_with(model: @user, url: users_path(subdomain: 'app'), remote: true) do |f| %>
+  <%= render "shared/error_messages" , model: @user %>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.text_field :name, placeholder: "Name", class: "form-control col" %>
+    <div class="col-1"></div>
+  </div>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.email_field :email, placeholder: "Email", class: "form-control col" %>
+    <div class="col-1"></div>
+  </div>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.password_field :password, placeholder: "Password", class: "form-control col" %>
+    <div class="col-1"></div>
+  </div>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.password_field :password_confirmation, placeholder: "Confirm password", class: "form-control col" %>
+    <div class="col-1"></div>
+  </div>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.submit label, class: "form-control btn btn-primary col" %>
+    <div class="col-1"></div>
+  </div>
+<%- end %>

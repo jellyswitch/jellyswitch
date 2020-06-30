@@ -1,0 +1,19 @@
+<% title "Check in" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">Welcome!</h4>
+  <% if active_working_hours?(current_location) %>
+    <p>
+      <% if current_user.has_active_day_pass? %>
+        Your day pass is ready to be used today.  Please check in below.
+      <% elsif current_user.has_active_subscription? %>
+        Your membership is ready to be used.  Please check in below.
+      <% else %>
+        Please check in to continue to <%= current_location.name %>
+      <% end %>
+    </p>
+    <%= render "form", checkin: @checkin, cc: false %>
+  <% else %>
+    <%= render "shared/closed", location: current_location %>
+  <% end %>
+<% end %>

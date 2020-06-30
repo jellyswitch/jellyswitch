@@ -1,0 +1,24 @@
+<div class="row mt-3 mb-3">
+  <div class="col-sm-3"></div>
+  <div class="card col-sm bg-light p-3">
+    <div class="card-body">
+      <h4 class="display-4 text-center mt-4 card-title">Update billing information</h4>
+      <p class="lead text-center mb-3 mt-3">To replace your current card on file, please enter your credit card information below.</p>
+      <%= form_with(remote: true, url: user_billing_path(current_user), html: {id: "stripe-form" }) do |f| %>
+        <div class="form-group row">
+          <div class="col-1"></div>
+            <%= render "shared/billing" %>
+          <div class="col-1"></div>
+        </div>
+        <div class="form-group row">
+          <div class="col-1"></div>
+            <%= f.submit "Update", id: 'stripe-submit', class: "form-control btn btn-primary col" %>
+          <div class="col-1"></div>
+        </div>
+      <%- end %>
+    </div>
+  </div>
+  <div class="col-sm-3"></div>
+</div>
+
+<%= javascript_pack_tag "stripe_handler.js" %>

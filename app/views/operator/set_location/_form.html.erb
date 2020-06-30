@@ -1,0 +1,8 @@
+<% Location.visible.each do |location| %>
+  <%= wide_card do %>
+    <%= form_for(:location, url: set_location_path, method: :put, remote: true, html: {class: "form"}) do |f| %>
+      <%= f.hidden_field :id, value: location.id %>
+      <%= f.submit "Switch to #{location.name}", class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
+<% end %>

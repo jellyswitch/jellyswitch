@@ -1,0 +1,53 @@
+<%= form_for(office_lease, remote: true) do |f| %>
+  <%= render "shared/error_messages" , model: office_lease %>
+
+  <div class="form-group">
+    <%= f.label :organization, "Group on lease" %>
+    <%= f.collection_select :organization_id, @organizations, :id, :name, { prompt: '' }, { class: "form-control"} %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :office, "Office being leased" %>
+    <%= f.collection_select :office_id, @offices, :id, :name, { prompt: '' }, { class: "form-control" } %>
+  </div>
+
+  <%= f.fields_for :subscription do |ff| %>
+    <%= ff.fields_for :plan do |fff| %>
+      <%= fff.hidden_field :name, value: "Office Lease Plan" %>
+      <%= fff.hidden_field :plan_type, value: "lease" %>
+
+      <div class="form-group">
+        <%= fff.label :interval, "Lease payment frequency" %>
+        <%= fff.select :interval, Plan.lease_options_for_interval, {}, { class: "form-control" } %>
+      </div>
+
+      <div class="form-group">
+        <%= fff.label :amount_in_cents, "Lease payment amount (in cents)" %>
+        <%= fff.number_field :amount_in_cents, class: "form-control" %>
+      </div>
+
+    <% end %>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :start_date, "Lease Start Date" %>
+    <%= f.date_select :start_date, { order: [:month, :day, :year]}, class: "form-control form-control-sm col ml-1 mr-1" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :end_date, "Lease End Date" %>
+    <%= f.date_select :end_date, { order: [:month, :day, :year], default: Time.zone.now + 1.year}, class: "form-control form-control-sm col ml-1 mr-1" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :initial_invoice_date, "Next Invoice Date" %>
+    <%= f.date_select :initial_invoice_date, { order: [:month, :day, :year], default: Time.zone.now + 1.day}, class: "form-control form-control-sm col ml-1 mr-1" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :lease_agreement %>
+    <%= f.file_field :lease_agreement, accept: 'application/pdf', class: "form-control-file" %>
+  </div>
+
+  <%= f.submit label, class: "form-control btn btn-primary" %>
+<%- end %>

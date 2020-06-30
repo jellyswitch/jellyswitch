@@ -1,0 +1,31 @@
+<% title "Expenses" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Invoices & Expenses", accounting_index_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Expenses</li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Expenses</h4>
+  <div class="row justify-content-end mb-1">
+    <div class="col">
+      <%= select_tag "month", options_for_select(FeedItem::MONTHS), data: {remote: true,url: update_expenses_accounting_index_path }, class:'form-control'%>
+    </div>
+  </div>
+  <div class="expense-table">
+    <table class="table">
+      <%- @expenses.each do |expense| %>
+        <tr>
+          <td><small><%= link_to expense.text, feed_item_path(expense) %></small></td>
+          <td class="text-right"><%= number_to_currency(expense.amount.to_f / 100.0) %></td>
+        </tr>
+      <%- end %>
+      <tr>
+        <td class="text-right"><strong>Total</strong></td>
+        <td class="text-right">
+          <%= number_to_currency(@expenses.sum {|e| e.amount }.to_f / 100.0) %>
+        </td>
+      </tr>
+    </table>
+  </div>
+<%- end %>

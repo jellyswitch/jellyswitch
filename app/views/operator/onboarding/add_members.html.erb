@@ -1,0 +1,16 @@
+<% title "Add Members" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Onboarding", new_operator_onboarding_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Add Members</li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">Add Members</h4>
+
+  <%= link_to "I'll add members one at a time", new_member_operator_onboarding_index_path, class: "btn btn-block btn-success" %>
+
+  <%= link_to "Import my members from Stripe", new_stripe_members_operator_onboarding_index_path, class: "btn btn-block btn-primary" %>
+
+  <%= mail_to "Dave Paola <dave@jellyswitch.com>", "Add my members for me, please!", subject: "Add my members, please!", body: "#{current_tenant.name} would like assistance adding their members! Thanks!", class: "btn btn-block btn-info" %>
+<% end %>

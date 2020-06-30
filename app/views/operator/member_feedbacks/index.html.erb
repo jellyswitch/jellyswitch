@@ -1,0 +1,14 @@
+<%- title "Member Feedback" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Members & Groups", members_groups_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Member Feedback</li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">Member Feedback</h4>
+
+  <div class="list-group list-group-flush mt-4">
+    <%= render @member_feedbacks %>
+  </div>
+<% end %>

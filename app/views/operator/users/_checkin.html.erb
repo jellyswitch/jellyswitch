@@ -1,0 +1,40 @@
+<div class="list-group-item">
+  <p class="text-center">
+    <strong><%= checkin.location.name %></strong>
+  </p>
+  <% if checkin.open? %>
+    <h4 class="text-success text-center mt-1"><i>Currently Checked In</i></h4>
+  <% else %>
+    <% if checkin.invoice.present? %>
+      <h4 class="text-success text-center mt-1"><%= number_to_currency(checkin.invoice.amount_due.to_f / 100.0) %></h4>
+    <% end %>
+  <% end %>
+  <div class="row mt-3">
+    <div class="col">
+      <dl class="row">
+        <dt class="col-6">Day</dt>
+        <dd class="col">
+          <%= short_date(checkin.datetime_in) %>
+        </dd>
+
+        <dt class="col-6">Duration</dt>
+        <dd class="col">
+          <% if checkin.open? %>
+            <%= time_ago_in_words(checkin.datetime_in) %>
+          <% else %>
+            <%= distance_of_time_in_words(checkin.datetime_in, checkin.datetime_out) %>
+          <% end %>
+        </dd>
+
+        <dt class="col-6">Timestamps</dt>
+        <dd class="col">
+          <% if checkin.open? %>
+            <%= pretty_time(checkin.datetime_in) %>
+          <% else %>
+            <%= pretty_timestamps(checkin.datetime_in, checkin.datetime_out) %>
+          <% end %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<%= form_for(operator_survey, remote: true) do |f| %>
+  <%= render "shared/error_messages" , model: operator_survey %>
+  <div class="form-group">
+    <%= f.label :space_name, "What is the name of your coworking space?" %>
+    <%= f.text_field :space_name, placeholder: "Space Name", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :location, "Where is your space located?" %>
+    <%= f.text_field :location, placeholder: "Location", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :square_footage, "How big is your coworking space (square feet)?" %>
+    <%= f.text_field :square_footage, placeholder: "Square footage", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :number_of_members, "How many members do you have?" %>
+    <%= f.text_field :number_of_members, placeholder: "Number of members", class: "form-control" %>
+  </div>
+
+  <%= f.submit "Take me to the Jellyswitch Demo!", class: "btn btn-primary" %>
+<%- end %>

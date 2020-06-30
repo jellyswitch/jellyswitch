@@ -1,0 +1,10 @@
+  <%= form_with(model: plan, url: url, method: :post, remote: true) do |f| %>
+    <%= render "shared/error_messages" , model: plan %>
+
+    <%= render "operator/plans/form_fields", plan: plan, f: f %>
+
+    
+    <br />
+    <%= f.submit "Add plan and add another", class: "form-control btn btn-primary mb-2", name: "add_plan_and_add_another" %>
+    <%= f.submit "Just add this plan", class: "form-control btn btn-outline-primary", name: "add_plan" %>
+  <% end %>

@@ -1,0 +1,41 @@
+
+<%- title 'Plans' %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Plans & Day Passes", plans_day_passes_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Plans</li>
+<% end %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= list_wrapper do %>
+
+
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Available Plans</h4>
+      <%= link_to "Add a new plan", new_plan_path, class: "btn btn-primary btn-block mb-3" %>
+    <% end %>
+
+    <%= link_to archived_plans_path, class: "list-group-item list-group-item-action d-flx m-0" do %>
+      <div class="row">
+        <div class="col-11">
+          <i class="fas fa-archive"></i>
+          &nbsp;
+          Archived Plans
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+    
+
+    <% if @plans.available.count < 1 %>
+      <%= list_item do %>
+        <i>There are no plans available.</i>
+      <% end %>
+    <% else %>
+        <%= render @plans.available %>
+    <% end %>
+
+  <% end %>
+<% end %>

@@ -1,0 +1,22 @@
+<%= link_to post_path(post), class: 'list-group-item list-group-item-action' do %>
+  <div class="row">
+    <div class="col-2">
+      <%= render "shared/small_profile_photo", user: post.user %>
+    </div>
+    <div class="col-8">
+      <div class="row">
+        <%= title %>
+      </div>
+      <div class="row">
+        <small>
+          By <%= post.user.name %> on <%= short_date(post.created_at) %>
+        </small>
+      </div>
+    </div>
+    <div class="col-2 d-flex justify-content-center align-items-center">
+      <% if post.post_replies.count > 0 %>
+        <span class="badge badge-primary"><%= post.post_replies.count %></span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

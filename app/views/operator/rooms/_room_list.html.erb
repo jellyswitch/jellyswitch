@@ -1,0 +1,11 @@
+<%= render Layout::FullWidth do %>
+
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Available Rooms</h4>
+    <% if rooms.count < 1 %>
+      <i>No available rooms.</i>
+    <% else %>
+      <%= render rooms %>
+    <% end %>
+  <% end %>
+<% end %>

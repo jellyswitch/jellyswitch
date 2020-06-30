@@ -1,0 +1,9 @@
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Rooms & Reservations</h4>
+    <p>
+      Showing rooms for <strong><%= current_location.name %></strong>. Switch locations to manage rooms at other locations.
+    </p>
+    <%= link_to "Add a new room", new_room_path, class: "btn btn-block btn-primary" %>
+  <% end %>
+<% end %>

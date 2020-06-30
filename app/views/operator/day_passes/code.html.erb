@@ -1,0 +1,18 @@
+<% title "Redeem code" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Redeem a day pass code</h4>
+
+  <%= form_with(remote: true, url: code_day_passes_path, html: {class: "form"}) do |f| %>
+    <div class="form-group">
+      <%= f.label :code, "Enter discount code" %>
+      <%= f.text_field :code, class: "form-control" %>
+    </div>
+
+    <%= f.submit "Redeem", class: "btn btn-block btn-primary" %>
+  <% end %>
+
+  <p class="text-muted">
+    <%= link_to "Go Back", choose_path, data: {"turbolinks-action" => "restore"} %>
+  </p>  
+<% end %>

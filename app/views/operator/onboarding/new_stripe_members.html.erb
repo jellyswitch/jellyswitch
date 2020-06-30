@@ -1,0 +1,50 @@
+<% title "Import members from Stripe" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Onboarding", new_operator_onboarding_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Import members from Stripe</li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">Import members from Stripe</h4>
+
+  <% if @customers.count < 1 %>
+    <p>You have no customers in your Stripe account.</p>
+  <% else %>
+    <ul class="list-group list-group-flush">
+      <% @customers.each do |customer| %>
+        <li class="list-group-item">
+          <% if customer[:user].present? && customer[:user].operator == current_tenant %>
+            <div class="row">
+              <div class="col">
+                <%= customer[:user].name %>
+              </div>
+              <div class="col">
+                <%= customer[:user].email %>
+              </div>
+              <div class="col">
+                <%= link_to "View Member", user_path(customer[:user]), class: "btn btn-block btn-info", target: "_blank" %>
+              </div>
+            </div>
+          <% else %>
+            <%= form_with(url: create_stripe_members_operator_onboarding_index_path, remote: true) do |f| %>
+              <div class="form-row">
+                <%= f.hidden_field :stripe_customer_id, value: customer[:stripe_customer_id] %>
+                <%= f.hidden_field :card_added, value: customer[:card_added] %>
+                <div class="col">
+                  <%= f.text_field :name, placeholder: "Name", class: "form-control", value: customer[:name] %>
+                </div>
+                <div class="col">
+                  <%= f.text_field :email, placeholder: "Email", class: "form-control", value: customer[:email] %>
+                </div>
+                <div class="col">
+                  <%= f.submit "Add Member", class: "btn btn-block btn-primary" %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>

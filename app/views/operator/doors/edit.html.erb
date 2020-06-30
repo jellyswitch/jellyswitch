@@ -1,0 +1,21 @@
+<%- title "Configure Door" %>
+
+<% if !mobile_app_request? %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Doors", doors_path %></li>
+      <li class="breadcrumb-item"><%= link_to @door.name, door_path(@door) %></li>
+      <li class="breadcrumb-item active">Configure</li>
+    </ol>
+  </nav>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">Edit Door</h4>
+  <%= render "form", label: "Update" %>
+  <div class="row mt-3">
+    <div class="col-12">
+      <%= link_to "Cancel", doors_path, class: "btn btn-block btn-warning" %>
+    </div>
+  </div>
+<% end %>

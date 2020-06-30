@@ -1,0 +1,67 @@
+<% title "Childcare" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to @user.name, user_path(@user) %></li>
+  <li class="breadcrumb-item active" aria-current="page">Childcare</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Childcare</h4>
+
+    <dl class="row">
+      <dt class="col-5">Current balance</dt>
+      <dd class="col">
+        <%= render ChildcareBalance, amount: @user.childcare_reservation_balance %>
+      </dd>
+    </dl>
+
+    <% if admin? %>
+      <%= form_with(url: user_add_childcare_reservations_path, method: :post, class: 'form') do |f| %>
+        <div class="form-group">
+          <%= f.number_field :amount, placeholder: "Number of reservations", class: "form-control" %>
+        </div>
+
+        <%= f.submit "Add to balance", class: "btn btn-primary btn-block" %>
+      <% end %>
+    <% else %>
+      <div class="row mt-3">
+        <div class="col">
+          <%= link_to "Buy more childcare reservations", new_childcare_reservation_purchase_path, class: "btn btn-block btn-success" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if @user.childcare_reservations.count > 0 %>
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Reservations</h4>
+
+      <% if !admin? %>
+        <div class="row mt-3">
+          <div class="col">
+            <%= link_to new_childcare_reservation_path, class: "btn btn-block btn-primary #{class_for_childcare_button(@user)}" do %>
+              <i class="fas fa-child"></i>
+              &nbsp;
+              New Childcare Reservation
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% @user.childcare_reservations.each do |reservation| %>
+      <%= list_item do %>
+        <%= render Childcare::Reservation, childcare_reservation: reservation %>
+        <% if policy(reservation).show? %>
+          <%= link_to "View reservation", childcare_reservation_path(reservation), class: "btn btn-block btn-primary" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= list_item do %>
+      <p>No reservations.</p>
+    <% end %>
+  <% end %>
+
+<% end %>

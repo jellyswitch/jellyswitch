@@ -1,0 +1,22 @@
+<% title "Check-ins" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to @user.name, user_path(@user) %></li>
+  <li class="breadcrumb-item active" aria-current="page">Check-ins</li>
+<% end %>
+
+<div class="row mt-0 mb-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 pl-0 pr-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        
+        <h4 class="display-4 text-center mt-4">Check-ins</h4>
+        <%= render "checkins", user: @user %>
+        
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+

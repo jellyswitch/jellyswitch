@@ -1,0 +1,31 @@
+<div class="row">
+  <div>
+    <%- if !@feed_item.member_feedback.anonymous? %>
+      <%- if @feed_item.user.has_profile_photo? %>
+        <%= image_tag @feed_item.user.square_profile_photo, class: "img-thumbnail", style: "height: 50px;" %>
+      <%- else %>
+        <%= image_tag "profile-125x125.jpg", class: "img-thumbnail", style: "height: 50px;" %>
+      <%- end %>
+    <%- else %>
+      <%= image_tag "profile-125x125.jpg", class: "img-thumbnail", style: "height: 50px;" %>
+    <%- end %>
+  </div>
+  <div class="ml-2">
+    <p class="mb-1">
+      <%- if !@feed_item.member_feedback.anonymous? %>
+        <%= link_to @feed_item.user.name, user_url(@feed_item.user) %>
+      <%- else %>
+        Anonymous
+      <%- end %>
+      <br />
+      <small>
+        <%= link_to "#{time_ago_in_words(@feed_item.created_at)} ago", feed_item_url(@feed_item) %>
+      </small>
+    </p>
+  </div>
+</div>
+<div class="row mt-4">
+  <p class="lead">
+    Submitted feedback: <i><%= @feed_item.member_feedback.comment %></i>
+  </p>
+</div>

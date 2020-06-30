@@ -1,0 +1,16 @@
+<%- if feed_item.subscription.present? %>
+  <dl class="row">
+    <dt class="col-6">Plan:</dt>
+
+    <dd class="col">
+      <%= link_to feed_item.subscription.plan.name, plan_path(feed_item.subscription.plan) %>
+    </dd>
+
+    <dt class="col-6">Amount</dt>
+    <dd class="col">
+      <span class="text-success">
+        <%= feed_item.subscription.plan.pretty_price %>
+      </span>
+    </dd>
+  </dl>
+<% end %>

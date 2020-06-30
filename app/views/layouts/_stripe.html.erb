@@ -1,0 +1,9 @@
+<% if current_tenant.present? && current_tenant.production? %>
+<script type="text/javascript">
+    window.stripe_key = "<%= Rails.configuration.stripe[:publishable_key] %>";
+  </script>
+<% else %>
+  <script type="text/javascript">
+    window.stripe_key = "<%= Rails.configuration.stripe[:test_publishable_key] %>";
+  </script>
+<% end %>

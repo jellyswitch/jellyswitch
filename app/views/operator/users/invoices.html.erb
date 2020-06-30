@@ -1,0 +1,15 @@
+<% title "My Invoices" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "My Account", user_path(@user) %></li>
+  <li class="breadcrumb-item">My Invoices</li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center" >My Invoices</h4>
+  <ul class="list-group list-group-flush">
+    <% @invoices.each do |invoice| %>
+      <%= render "invoice", invoice: invoice %>
+    <% end %>
+  </ul>
+<% end %>

@@ -1,0 +1,23 @@
+<% title "Activate" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Welcome!</h4>
+  <p>
+    Please enter your billing information below to activate your membership.
+  </p>
+
+  <%= form_with(remote: true, url: activate_membership_path, html: {id: "stripe-form" }) do |f| %>
+    <div class="form-group row">
+      <div class="col-1"></div>
+        <%= render "shared/billing" %>
+      <div class="col-1"></div>
+    </div>
+    <div class="form-group row">
+      <div class="col-1"></div>
+        <%= f.submit "Activate my membership", id: 'stripe-submit', class: "form-control btn btn-primary col" %>
+      <div class="col-1"></div>
+    </div>
+  <%- end %>
+<% end %>
+
+<%= javascript_pack_tag "stripe_handler.js" %>

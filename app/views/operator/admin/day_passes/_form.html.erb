@@ -1,0 +1,21 @@
+<%= form_with(model: day_pass, url: operator_admin_day_passes_path, html: { class: "form", id: "stripe-form"}, remote: true) do |f| %>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.date_select :day, {default: Time.zone.today, order: [:month, :day, :year]}, class: "form-control form-control-sm col ml-1 mr-1" %>
+    <div class="col-1"></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.select :day_pass_type, day_pass_type_options(DayPassType.all_options_for_select(current_tenant)), {}, { class: "form-control form-control-sm col ml-1 mr-1" } %>
+    <div class="col-1"></div>
+  </div>
+
+  <%= f.hidden_field :user_id, value: user.id %>
+
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.submit label, id: 'stripe-submit', class: "form-control btn btn-primary col", data: { acc: 'add-payment' } %>
+    <div class="col-1"></div>
+  </div>
+<% end %>

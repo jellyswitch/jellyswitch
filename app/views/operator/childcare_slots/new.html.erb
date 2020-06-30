@@ -1,0 +1,17 @@
+<% title "Add Availability" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Childcare", childcare_index_path %></li>
+  <li class="breadcrumb-item"><%= link_to "Availability", childcare_slots_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Add availability</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      Add Childcare Availability
+    </h4>
+
+    <%= render "form", childcare_slot: @childcare_slot, label: "Add availability slot", url: childcare_slots_path %>
+  <% end %>
+<% end %>

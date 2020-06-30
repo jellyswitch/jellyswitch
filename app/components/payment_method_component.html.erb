@@ -1,0 +1,48 @@
+<h4 class="display-4">Payment method</h4>
+<p>Tap to change:</p>
+<ul class="list-group mt-4">
+  <% if card_added? %>
+    <% if cash_or_check? %>
+      <%= link_to "Card ending in #{last_4_digits}", credit_card_path, class: "list-group-item" %>
+    <% else %>
+      <% if user? %>
+        <% if bill_to_group? %>
+          <%= link_to "Card ending in #{last_4_digits}", credit_card_path, class: "list-group-item" %>
+        <% else %>
+          <li class="list-group-item active">Card ending in <%= last_4_digits %></li>
+        <% end %>
+      <% else %>
+        <% if cash_or_check? %>
+          <%= link_to "Card ending in #{last_4_digits}", credit_card_path, class: "list-group-item" %>
+        <% else %>
+          <li class="list-group-item active">Card ending in <%= last_4_digits %></li>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <li class="list-group-item disabled">No card on file</li>
+  <% end %>
+
+  <% if cash_or_check? && !bill_to_group? %>
+    <li class="list-group-item active">Via cash or check</li>
+  <% else %>
+    <%= link_to "Via cash or check", cash_or_check_path, class: "list-group-item" %>
+  <% end %>
+
+  <% if billable_to_group? %>
+    <% if member_of_group? %>
+      <% if bill_to_group? %>
+        <li class="list-group-item active">Bill to group (<%= group_name %>)</li>
+      <% else %>
+        <%= link_to "Bill to group (#{group_name})", bill_to_group_path, class: "list-group-item" %>
+      <% end %>
+    <% else %>
+      <% if bill_to_group? %>
+        <span class="badge badge-danger">User is not a member of a group</span>
+      <% end %>
+      <li class="list-group-item disabled">Group billing unavailable (not a member of a group)</li>
+    <% end %>
+  <% else %>
+    <%= link_to "Update credit card", organization_billing_path(billable), class: "btn btn-block btn-primary mt-3" %>
+  <% end %>
+</ul>

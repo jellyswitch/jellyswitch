@@ -1,0 +1,105 @@
+<div class="form-group">
+  <%= f.label :name, "What is this plan called?" %>
+  <%= f.text_field :name, placeholder: "Full Time Membership", class: "form-control", disabled: !plan.new_record? %>
+</div>
+
+<%= f.hidden_field :plan_type, value: "individual" %>
+
+<% if plan.new_record? %>
+  <%= f.label :amount_in_cents, "How much does this plan cost?" %>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">$</span>
+    </div>
+    <%= f.text_field :amount_in_cents , class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :interval, "How frequent should members be charged?" %>
+    <%= f.select :interval, Plan.options_for_interval, {selected: "monthly"}, class: "form-control" %>
+  </div>
+<% else %>
+  <%= f.label :amount_in_cents, "How much does this plan cost?" %>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">$</span>
+    </div>
+    <%= f.text_field :amount_in_cents, value: dollar_amount(plan.amount_in_cents), class: "form-control", disabled: true %>
+  </div>
+  <div class="row mb-3 mt-3">
+    <small class="col">(You cannot change the price of a plan after it's created.)</small>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :interval, "How frequent should members be charged?" %>
+    <%= f.select :interval, Plan.options_for_interval, {selected: "monthly"}, class: "form-control", disabled: true %>
+  </div>
+<% end %>
+
+<div class="form-group">
+
+  <div class="form-check">
+    <%= f.check_box :available, class: "form-check-input" %>
+    <%= f.label :available, "Available", class: "form-check-label" %>
+  </div>
+  
+  <div class="form-check mt-3">
+    <%= f.check_box :visible, class: "form-check-input" %>
+    <%= f.label :visible, "Visible to new members", class: "form-check-label" %>
+  </div>
+
+  <div class="form-check mt-3">
+    <%= f.check_box :always_allow_building_access, class: "form-check-input" %>
+    <%= f.label :always_allow_building_access, "Includes 24/7 building access", class: "form-check-label" %>
+  </div>
+</div>
+
+<div class="form-group mt-3">
+  <%= f.label "Which locations is this plan available at?" %>
+  <%= f.select :location_ids, options_from_collection_for_select(current_tenant.locations.all, :id, :name, plan.locations.map(&:id)), {}, { multiple: true, class: "form-control"} %>
+</div>
+
+<div class="form-group">
+  <%= f.label :description %>
+  <%= f.rich_text_area :description %>
+</div>
+
+<hr />
+<p>Other options:</p>
+
+<% if policy(:credit).enabled? %>
+  <%= render Accordion, title: "Credit System" do %>
+    <div class="form-group">
+      <%= f.label :credits, "How many credits per billing cycle does this plan include?" %>
+      <%= f.text_field :credits, placeholder: "Number of credits per billing cycle", class: "form-control" %>
+    </div>
+  <% end %>
+<% end %>
+
+<% if policy(:childcare).enabled? %>
+  <%= render Accordion, title: "Childcare Reservations" do %>
+    <div class="form-group">
+      <%= f.label :childcare_reservations, "How many childcare reservations per billing cycle does this plan include?" %>
+      <%= f.text_field :childcare_reservations, placeholder: "Number of childcare reservations per billing cycle", class: "form-control" %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= render Accordion, title: "Monthly Limits" do %>
+  <div class="form-check">
+    <%= f.check_box :has_day_limit, class: "form-check-input" %>
+    <%= f.label :has_day_limit, "Limit number of days per month to:", class: "form-check-label" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.number_field :day_limit, class: "form-control", value: 10 %>
+  </div>
+<% end %>
+
+<%= render Accordion, title: "Commitment Length" do %>
+  <div class="form-group">
+    <%= f.label :commitment_interval, "For example, 6 for 6 months, 12 for 12 weeks, etc" %>
+    <%= f.number_field :commitment_interval, class: "form-control" %>
+  </div>
+<% end %>
+

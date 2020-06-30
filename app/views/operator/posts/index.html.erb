@@ -1,0 +1,12 @@
+<% title "Bulletin Board" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Bulletin Board</h4>
+    <%= link_to "New Post", new_post_path, class: "btn btn-block btn-primary" %>
+  <% end %>
+
+  <% @posts.each do |post| %>
+    <%= render Posts::PostLink, post: post %>
+  <% end %>
+<% end %>

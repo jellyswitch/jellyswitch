@@ -1,0 +1,28 @@
+<%- title @room.name %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Rooms", rooms_path %></li>
+  <li class="breadcrumb-item"><%= @room.name %></li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <%= render @room %>
+  <% end %>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center mt-4">Reservations</h4>
+    <%- if @reservations.count < 1 %>
+      (none)
+    <%- else %>
+      <ul class="list-group list-group-flush">
+        <%- @reservations.each do |reservation| %>
+          <%= render "operator/reservations/reservation_card", reservation: reservation %>
+        <%- end %>
+      </ul>
+    <%- end %>
+    <%== pagy_bootstrap_responsive_nav(@pagy) %>
+  <% end %>
+<% end %>

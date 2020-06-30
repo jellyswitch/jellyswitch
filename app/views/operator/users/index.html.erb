@@ -1,0 +1,45 @@
+<%- title "Member Directory" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Members & Groups", members_groups_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Member Directory</li>
+<% end %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Member Directory</h4>
+        <% if admin? %>
+          <div class="row mb-3 mt-3">
+            <div class="col">
+              <%= link_to add_member_users_path, class: "btn btn-block btn-primary" do %>
+                <i class="fas fa-users"></i>
+                &nbsp;
+                Add a member
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= link_to unapproved_users_path, class: "list-group-item list-group-item-action d-flx m-0", style: "border-top: 0px;" do %>
+        <i class="fas fa-hand-paper"></i>
+        &nbsp;
+        View approval queue (<%= @unapproved_users.count %> members)
+      <% end %>
+
+      <%= link_to archived_users_path, class: "list-group-item list-group-item-action d-flx m-0", style: "border-top: 0px; border-bottom: 0px;" do %>
+        <i class="fas fa-archive"></i>
+        &nbsp;
+        View archived members (<%= @archived_users.count %> members)
+      <% end %>
+
+      <% @users.each do |user| %>
+        <%= render "list_item", user: user %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

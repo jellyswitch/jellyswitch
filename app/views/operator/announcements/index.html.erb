@@ -1,0 +1,37 @@
+<% title "Announcements" %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg">
+    <% if policy(Announcement.new).new? %>
+      <%= link_to new_announcement_path, class: "btn btn-block btn-primary mb-2" do %>
+        <i class="fas fa-bullhorn"></i>
+        &nbsp;
+        Post an announcement
+      <% end %>
+    <% end %>
+
+    <% if @announcements.count > 0 %>
+      <%= list_wrapper do %>
+        <% @announcements.each do |announcement| %>
+          <%= list_item do %>
+            <%= render announcement %>
+          <% end %>
+        <% end %>
+      <% end %>
+      
+      <div class="mt-2">
+        <%== pagy_bootstrap_responsive_nav(@pagy) %>
+      </div>
+      
+    <% else %>
+      <%= list_wrapper do %>
+        <%= list_item do %>
+          No announcements yet!
+        <% end %>
+      <% end %>
+    <% end %>
+
+  </div>
+  <div class="col-lg-3"></div>
+</div>

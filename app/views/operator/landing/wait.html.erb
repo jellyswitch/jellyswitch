@@ -1,0 +1,14 @@
+<div class="row mt-3">
+  <div class="col-sm-3"></div>
+  <div class="col-sm">
+    <div class="jumbotron bg-white pb-2 pt-2">
+      <h4 class="display-4 text-center mt-4">We're excited you're here!</h4>
+      <p class="lead text-center mb-3 mt-3">We'll reach out to you as soon as possible to confirm your day pass (you won't be billed until then).</p>
+      <p class="lead text-center mb-3 mt-3">
+        If you're in a hurry, <%= current_tenant.name %> can be reached by emailing <%= mail_to current_tenant.contact_email, current_tenant.contact_name %>
+        or calling <%= current_tenant.contact_phone %>.
+      </p>
+    </div>
+  </div>
+  <div class="col-sm-3"></div>
+</div>

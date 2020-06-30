@@ -1,0 +1,19 @@
+<hr />
+<div class="row mb-2">
+  <div class="col-2">
+    <%= render "shared/small_profile_photo", user: feed_item_comment.user %>
+  </div>
+  <div class="col">
+    <p class="mb-1">
+      <%= link_to feed_item_comment.user.name, user_path(feed_item_comment.user) %> <small>added a note</small>
+      <div class="clearfix"></div>
+      <small><%= time_ago_in_words(feed_item_comment.created_at) %> ago</small>
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col">
+    <%= feed_item_comment.comment %>
+  </div>
+</div>

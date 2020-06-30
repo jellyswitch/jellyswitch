@@ -1,0 +1,19 @@
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item dropdown data-turbolinks-permanent">
+    <a class="nav-link dropdown-toggle" href="#" id="accountDropdownLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= current_user.name %>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
+      <% if current_user.organization_owner? %>
+        <%= link_to "My Organization", organization_path(current_user.organization), class: "dropdown-item", data: { "turbolinks-action" => "restore" } %>
+      <% end %>
+      <%= link_to "My Account", user_path(current_user), class: "dropdown-item", data: { "turbolinks-action" => "restore" } %>
+      <%= link_to "My Membership", user_memberships_path(current_user), class: "dropdown-item", data: { "turbolinks-action" => "restore" } %>
+      <%= link_to "My Day Passes", user_day_passes_path(current_user), class: "dropdown-item", data: { "turbolinks-action" => "restore" } %>
+      <%= link_to "My Reservations", user_reservations_path(current_user), class: "dropdown-item", data: { "turbolinks-action" => "restore" } %>
+      <%= link_to "My Invoices", user_invoices_path(current_user), class: "dropdown-item", data: { "turbolinks-action" => "restore" } %>
+      <%= link_to "Change Password", user_change_password_path(current_user), class: "dropdown-item", data: { "turbolinks-action" => "restore" } %>
+      <%= link_to "Log out", logout_path, method: :delete, remote: true, class: "dropdown-item" %>
+    </div>
+  </li>
+</ul>

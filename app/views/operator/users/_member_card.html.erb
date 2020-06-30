@@ -1,0 +1,34 @@
+<div class="card border-light">
+  <div class="card-body">
+    <div class="row">
+      <div>
+        <%- if member.has_profile_photo? %>
+          <%= image_tag member.square_profile_photo, class: "img-thumbnail" %>
+        <%- else %>
+          <%= image_tag "profile-125x125.jpg", class: "img-thumbnail", style: "height: 100px;" %>
+        <%- end %>
+      </div>
+      <div class="ml-2">
+        <p class="mb-1">
+          <%- if admin? %>
+            <%= link_to member.name, user_path(member) %>
+          <%- else %>
+            <%= member.name %>
+          <%- end %>
+        </p>
+        <%= render "operator/users/social", user: member %>
+        <%- if member.admin? %>
+          <span class="badge badge-success">Operator</span>
+        <%- end %>
+        <%- if !member.approved? %>
+          <span class="badge badge-danger">Not Approved</span>
+        <%- end %>
+        <span class="badge badge-info">Member</span>
+        <br />
+      </div>
+    </div>
+    <div class="row">
+      <p class="card-text"><%= member.bio %></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+
+<%- title "Groups" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Members & Groups", members_groups_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Groups</li>
+<% end %>
+
+<div class="row mt-0 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Groups</h4>
+
+        <% if policy(Organization).new? %>
+          <%= link_to "Add a new group", new_organization_path, class: "btn btn-block btn-primary" %>
+        <% end %>
+      
+      <% end %>
+      <%= render @organizations, view: true %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

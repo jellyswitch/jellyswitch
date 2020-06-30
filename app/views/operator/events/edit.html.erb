@@ -1,0 +1,36 @@
+
+<% title "Edit Event" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "What's Happening?", events_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Edit Event</li>
+<% end %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Edit Event</h4>        
+        <%= form_with(model: @event, remote: true, html: {class: "form", multipart: true}, data: {type: :html}) do |f| %>
+          <%= render "form", event: @event, f: f %>
+
+            <div class="form-group row m-0 p-0">
+            <button class="form-control btn btn-info col" id="submit" data-disable-with="Updating...">
+              <i class="far fa-calendar-alt"></i>      
+              &nbsp;
+              Update event
+            </button>
+          </div>
+        <% end %>
+
+        <%= link_to event_path(@event), class: "btn btn-block btn-danger mt-4", method: :delete do %>
+          <i class="fas fa-times"></i>
+          &nbsp;
+          Cancel this event
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

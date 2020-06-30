@@ -1,0 +1,5 @@
+<% if active %>
+  <li class="breadcrumb-item active"><%= label %></li>
+<% else %>
+  <li class="breadcrumb-item"><%= link_to label, path %></li>
+<% end %>

@@ -1,0 +1,21 @@
+<% title "Choose a day" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Choose a day</h4>
+
+    <dl class="row">
+      <dt class="col-6">Room</dt>
+      <dd class="col"><%= @room.name %></dd>
+    </dl>
+
+    <%= form_with(url: choose_time_post_reservations_path, method: :post) do |f| %>
+      <div class="form-group">
+        <%= f.date_select :day, {order: [:month, :day, :year]}, class: "form-control mt-2" %>
+      </div>
+      <%= f.hidden_field :room_id, value: @room.id %>
+
+      <%= f.submit "Next", class: "btn btn-block btn-primary" %>
+    <% end %>
+  <% end %>
+<% end %>

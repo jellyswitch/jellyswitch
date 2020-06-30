@@ -1,0 +1,20 @@
+<% title "New Reservation" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Childcare", childcare_index_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">New Reservation</li>
+<% end %>
+
+<div id="fullwidth">
+  <%= render Layout::FullWidth do %>
+    <div class="list-group-item m-0 p-0">
+      <h4 class="display-4 text-center p-2">New Childcare Reservation</h4>
+
+      <p class="text-center p-2">What day would you like to reserve?</p>
+
+      <%= month_calendar do |date| %>
+        <%= render Childcare::CalendarDay, date: date, location: current_location %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

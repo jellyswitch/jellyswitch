@@ -1,0 +1,33 @@
+<%- title "Day Pass" %>
+
+<div class="row mt-3">
+  <div class="col-sm-3"></div>
+  <div class="col-sm">
+    <div class="jumbotron bg-white pb-2 pt-2">
+      <h2 class="text-center mb-5 mt-5">Day Pass for <%= @day_pass.pretty_day %></h2>
+      <table class="table">
+        <tr>
+          <th>Purchaser</th>
+          <td>
+            <%- if admin? %>
+              <%= link_to @day_pass.user.name, user_path(@day_pass.user) %>
+            <%- else %>
+              <%= @day_pass.user.name %>
+            <%- end %>
+          </td>
+        </tr>
+        <tr>
+          <th>Date Purchased</th>
+          <td><%= pretty_datetime(@day_pass.created_at) %></td>
+        </tr>
+        <tr>
+          <th>Used on</th>
+          <td><%= @day_pass.pretty_day %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="col-sm-3"></div>
+</div>
+
+

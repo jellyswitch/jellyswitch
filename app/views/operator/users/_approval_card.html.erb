@@ -1,0 +1,25 @@
+<li class="list-group-item m-0 pb-4">
+
+  <div class="row mb-2 mt-2">
+    <div class="col-2">
+      <%= render "shared/small_profile_photo", user: user %>
+    </div>
+    <div class="col-6">
+      <p class="mb-1 pt-2">
+        <%= user.name %>
+      </p>
+    </div>
+    <div class="col-1 pt-1">
+      <%= link_to user_path(user), class: "btn btn-outline-primary btn-sm" do %>
+        <i class="fas fa-search-plus"></i>
+      <% end %>
+    </div>
+    <div class="col-1 pt-1 ml-1">
+      <%= render "approval_toggle_icon", user: user %>
+    </div>
+    <div class="col-1 pt-1 ml-1">
+      <%= render "archive_toggle_icon", user: user %>
+    </div>
+  </div>
+
+</li>

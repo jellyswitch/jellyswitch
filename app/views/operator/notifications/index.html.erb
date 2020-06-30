@@ -1,0 +1,87 @@
+<%- title "Notifications" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Customization", customization_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Notifications</li>
+<% end %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= list_wrapper do %>
+    
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Notifications</h4>
+
+      <div class="row mb-3">
+        <small class="col text-center">
+          Customize what shows up in your team's feed and which events trigger push notifications.
+        </small>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(OnOffSwitch, predicate: policy(:notification).reservations?, path: reservations_notifications_path) do %>
+            Room reservations
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(OnOffSwitch, predicate: policy(:notification).memberships?, path: memberships_notifications_path) do %>
+            Memberships
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(OnOffSwitch, predicate: policy(:notification).day_passes?, path: day_passes_notifications_path) do %>
+            Day passes
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(OnOffSwitch, predicate: policy(:notification).checkins?, path: checkins_notifications_path) do %>
+            Checkins
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(OnOffSwitch, predicate: policy(:notification).posts?, path: posts_notifications_path) do %>
+            Management notes
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(OnOffSwitch, predicate: policy(:notification).signups?, path: signups_notifications_path) do %>
+            Signups
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(OnOffSwitch, predicate: policy(:notification).refunds?, path: refunds_notifications_path) do %>
+            Refunds
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(OnOffSwitch, predicate: policy(:notification).member_feedback?, path: feedback_notifications_path) do %>
+            Member feedback
+          <% end %>
+        </div>
+      </div>
+
+    <% end %>
+
+  <% end %>
+<% end %>

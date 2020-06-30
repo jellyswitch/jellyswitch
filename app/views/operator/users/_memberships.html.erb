@@ -1,0 +1,130 @@
+<% if user.subscriptions.active.count < 1 %>
+  <h4 class="display-4 text-center mb-4">No active membership</h4>
+  
+  <% if user.pending? %>
+    <p class="text-center">
+      <small>This user has a pending membership. If you'd like to add a different membership, please cancel that pending membership first.</small>
+    </p>
+  <% else %>
+    <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#newModal">
+      Add membership
+    </button>
+
+    <div class="modal fade" id="newModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <%= render "operator/subscriptions/admin_form", user: user %>
+            <%= javascript_pack_tag "stripe_handler.js" %>
+
+            <%= render "operator/users/payment_disclaimer", user: user %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <h4 class="display-4 text-center">Membership</h4>
+  <% user.subscriptions.for_operator(current_tenant).active.each do |subscription| %>
+    <dl class="row mt-3">
+      <dt class="col-sm-3">Plan</dt>
+      <dd class="col-sm"><%= subscription.plan.plan_name %></dd>
+
+      <dt class="col-sm-3">Subscribe Date</dt>
+      <dd class="col-sm"><%= short_date(subscription.created_at) %></dd>
+
+      <dt class="col-sm-3">Start Date</dt>
+      <dd class="col-sm"><%= short_date(subscription.start_date) %></dd>
+
+      <dt class="col-sm-3">End Date</dt>
+      <dd class="col-sm">
+        <% if subscription.has_end_date? %>
+          <%= short_date(subscription.end_date) %>
+        <% else %>
+          <i>None</i>
+        <% end %>
+      </dd>
+
+      <dt class="col-sm-3">Billed To</dt>
+      <dd class="col-sm">
+        <% if subscription.billable_type == "User" %>
+          <%= link_to subscription.billable.name, user_path(subscription.billable) %>
+        <% elsif subscription.billable_type == "Organization" %>
+          <%= link_to subscription.billable.name, organization_path(subscription.billable) %>
+        <% else %>
+          <strong>Billed to:</strong> <span class="badge badge-danger"><%= subscription.billable_type %></span>
+        <% end %>
+      </dd>
+
+      <% if subscription.plan.has_day_limit? %>
+        <dt class="col-sm-3">Days remaining</dt>
+        <dd class="col-sm"><%= subscription.days_left %></dd>
+      <% end %>
+      
+      </dl>
+    <% if !subscription.has_stripe_subscription? %>
+      <div class="row">
+        <div class="col">
+          <span class="text-danger">
+            <strong>Stripe sync error</strong>
+            <br />
+            <p>This membership is not in sync with Stripe. Please email <%= mail_to "hello@jellyswitch.com", "hello@jellyswitch.com" %> to resolve.
+          </span>
+        </div>
+      </div>
+    
+
+
+    <% else %>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#newModal-<%= subscription.id %>">
+            Upgrade/downgrade (Prorate)
+          </button>
+
+          <div class="modal fade" id="newModal-<%= subscription.id %>" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <%= javascript_pack_tag "stripe_handler.js" %>
+
+                  <%= form_for(subscription, remote: true, html: {id: "stripe-form" }) do |f| %>
+                    <%= render "shared/error_messages", model: subscription %>
+                    <%= f.hidden_field :subscribable_id, value: user.id %>
+
+                    <div class="form-group row">
+                      <div class="col-1"></div>
+                      <div class="col">
+                        Pick a plan:
+                        <%= f.collection_select :plan_id, Plan.available.individual, :id, :pretty_name, {}, { class: "form-control form-control-sm" } %>
+                      </div>
+                      <div class="col-1"></div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-1"></div>
+                      <div class="col">
+                        <%= f.submit "Change membership", id: 'stripe-submit', class: "form-control btn btn-primary btn-block", data: { acc: 'add-payment' } %>
+                      </div>
+                      <div class="col-1"></div>
+                    </div>
+                  <% end %>
+
+                  <%= render "operator/users/payment_disclaimer", user: user %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col">
+          <%= link_to "Cancel membership", subscription_path(subscription), method: :delete, remote: true, class: "btn btn-block btn-danger" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+

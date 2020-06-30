@@ -1,0 +1,18 @@
+<li class="list-group-item row">
+  <p class="lead">
+    <%- if reservation.user.nil? %>
+      <i>Deleted user</i>
+    <%- else %>
+      <%= link_to reservation.user.name, user_path(reservation.user) %>
+      in 
+      <%= reservation.room.decorate.smart_link %>
+    <%- end %>
+  </p>
+  <p class="card-text"><%= reservation.pretty_datetime %> for <%= reservation.minutes %> minutes</p>
+  <%- if reservation.cancelled? %>
+    <span class="badge badge-warning">Cancelled</span>
+  <%- end %>
+  <%- if policy(reservation).cancel? %>
+    <p><%= link_to "Cancel this reservation", reservation_path(reservation), method: :delete, remote: true, class: "btn btn-block btn-danger" %></p>
+  <%- end %>
+</li>

@@ -1,0 +1,10 @@
+<% title "Redeem Code" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">Redeem Code</h4>
+  <%= render "form", day_pass: @day_pass, day_pass_type: @day_pass_type, label: "Purchase", user: current_user %>
+  <%= render "shared/terms_of_service" %>
+  <p class="text-muted">
+    <%= link_to "Go Back", choose_path, data: {"turbolinks-action" => "restore"} %>
+  </p>
+<% end %>

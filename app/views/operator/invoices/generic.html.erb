@@ -1,0 +1,17 @@
+<% title @title %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Invoices & Expenses", accounting_index_path %></li>
+  <li class="breadcrumb-item active" aria-current="page"><%= @title %></li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center"><%= @title %></h4>
+  <%= render "operator/invoices/nav" %>
+  <ul class="list-group list-group-flush">
+    <%= render @invoices %>
+  </ul>
+  <div class="mt-2">
+    <%== pagy_bootstrap_responsive_nav(@pagy) %>
+  </div>
+<% end %>

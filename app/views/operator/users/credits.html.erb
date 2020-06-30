@@ -1,0 +1,30 @@
+<% title "Credits" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to @user.name, user_path(@user) %></li>
+  <li class="breadcrumb-item active" aria-current="page">Credits</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Credits</h4>
+
+    <div class="row">
+      <div class="col">
+        Current balance:
+        &nbsp;
+        <%= render CreditAmount, amount: @user.credit_balance %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= list_item do %>
+    <%= form_with(url: user_add_credits_path, method: :post, class: 'form') do |f| %>
+      <div class="form-group">
+        <%= f.number_field :amount, placeholder: "Number of credits", class: "form-control" %>
+      </div>
+
+      <%= f.submit "Add Credits", class: "btn btn-primary btn-block" %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,240 @@
+<%- title "Modules" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Customization", customization_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Modules</li>
+<% end %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= list_wrapper do %>
+    
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Modules</h4>
+
+      <div class="row mb-3">
+        <small class="col text-center">
+          Enable and disable Jellyswitch modules to fully customize your experience.
+        </small>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="border-top">
+            <div class="d-flex align-items-center">
+              <% if mobile_app_request? %>
+                <% data_attrs = {} %>
+              <% else %>
+                <% data_attrs = {toggle: "modal", target: "#stripeModal" } %>
+              <% end %>
+              <%= link_to "#", class: "text-body", data: data_attrs do %>
+                <span style="font-size: 20pt">
+                  <% if policy(:payment).enabled? %>
+                    <span class="text-success">
+                      <i class="fas fa-toggle-on"></i>
+                    </span>
+                  <% else %>
+                    <span class="text-danger">
+                      <i class="fas fa-toggle-off"></i>
+                    </span>
+                  <% end %>
+                </span>
+              <% end %>
+              &nbsp;
+              Billing & Payments
+              <% if !policy(:payment).enabled? &&  mobile_app_request? %>
+                <small class="text-muted">
+                  &nbsp;
+                  Can only be enabled on the web
+                </small>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(ModuleToggle, predicate: policy(:announcement).enabled?, path: announcements_modules_path, label: "Announcements") do %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(ModuleToggle, predicate: policy(:post).enabled?, path: bulletin_board_modules_path, label: "Bulletin Board") do %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(ModuleToggle, predicate: policy(:room).enabled?, path: rooms_modules_path, label: "Rooms & Reservations") do %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(ModuleToggle, predicate: policy(:office).enabled?, path: offices_modules_path, disabled: !policy(:payment).enabled?, label: "Offices & Lease Management" ) do %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= render(ModuleToggle, predicate: policy(:door).enabled?, path: door_integration_modules_path, label: "Door Integration") do %>
+          <% end %>
+        </div>
+      </div>
+
+    <% end %>
+
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Labs</h4>
+
+      <div class="row mb-3">
+        <small class="col text-center">
+          These modules are currently under development. Please contact support if you have any questions or feedback.
+        </small>
+      </div>
+
+      <% if policy(:payment).enabled? %>
+
+        <div class="row">
+          <div class="col">
+            <%= render(ModuleToggle, predicate: policy(:event).enabled?, path: events_modules_path, label: "Events") do %>
+            <% end %>
+          </div>
+        </div>
+
+        <% if superadmin? %>
+          <div class="row">
+            <div class="col">
+              <%= render(ModuleToggle, predicate: policy(:lead).enabled?, path: crm_modules_path, label: "CRM & Lead Tracking") do %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        
+        <div class="row mb-3">
+          <div class="col">
+            <%= render(ModuleToggle, predicate: policy(:childcare).enabled?, path: childcare_modules_path, label: "Childcare") do %>
+              <% if policy(:childcare).enabled? %>
+                <% current_tenant.locations.each do |location| %>
+                  <%= form_with(url: childcare_reservations_settings_modules_path, method: :get) do |f| %>
+                    <%= f.hidden_field :location_id, value: location.id %>
+                    <div class="row mt-3">
+                      <div class="col">
+                        Price per reservation for <strong><%= location.name %></strong>
+                      </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                          <%= f.text_field :childcare_reservation_cost, value: number_with_precision(dollar_amount(location.childcare_reservation_cost_in_cents), precision: 2), class: "form-control" %>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <%= f.submit "Save", class: "btn btn-block btn-primary", data: {disable_with: "Saving..."} %>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col">
+            <%= render(ModuleToggle, predicate: policy(:credit).enabled?, path: credits_modules_path, label: "Reservation Credits") do %>
+              <% if policy(:credit).enabled? %>
+                <% current_tenant.locations.each do |location| %>
+                  <%= form_with(url: reservation_credits_settings_modules_path, method: :get) do |f| %>
+                    <%= f.hidden_field :location_id, value: location.id %>
+                    <div class="row mt-3">
+                      <div class="col">
+                        Price per credit for <strong><%= location.name %></strong>
+                      </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                          <%= f.text_field :credit_cost, value: number_with_precision(dollar_amount(location.credit_cost_in_cents), precision: 2), class: "form-control" %>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <%= f.submit "Save", class: "btn btn-block btn-primary", data: {disable_with: "Saving..."} %>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="row mb-3">
+          <p class="col text-center text-danger">
+            Please enable billing & payments to access Labs features.
+          </p>
+        </div>
+      <% end %>
+
+    <% end %>
+
+    <% if superadmin? %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Debug Info</h4>
+
+        <% [:stripe_user_id, :stripe_publishable_key, :stripe_refresh_token, :stripe_access_token].each do |sym| %>
+          <dl class="row">
+            <dt class="col-lg-6"><%= sym.to_s %></dt>
+            <dd class="col">
+              <%= current_tenant.send(sym) %>
+            </dd>
+          </dl>
+        <% end %>
+
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<!-- Modal -->
+<div class="modal fade" id="stripeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title display-4" id="exampleModalCenterTitle">Connect with Stripe</h4>
+      </div>
+      <div class="modal-body p-4">
+        <div class="row mb-3">
+          <%= link_to "I already have a Stripe account", stripe_oauth_url(current_tenant, stripe_landing: "login"), class: "col btn btn-block btn-success" %>
+        </div>
+        <div class="row">
+          <%= link_to "I need to create a Stripe account", stripe_oauth_url(current_tenant, stripe_landing: "register"), class: "col btn btn-block btn-info" %>
+        </div>
+      </div>
+
+      <div class="modal-body p-4">
+        <strong>Why?</strong>
+        <p>
+          Jellyswitch uses Stripe Connect to perform all billing functions on your behalf. This includes membership plans, day passes, reservation charges, and all customer invoices.
+        </p>
+
+        <p>
+          This also lets <strong>you</strong> retain ownership of all of your customer data.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>

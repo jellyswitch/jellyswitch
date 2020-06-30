@@ -1,0 +1,32 @@
+
+<div class="row">
+  <div class="col-2">
+    <%= render "shared/small_profile_photo", user: announcement.user %>
+  </div>
+    <div class="col">
+    <div class="ml-0">
+      <span class="mb-1">
+        <div class="row">
+          <div class="col">
+            <%= announcement.user.name %>
+            <small>posted an announcement</small>
+          </div>
+        </div>
+        <div class="row" style="margin-top: -5px;">
+          <div class="col">
+            <small>
+              <%= time_ago_in_words(announcement.created_at) %> ago
+            </small>
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+<div class="row mt-3">
+  <div class="col-2"></div>
+  <div class="col">
+    <%= announcement.body %>
+  </div>
+</div>
+

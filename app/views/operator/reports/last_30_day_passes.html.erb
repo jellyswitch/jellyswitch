@@ -1,0 +1,27 @@
+<% title "Day Passes (Last 30 days)" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Day Passes (Last 30 days)</h4>
+  <p class="lead">Total: <%= @report.last_30_day_pass_count %></p>
+
+  <table class="table">
+    <tr>
+      <th>User</th>
+      <th>Day</th>
+      <th>Type</th>
+    </tr>
+    <% @report.last_30_day_passes.each do |day_pass| %>
+      <tr>
+        <td><%= link_to day_pass.user.name, user_path(day_pass.user) %></td>
+        <td><%= day_pass.pretty_day %></td>
+        <td>
+          <% if day_pass.day_pass_type.present? %>
+            <%= day_pass.day_pass_type.name %>
+          <% else %>
+            DELETED
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

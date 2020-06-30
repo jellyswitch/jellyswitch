@@ -1,0 +1,87 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+        environment:
+          PG_HOST: localhost
+          PGUSER: jellyswitch
+          RAILS_ENV: test
+
+      - image: postgres:10.5
+        environment:
+          POSTGRES_USER: jellyswitch
+          POSTGRES_DB: jellyswitch_test
+          POSTGRES_PASSWORD: ""
+
+      - image: docker.elastic.co/elasticsearch/elasticsearch:6.6.2
+      - image: stripemock/stripe-mock
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run: mkdir -pv ~/repo/tmp/screenshots
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler -v 2.0.1
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: "Setup custom environment variables"
+          command: |
+            echo 'export EVENTS_CHANNEL_ADAPTER="active_support"' >> $BASH_ENV \
+            echo 'export STRIPE_TEST_SECRET_KEY="sk_test_Q9MzTdwzBlJFbHrjwiwueyUf"' >> $BASH_ENV \
+            echo 'export STRIPE_TEST_PUBLISHABLE_KEY="pk_test_OQBxhfosB5JdplqhauZfTdCL"' >> $BASH_ENV
+
+      # Database setup
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:schema:load
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
+              circleci tests split --split-by=timings)"
+
+            bundle exec rspec \
+              --profile 10 \
+              --format progress \
+              --format RspecJunitFormatter \
+              --out /tmp/test-results/rspec.xml \
+              --format progress \
+              $TEST_FILES
+
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: ~/repo/tmp/screenshots
+          destination: test-screenshots

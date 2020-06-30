@@ -1,0 +1,75 @@
+<% title "Onboarding" %>
+
+<div class="row mt-3">
+</div>
+
+<%= wide_card do %>
+  <div class="p-3">
+  <h4 class="display-4 text-center mb-3">Let's get your space ready for customers!</h4>
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-1">
+          <%= render "checkbox", checked: current_tenant.plans.count > 0 %>
+        </div>
+        <div class="col">
+          <%= link_to "Set up membership plans", new_membership_plan_operator_onboarding_index_path, class: "btn btn-block btn-primary" %>
+        </div>
+        
+      </div>
+    </li>
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-1">
+          <%= render "checkbox", checked: current_tenant.day_pass_types.count > 0 %>
+        </div>
+        <div class="col">
+          <%= link_to "Set up day passes", new_day_pass_type_operator_onboarding_index_path, class: "btn btn-block btn-primary" %>
+        </div>
+      </div>
+    </li>
+
+    <% if policy(:room).enabled? %>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-1">
+            <%= render "checkbox", checked: current_location.rooms.count > 0 %>
+          </div>
+          <div class="col">
+            <%= link_to "Add reservable conference and/or phone rooms", new_room_operator_onboarding_index_path, class: "btn btn-block btn-primary" %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+
+    <% if policy(:door).enabled? %>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-1">
+            <%= render "checkbox", checked: current_location.doors.count > 0 %>
+          </div>
+          <div class="col">
+            <%= link_to "Set up building access", new_kisi_operator_onboarding_index_path, class: "btn btn-block btn-primary" %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-1">
+          <%= render "checkbox", checked: current_tenant.users.members.count > 0 %>
+        </div>
+        <div class="col">
+          <%= link_to "Import your member information", add_members_operator_onboarding_index_path, class: "btn btn-block btn-primary" %>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div class="row mt-4">
+    <%= link_to "Skip onboarding", skip_operator_onboarding_index_path, class: "btn btn-block btn-outline-info" %>
+  </div>
+  </div>
+<% end %>

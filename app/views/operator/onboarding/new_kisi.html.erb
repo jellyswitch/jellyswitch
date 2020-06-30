@@ -1,0 +1,94 @@
+<% title "Add Kisi" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Onboarding", new_operator_onboarding_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Add Kisi</li>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">Add Kisi</h4>
+
+  <p>
+    To set up Kisi, follow these steps:
+  </p>
+  <ol class="list-group list-group-flush">
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          Log in to your <%= link_to "Kisi dashboard", "https://web.kisi.io", target: "_blank" %>
+        </div>
+      </div>
+    </li>
+
+    <li class="list-group-item">
+      <div class="row">
+        <%= link_to "Click on your name and click Logins:", "https://web.kisi.io/user/logins", target: "blank", class: "col" %>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= image_tag "kisi/nav.png", class: "img-fluid" %>  
+        </div>
+      </div>
+    </li>
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          Click the &nbsp;<code>Add API Key</code>&nbsp; button:
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= image_tag "kisi/api_keys.png", class: "img-fluid" %>  
+        </div>
+      </div>
+    </li>
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          Name your new key <code>Jellyswitch</code> and click the <code>Add</code> button:
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= image_tag "kisi/new_api_key.png", class: "img-fluid" %>  
+        </div>
+      </div>
+    </li>
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          Click <code>Show API Secret Key</code> and highlight your API key and copy it:
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= image_tag "kisi/copy_api_key.png", class: "img-fluid" %>  
+        </div>
+      </div>
+    </li>
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          Paste your API Key into the box below:
+        </div>
+      </div>
+    </li>
+
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">
+          <%= form_with(remote: true, url: create_kisi_operator_onboarding_index_path, method: :post) do |f| %>
+            <%= f.text_field :kisi_api_key, placeholder: "Paste your Kisi API key here", class: "form-control" %>
+            <%= f.submit "Next", class: "btn btn-block btn-primary mt-2" %>
+          <% end %>
+        </div>
+      </div>
+    </li>
+  </ol>
+
+<% end %>

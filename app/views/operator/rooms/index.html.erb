@@ -1,0 +1,12 @@
+<% title "Rooms & Reservations" %>
+
+<% if admin? %>
+  <%= render "add_room" %>
+  <%= render "room_list", rooms: @rooms %>
+  <%= render "hidden_room_list", rooms: @hidden_rooms %>
+<% elsif current_user.can_see_all_rooms?(current_location) %>
+  <%= render "room_list", rooms: @rooms %>
+<% elsif logged_in? %>
+  <%= render "room_list", rooms: @rentable_rooms %>
+<% end %>
+

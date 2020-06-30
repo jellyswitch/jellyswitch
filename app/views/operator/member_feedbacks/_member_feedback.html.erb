@@ -1,0 +1,11 @@
+
+<ul class="list-group-item row">
+  <div class="col">
+    <p class="lead">
+      <%= simple_format(member_feedback.comment) %>
+    </p>
+    <p>
+      <%= time_ago_in_words(member_feedback.created_at) %> ago by <%= member_feedback_who(member_feedback) %>
+    </p>
+  </div>
+</ul>

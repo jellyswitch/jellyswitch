@@ -1,0 +1,28 @@
+<% title "Onboarding" %>
+
+<%= render(Layout::Freola::FlatIcon, 
+  title: "Your first event!", 
+  body: "Most new members come from hosted events!", 
+  footer_text: nil, 
+  footer_link: nil,
+  icon: :group) do %>
+  <%= form_with(url: create_event_onboarding_index_path, method: :post, remote: true) do |f| %>
+    <div class="form-group">
+      <label>Event Name</label>
+      <%= f.text_field :event_name, class: "form-control", value: "Wednesday afternoon coffee" %>
+    </div>
+
+    <div class="form-group">
+      <label>Event Description</label>
+      <%= f.text_area :description, class: "form-control", value: "Come be social and mingle with your fellow community members!" %>
+    </div>    
+
+    <div class="form-group row m-0 p-0">
+      <button class="form-control btn btn-primary col" id="submit" data-disable-with="Scheduling...">
+        <i class="far fa-calendar-alt"></i>      
+        &nbsp;
+        Create event
+      </button>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,2 @@
+module Layout::Freola
+end

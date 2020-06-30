@@ -1,0 +1,90 @@
+<% title "About #{@user.name}" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to @user.name, user_path(@user) %></li>
+  <li class="breadcrumb-item active" aria-current="page">About</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_wrapper do %>
+    <%= list_item do %>
+      <div class="row">
+        <div class="col-2">
+          <%= render "shared/small_profile_photo", user: @user %>
+        </div>
+        <div class="col">		
+          <h5 class="mb-1">		
+            <%= link_to @user.name, user_path(@user) %>		
+          </h5>		
+          <small>		
+            Joined		
+            <%= time_ago_in_words(@user.created_at) %>		
+            ago		
+            (<%= @user.created_at.strftime("%F") %>)		
+          </small>		
+        </div>
+      </div>
+      <dl class="row mt-3">
+        <dt class="col-sm-3">Email address</dt>
+        <dd class="col-sm" data-turbolinks="false"><%= mail_to @user.email %></dd>
+      </dl>
+      <dl class="row mt-3">
+        <dt class="col-sm-3">Phone number</dt>
+        <dd class="col-sm" data-turbolinks="false">
+          <% if @user.phone.present? %>
+            <%= number_to_phone(@user.phone) %>
+          <% else %>
+            <small>Not set</small>
+          <% end %>
+        </dd>
+      </dl>
+      <dl class="row mt-3">
+        <dt class="col-sm-3">Always has building access?</dt>
+        <dd class="col-sm">
+          <% if @user.always_allow_building_access? %>
+            Yes
+          <% else %>
+            No
+          <% end %>
+        </dd>
+      </dl>
+
+      <% if superadmin? %>
+        <dl class="row mt-3">
+          <dt class="col-sm-3">Stripe Customer ID</dt>
+          <dd class="col-sm">
+            <pre><%= @user.stripe_customer_id %></pre>
+          </dd>
+        </dl>
+      <% end %>
+
+      <% if policy(:credit).enabled? %>
+        <dl class="row mt-3">
+          <dt class="col-sm-3">Credit Balance</dt>
+          <dd class="col-sm">
+            <%= @user.credit_balance %>
+          </dd>
+        </dl>
+      <% end %>
+      
+      <div class="row mt-4">
+        <div class="col">
+          <div class="row">
+            <%= link_to "Edit this user", edit_user_path(@user), class: "col btn btn-block btn-outline-primary btn-sm mb-2 ml-3 mr-3" %>
+          </div>
+          <div class="row">
+            <div class="col">
+              <%= render "approval_toggle", user: @user %>
+            </div>
+          </div>
+        
+          <div class="row mt-2">
+            <div class="col">
+              <%= render "archive_toggle", user: @user %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

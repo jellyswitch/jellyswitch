@@ -1,0 +1,11 @@
+<% title "Check-ins" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Check-ins</h4>
+
+  <ul class="list-group">
+    <% @checkins.each do |checkin| %>
+      <%= render checkin %>
+    <% end %>
+  </ul>
+<% end %>

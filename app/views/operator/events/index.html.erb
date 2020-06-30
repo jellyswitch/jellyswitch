@@ -1,0 +1,42 @@
+
+<% title "What's Happening?" %>
+
+<%= render "operator/events/apps" %>
+
+<div class="row mt-0 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Upcoming Events</h4>
+        <div class="text-center">
+          <small>(Showing events scheduled at <%= current_location.name %>)</small>
+        </div>
+        <% if policy(Event).new? %>
+          <%= link_to new_event_path, class: "btn btn-block btn-primary" do %>
+            <i class="far fa-calendar-alt"></i>
+            &nbsp;
+            Create an event
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= link_to past_events_path, class: "list-group-item list-group-item-action d-flx m-0" do %>
+        <div class="row">
+          <div class="col-11">
+            <i class="fas fa-history"></i>
+            &nbsp;
+            Past Events
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+
+      <%= render "events_list", events: @events %>
+
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

@@ -1,0 +1,14 @@
+<div class="accordion mt-3 border-bottom" id="<%= id %>">
+  <div class="card">
+    
+        <button id="<%= header_id %>%" class="btn btn-link" type="button" data-toggle="collapse" data-target="#<%= collapse_id %>" aria-expanded="true" aria-controls="<%= collapse_id %>">
+          <small><%= title %> (tap to expand)</small>
+        </button>
+    
+    <div id="<%= collapse_id %>" class="collapse" aria-labelledby="<%= header_id %>%%>" data-parent="#<%= id %>">
+      <div class="card-body">
+        <%= content %>
+      </div>
+    </div>
+  </div>
+</div>

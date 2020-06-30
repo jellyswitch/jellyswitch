@@ -1,0 +1,36 @@
+<% title "My Reservations" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "My Account", user_path(@user) %></li>
+  <li class="breadcrumb-item">My Reservations</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">My Reservations</h4>
+  <% end %>
+
+  <%= link_to user_past_reservations_path(@user), class: "list-group-item list-group-item-action d-flx m-0" do %>
+    <div class="row">
+      <div class="col-11">
+        <i class="fas fa-history"></i>
+        &nbsp;
+        Past Reservations
+      </div>
+      <div class="col-1">
+        <i class="fas fa-chevron-right"></i>
+      </div>
+    </div>
+  <% end %>
+
+
+  <% if @reservations.count < 1 %>
+    <%= list_item do %>
+      <p class="lead text-center">No upcoming reservations.</p>
+    <% end %>
+  <% else %>
+    <% @reservations.each do |res_hash| %>
+      <%= render Reservations::DayList, reservation_hash: res_hash %>
+    <% end %>
+  <% end %>
+<% end %>

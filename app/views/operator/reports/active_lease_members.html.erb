@@ -1,0 +1,19 @@
+<% title "Active Lease Members" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Active Lease Members</h4>
+  <p class="lead">Total: <%= @report.active_lease_member_count %></p>
+
+  <table class="table">
+    <tr>
+      <th>Member</th>
+      <th>Group</th>
+    </tr>
+    <% @report.active_lease_members.each do |user| %>
+      <tr>
+        <td><%= link_to user.name, user_path(user) %>
+        <td><%= link_to user.organization.name, organization_path(user.organization) %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

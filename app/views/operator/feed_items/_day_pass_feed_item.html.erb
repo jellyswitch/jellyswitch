@@ -1,0 +1,30 @@
+
+<% if feed_item.day_pass.day_pass_type.present? %>
+
+  <dl class="row">
+    <dt class="col-6">
+      Type:
+    </dt>
+    <dd class="col">
+      <%= feed_item.day_pass.day_pass_type.name %>
+    </dd>
+
+    <dt class="col-6">Amount:</dt>
+    <dd class="col">
+      <span class="text-success">
+        <% if feed_item.day_pass.day_pass_type.free? %>
+          FREE
+        <% else %>
+          <%= number_to_currency(feed_item.day_pass.day_pass_type.amount_in_cents.to_f / 100.0) %>
+        <% end %>
+      </span>
+    </dd>
+    
+    <dt class="col-6">
+      Day:
+    </dt>
+    <dd class="col">
+      <%= link_to feed_item.day_pass.pretty_day, day_pass_path(feed_item.day_pass) %>
+    </dd>
+  </dt>
+<% end %>

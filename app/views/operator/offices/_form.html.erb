@@ -1,0 +1,42 @@
+<%= form_for(@office, remote: true) do |f| %>
+  <%= render "shared/error_messages" , model: @office %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :capacity %>
+    <%= f.number_field :capacity, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :square_footage %>
+    <%= f.number_field :square_footage, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <%= f.check_box :visible, class: "form-check-input" %>
+      <%= f.label :visible, "Visible", {class: "form-check-label"} %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :lease %>
+    <%= f.file_field :lease, accept: 'application/pdf', class: "form-control-file" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :photo %>
+    <%= f.file_field :photo, class: "form-control-file" %>
+  </div>
+
+  <%= f.submit label, class: "form-control btn btn-primary" %>
+<%- end %>

@@ -1,0 +1,25 @@
+<% title "Upgrade" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center mt-4">Welcome!</h4>
+  <p class="lead text-center mb-3 mt-3">You have hit the limit of your membership plan. To proceed, please choose an option below:</p>
+  
+  <% if current_location.allow_hourly? %>
+    <%= render(MemberOnboarding::Checkin, location: current_location, has_billing: current_user.has_billing?) %>
+  <% end %>
+
+  <div class="row mb-2 mr-1 ml-1">
+    <% if @day_pass_types.count > 0 %>
+      <%= render(MemberOnboarding::DayPass, day_pass_types: @day_pass_types, new_day_pass_path: new_day_pass_path) %>
+    <% end %>
+  </div>
+
+<% end %>
+
+<div class="row mb-3">
+  <div class="col-lg-3"></div>
+  <div class="col-lg">
+    <%= render "shared/contact_card" %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

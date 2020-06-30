@@ -1,0 +1,40 @@
+<% title "Childcare Slots" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Childcare", childcare_index_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Availability</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      Childcare Availability
+    </h4>
+
+    <p>Viewing availability for <%= current_location.name %>. Change locations to view & edit availability at other locations.</p>
+    
+    <%= link_to new_childcare_slot_path, class: "btn btn-block btn-primary" do %>
+      <i class="fas fa-calendar-alt"></i>
+      &nbsp;
+      Add availability
+    <% end %>
+  <% end %>
+
+  <% @childcare_slots.each do |slot| %>
+    <%= link_to childcare_slot_path(slot), class: "list-group-item list-group-item-action" do %>
+      <div class="row">
+        <div class="col-2">
+          <span class="badge">
+            <%= slot.capacity %> spots
+          </span>
+        </div>
+        <div class="col-9">
+          <%= slot.pretty_name %>
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

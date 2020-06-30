@@ -1,0 +1,9 @@
+<h5 class="card-title">
+  Latest announcement
+</h5>
+<div class="row mb-1">
+  <div class="col">
+    <%= render "operator/announcements/announcement", announcement: current_tenant.announcements.latest %>
+  </div>
+</div>
+<%= link_to 'Read announcements', announcements_path, class: "btn btn-block btn-primary mt-3" %>

@@ -1,0 +1,104 @@
+<h4 class="display-4 text-center mt-3"><%= location.name %> Settings</h4>
+
+<h5>Configuration</h5>
+<dl>
+
+  <%= render(OnOffSwitch, predicate: location.visible?, path: location_visible_path(location)) do %>
+    Visible to users
+  <% end %>
+
+  <% if policy(:payment).enabled? %>
+    <%= render(OnOffSwitch, predicate: location.new_users_get_free_day_pass?, path: location_new_users_get_free_day_pass_path(location)) do %>
+      Automatically provision free day passes to new users
+    <% end %>
+    
+    <%= render(OnOffSwitch, predicate: location.allow_hourly?, path: location_allow_hourly_path(location)) do %>
+      Allow hourly check-ins and check-outs
+    <% end %>
+
+    <% if location.allow_hourly? %>
+      <dt>Hourly rate</dt>
+      <dd><%= number_to_currency(location.hourly_rate_in_cents.to_f / 100.0) %></dd>
+    <% end %>
+  <% end %>
+</dl>
+
+<hr />
+<h5>About</h5>
+
+<dl>
+  <dt>Name</dt>
+  <dd><%= location.name %></dd>
+
+  <dt>Homepage description</dt>
+  <dd><%= simple_format(location.snippet) %></dd>
+
+  <dt>Contact Name (for members)</dt>
+  <dd><%= location.contact_name %></dd>
+
+  <dt>Contact email (for members)</dt>
+  <dd><%= location.contact_email %></dd>
+
+  <dt>Contact phone (for members)</dt>
+  <dd><%= location.contact_phone %></dd>
+
+  <dt>Working Hours</dt>
+  <dd>
+    <%= format_working_hours(location, "-") %>
+  </dd>
+
+  <dt>Working Days</dt>
+  <dd>
+    <% [:open_sunday, :open_monday, :open_tuesday, :open_wednesday, :open_thursday, :open_friday, :open_saturday].each do |day| %>
+      <div class="form-check">
+        <% if location.send("#{day}?".to_sym) == true %>
+          <input class="form-check-input" type="checkbox" disabled checked>
+        <% else %>
+          <input class="form-check-input" type="checkbox" disabled>
+        <% end %>
+        <%= label_tag :day, "#{day.to_s.humanize.titleize}?", class: "form-check-label" %>
+      </div>
+    <% end %>
+  </dd>
+
+  <dt>Square Footage</dt>
+  <dd><%= location.square_footage %></dd>
+
+  <dt>Flex Square Footage</dt>
+  <dd><%= location.flex_square_footage %></dd>
+
+  <dt>Common Square Footage</dt>
+  <dd><%= location.common_square_footage %></dd>
+
+  <dt>Wifi Name</dt>
+  <dd><%= location.wifi_name %></dd>
+
+  <dt>Wifi Password</dt>
+  <dd><%= location.wifi_password %></dd>
+
+  <dt>Building Access Instructions</dt>
+  <dd>
+    <% if location.building_access_instructions.present? %>
+      <%= location.building_access_instructions %>
+    <% else %>
+      <i>Not set</i>
+    <% end %>
+  </dd>
+
+  <dt>Building Address</dt>
+  <dd><%= location.building_address %></dd>
+
+  <dt>Time Zone</dt>
+  <dd><%= location.time_zone %></dd>
+
+  <dt>Background</dt>
+  <dd>
+    <% if location.background_image.attached? %>
+      <%= image_tag(location.background_image.variant(resize: "500x500"), width: 150, height: 150) %>
+    <% else %>
+      <i>Not uploaded</i>
+    <% end %>
+  </dd>
+</dl>
+
+<%= link_to "Edit", edit_location_path(location), class: "btn btn-block btn-info" %>

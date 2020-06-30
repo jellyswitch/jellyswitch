@@ -1,0 +1,60 @@
+
+<div class="list-group-item">
+  <p class="text-center">
+    <strong><%= invoice.description %></strong>
+  </p>
+  <h4 class="text-success text-center mt-1"><%= number_to_currency(invoice.amount_due.to_f / 100.0) %></h4>
+  <div class="row mt-3">
+    <div class="col">
+      <dl class="row">
+        <dt class="col-6">Billable To</dt>
+        <dd class="col"><%= link_to invoice.billable.name, path_for_billable(invoice) %></dd>
+      
+        <dt class="col-6">Invoiced on</dt>
+        <dd class="col"><%= invoice.pretty_date %></dd>
+
+        <dt class="col-6">Due on</dt>
+        <dd class="col"><%= invoice.pretty_due_date %></dd>
+
+        <dt class="col-6">Method</dt>
+        <dd class="col">
+          <span class="badge badge-dark"><%= invoice.payment_method %></span>
+        </dd>
+
+        <dt class="col-6">Status</dt>
+        <dd class="col">
+          <% if invoice.paid? %>
+            <span class="badge badge-success">paid</span>
+          <% else %>
+            <span class="badge badge-info"><%= invoice.status %></span>
+          <% end %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <%= link_to "Download PDF", invoice.pdf_url, class: "btn btn-block btn-primary" %>
+
+      <% if invoice.paid?  %>
+        <div class="clearfix mb-1"></div>
+        <%= button_to "Refund", invoice_refunds_path(invoice), remote: true, data: {disable_with: "Refunding..."}, class: "btn btn-block btn-secondary" %>
+      <% end %>
+
+      <% if invoice.voidable?  %>
+        <div class="clearfix mb-1"></div>
+        <%= button_to "Void", invoice_refunds_path(invoice), class: "btn btn-block btn-secondary", remote: true, data: {disable_with: "Voiding..."} %>
+      <% end %>
+
+      <% if invoice.open? %>
+        <div class="clearfix mb-1"></div>
+        <%= link_to "Mark as paid", invoice_mark_paid_path(invoice), class: "btn btn-block btn-success", remote: true, data: {disable_with: "Marking as paid..."} %>
+
+        <% if policy(invoice).charge? %>
+          <div class="clearfix mb-1"></div>
+          <%= link_to "Pay with card on file", invoice_charge_path(invoice), class: "btn btn-block btn-success", remote: true, data: {disable_with: "Charging card..."} %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

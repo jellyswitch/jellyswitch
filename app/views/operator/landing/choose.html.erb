@@ -1,0 +1,53 @@
+<% title "Welcome" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center mt-4">Welcome!</h4>
+    <p class="lead text-center mb-3 mt-3">Please select an option below.</p>
+  <% end %>    
+
+  <% if current_location.hourly_enabled? %>
+    <%= list_item do %>
+      <% if active_working_hours?(current_location) %>
+        <%= render(MemberOnboarding::Checkin, location: current_location, has_billing: current_user.has_billing?) %>
+      <% else %>
+        <div class="row mb-2 mr-1 ml-1">
+          <div class="col mt-3">
+            <h5 class="text-center">
+              <i class="fas fa-door-closed"></i>
+              &nbsp;
+              Check In Unavailable
+            </h5>
+            <div class="mt-3">
+              We are currently closed for the day. Please come back between the hours of <%= format_working_hours(current_location, "and") %>.
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if current_tenant.day_passes_enabled? && @day_pass_types.count > 0 %>
+    <%= list_item do %>
+      <%= render(MemberOnboarding::DayPass, day_pass_types: @day_pass_types, new_day_pass_path: new_day_pass_path, location: current_location) %>
+    <% end %>
+  <% end %>
+
+  <% if current_tenant.memberships_enabled? %>
+    <%= list_item do %>
+      <%= render(MemberOnboarding::Memberships, plans: @plans, location: current_location) %>
+    <% end %>
+  <% end %>
+
+  <% if policy(:room).enabled? && current_location.rentable_rooms_enabled? %>
+    <%= list_item do %>
+      <%= render(MemberOnboarding::Rooms, rooms: @rooms) %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <%= render "shared/contact_card" %>
+  <% end %>
+<% end %>

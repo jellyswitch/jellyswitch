@@ -1,0 +1,9 @@
+<h5 class="card-title">
+  Reserving a room
+</h5>
+<p class="card-text">
+  <%= current_location.name %> has <%= Room.visible.count %> rooms available for you to reserve. You may reserve any available room online at any point.
+</p>
+<p class="card-text">
+  <%= link_to "Reserve a room", rooms_path, class: "btn btn-block btn-primary" %>
+</p>

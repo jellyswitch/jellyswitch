@@ -1,0 +1,21 @@
+<% title @office.name %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Offices", offices_path %></li>
+  <% if @office.available? %>
+    <li class="breadcrumb-item"><%= link_to "Available", available_offices_path %></li>
+  <% end %>
+  <li class="breadcrumb-item active" aria-current="page"><%= @office.name %></li>
+<% end %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <%= render "operator/offices/office_detail", office: @office %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

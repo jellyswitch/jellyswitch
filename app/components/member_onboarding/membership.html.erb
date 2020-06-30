@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col">
+    <h5><%= plan.name.capitalize %></h5>
+    Price: <span class="text-success font-weight-bold"><%= number_to_currency(dollar_amount(plan.amount_in_cents)) %></span> / <%= plan.display_interval %>
+    <br/>
+    <% if credit_enabled? %>
+      Includes <strong><%= number_with_delimiter(plan.credits) %> credits</strong> every billing cycle
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <%= plan.description %>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+    <%= link_to "Select #{plan.name}", new_subscription_path(plan_id: plan.id), class: "btn btn-block btn-primary" %>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<% title "Confirm" %>
+
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    
+    <h4 class="text-center display-4">Confirm Membership</h4>
+
+    <%= form_with(model: Subscription.new, url: operator_admin_subscriptions_path, remote: true, html: {id: "stripe-form" }) do |f| %>
+      <%= f.hidden_field :subscribable_id, value: @user.id %>
+      <%= f.hidden_field :plan_id, value: @subscription.plan.id %>
+
+      <div class="form-group row">
+        <div class="col-1"></div>
+        <div class="col">
+          Plan:
+          <br />
+          <%= @subscription.plan.pretty_name %>
+        </div>
+        <div class="col-1"></div>
+      </div>
+
+      
+      <div class="form-group row">
+        <div class="col-1"></div>
+        <div class="col">
+          Starts on:
+          <% if @subscription.plan.annual? || @subscription.plan.quarterly? || @subscription.plan.biannually? %>
+            <%= f.date_select :start_day, {order: [:month, :day, :year]}, class: "form-control mt-2" %>
+          <% else %>
+            <%= f.select :start_day, options_for_select(days_option_for_current_month), {}, {class: "form-control form-control-sm" } %>
+          <% end %>
+        </div>
+        <div class="col-1"></div>
+      </div>
+
+
+      <div class="form-group row">
+        <div class="col-1"></div>
+        <div class="col">
+          <%= f.submit "Add membership", id: 'stripe-submit', class: "form-control btn btn-primary btn-block", data: { acc: 'add-payment' } %>
+        </div>
+        <div class="col-1"></div>
+      </div>
+    <% end %>
+
+
+
+  <% end %>
+<% end %>

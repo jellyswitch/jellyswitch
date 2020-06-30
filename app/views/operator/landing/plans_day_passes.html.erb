@@ -1,0 +1,26 @@
+<% title "Plans & Day Passes" %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= list_wrapper do %>
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Plans</h4>
+
+      <p>
+        <%= current_tenant.name %> offers <%= current_tenant.plans.visible.available.count %> <%= quantize(current_tenant.plans.visible.available, "plans") %> for new members, and <%= current_tenant.plans.available.invisible.count %> additional <%= quantize(current_tenant.plans.available.invisible, "plans") %> available for other uses.
+      </p>
+
+      <%= link_to "View Plans", plans_path, class: "btn btn-block btn-primary" %>
+    <% end %>
+
+    <%= list_item do %>
+
+      <h4 class="display-4 text-center">Day Pass Types</h4>
+
+      <p>
+        <%= current_tenant.name %> offers <%= current_tenant.day_pass_types.available.visible.count %> <%= quantize(current_tenant.day_pass_types.available.visible, "day pass types") %> for members to purchase, and <%=  current_tenant.day_pass_types.invisible.available.count %> <%= quantize(current_tenant.day_pass_types.invisible.available, "day pass types") %> for other uses.
+      </p>
+
+      <%= link_to "View Day Pass Types", day_pass_types_path, class: "btn btn-block btn-primary" %>
+    <% end %>
+  <% end %>
+<% end %>

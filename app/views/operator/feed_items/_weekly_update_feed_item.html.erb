@@ -1,0 +1,9 @@
+<div class="row mb-3">
+  <div class="col">
+    <p>
+      Update for the week of <%= pretty_dates(feed_item.weekly_update.week_start, feed_item.weekly_update.week_end) %>
+    </p>
+    <%= link_to "View", weekly_update_path(feed_item.weekly_update), class: "btn btn-block btn-primary" %>
+  </div>
+</div>
+

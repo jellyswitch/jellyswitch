@@ -1,0 +1,215 @@
+<%= render "operator/search_results/form" %>
+
+
+<div class="d-flex justify-content-center mb-2">
+  <div class="btn-group mt-2" role="group" aria-label="Filter">
+    <%= link_to "All", feed_items_path, class: "btn btn-light #{@all_active}", data: {"turbolinks-action" => "replace"} %>
+
+    <%= link_to notes_feed_items_path, class: "btn btn-light #{@notes_active}", data: {"turbolinks-action" => "replace"} do %>
+      <i class="fas fa-clipboard"></i>
+    <% end %>
+    
+    <%= link_to questions_feed_items_path, class: "btn btn-light #{@questions_active}", data: {"turbolinks-action" => "replace"} do %>
+      <i class="fas fa-question"></i>
+    <% end %>
+
+    <%= link_to activity_feed_items_path, class: "btn btn-light #{@activity_active}", data: {"turbolinks-action" => "replace"} do %>
+      <i class="fas fa-users"></i>
+    <% end %>
+
+    <%= link_to financial_feed_items_path, class: "btn btn-light #{@financial_active}", data: {"turbolinks-action" => "replace"} do %>
+      <i class="fas fa-dollar-sign"></i>
+    <% end %>
+
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newModal">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</div>
+
+<%= list_wrapper do %>
+  <li class="list-group-item m-0 pt-3 pb-2" style="border-bottom: 0px;">
+    <h5>What's Happening?</h5>  
+  </li>
+
+  <% if policy(:room).enabled? %>
+    <%= link_to today_reservations_path, class: "list-group-item list-group-item-action m-0" do %>
+      <div class="row">
+        <div class="col-lg-10 col-11">
+          <i class="fas fa-briefcase mt-2"></i>
+          &nbsp;
+          <%= @reservations %> reservations today
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if @users.count > 0 %>
+
+    <%= link_to unapproved_users_path, class: "list-group-item list-group-item-action m-0", style: "border-top: 0px;" do %>
+      <div class="row">
+        <div class="col-lg-10 col-11">
+          <i class="fas fa-hand-paper"></i>
+          &nbsp;
+          <%= @users.count %> members awaiting approval
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+  
+  <% end %>
+
+  <% if policy(:childcare).enabled? %>
+    <%= link_to childcare_index_path, class: "list-group-item list-group-item-action m-0", style: "border-top: 0px;" do %>
+      <div class="row">
+        <div class="col-lg-10 col-11">
+          <i class="fas fa-child"></i>
+          &nbsp;
+          <%= @upcoming_childcare_reservations.count %> upcoming childcare reservations
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if @delinquent_invoices.count > 0 %>
+    <%= link_to delinquent_invoices_path, class: "list-group-item list-group-item-action d-flx m-0", style: "border-top: 0;" do %>
+      <div class="row">
+        <div class="col-lg-10 col-11">
+          <i class="fas fa-dollar-sign"></i>
+          &nbsp;
+          <%= @delinquent_invoices.count %> <%= quantize(@delinquent_invoices.count, "delinquent invoice") %>
+          -
+          <span class="text-danger"><%= number_to_currency(@delinquent_amount) %></span>
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if policy(:office).enabled? %>
+    <% if @upcoming_renewals.count > 0 %>
+      <%= link_to upcoming_renewals_offices_path, class: "list-group-item list-group-item-action d-flx m-0", style: "border-top: 0;" do %>
+        <div class="row">
+          <div class="col-lg-10 col-11">
+            <i class="fas fa-user-clock"></i>
+            &nbsp;
+            <%= @upcoming_renewals.count %> <%= quantize(@upcoming_renewals.count, "upcoming renewal") %>
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if policy(:event).enabled? %>
+    <% if @events.count > 0 %>
+      <% @events.each do |event| %>
+        <%= link_to event_path(event), class: "list-group-item list-group-item-action m-0", style: "border-top: 0px;" do %>
+          <i class="far fa-calendar-alt"></i>
+          &nbsp;
+          <%= event.title %>
+          &nbsp;
+          <strong class="text-danger"><%= render "operator/events/timestamp", event: event %></strong>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= link_to events_path, class: "list-group-item list-group-item-action m-0", style: "border-top: 0px;" do %>
+      <div class="row">
+        <div class="col-lg-10 col-11">
+          <div class="text-center">
+            View all events
+          </div>
+        </div>
+        <div class="col-1">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+
+<% if !current_tenant.onboarded? && current_tenant.skip_onboarding? %>
+  <% if mobile_app_request? %>
+    <div class="d-flex justify-content-center mb-2 mt-2">
+      <%= link_to "Resume onboarding", new_operator_onboarding_path, class: "btn btn-block btn-sm btn-success" %>
+    </div>
+  <% else %>
+    <%= render(OnboardingSidebar, 
+      operator: current_tenant, 
+      location: current_location) %>
+  <% end %>
+<% end %>
+
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="list-group list-group-flush">
+
+          <% if policy(:room).enabled? %>
+            <%= link_to rooms_path, class: "list-group-item list-group-item-action" do %>
+              <i class="fas fa-briefcase"></i>
+              &nbsp;
+              Reserve a room
+            <% end %>
+          <% end %>
+
+          <%= link_to new_feed_item_path, class: "list-group-item list-group-item-action" do %>
+            <i class="fas fa-edit"></i>
+            &nbsp;
+            Post a management note
+          <% end %>
+
+          <% if policy(:announcement).enabled? %>
+            <%= link_to new_announcement_path, class: "list-group-item list-group-item-action" do %>
+              <i class="fas fa-bullhorn"></i>
+              &nbsp;
+              Post an announcement
+            <% end %>
+          <% end %>
+
+          <% if policy(:event).enabled? %>
+            <%= link_to new_event_path, class: "list-group-item list-group-item-action" do %>
+              <i class="far fa-calendar-alt"></i>
+              &nbsp;
+              Create an event
+            <% end %>
+          <% end %>
+
+          <%= link_to add_member_users_path, class: "list-group-item list-group-item-action" do %>
+            <i class="fas fa-users"></i>
+            &nbsp;
+            Add a member
+          <% end %>
+
+          <% if policy(:office).enabled? %>
+            <%= link_to new_office_lease_path, class: "list-group-item list-group-item-action" do %>
+              <i class="fas fa-file-alt"></i>
+              &nbsp;
+              Add an office lease
+            <% end %>
+          <% end %>
+
+          <div class="list-group-item">
+            <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

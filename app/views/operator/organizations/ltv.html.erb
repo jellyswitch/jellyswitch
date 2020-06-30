@@ -1,0 +1,41 @@
+<% title "LTV" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to @organization.name, organization_path(@organization) %></li>
+  <li class="breadcrumb-item active" aria-current="page">LTV</li>
+<% end %>
+
+<div class="row mt-0 mb-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 pl-0 pr-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <% if policy(:payment).enabled? %>
+          <dl class="row">
+            <dt class="col-sm-3">Lifetime (months)</dt>
+            <dd class="col-sm">
+              <% if @months == 0 %>
+                Less than a month
+              <% else %>
+                <%= @months %>
+                <%= quantize(@months, "month") %>
+              <% end %>
+            </dd>
+          </dl>
+
+          <dl class="row">
+            <dt class="col-sm-3">Lifetime Value (LTV)</dt>
+            <dd class="col-sm text-success">
+              <%= number_to_currency(@organization.invoices.paid.sum(:amount_due).to_f / 100.0) %>
+            </dd>
+          </dl>
+
+          <p>This number represents a sum of all paid invoices thus far.</p>
+        <% else %>
+          <%= render(EnableBilling) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

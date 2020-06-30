@@ -1,0 +1,10 @@
+<span class="text-muted">
+  <%= event.rsvps.going.count %>
+  <%= quantize(event.rsvps.going.count, "person") %>
+  <% if event.rsvps.going.count > 1 || event.rsvps.going.count == 0%>
+    are
+  <% else %>
+    is
+  <% end %>
+  going
+</span>

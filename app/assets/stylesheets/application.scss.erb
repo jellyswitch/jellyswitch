@@ -1,0 +1,85 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+ /* import the necessary Bootstrap files */
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "organization";
+@import "trix";
+@import "simple_calendar";
+
+.simple-calendar .past {
+  background: #DDD;
+}
+
+<% ["primary", "secondary", "success", "danger", "info", "warning", "light", "dark"].each do |color| %>
+
+  <% if Rails.application.config.x.customization.send(color.to_sym).present? %>
+
+    $<%= color %>-color: #<%= Rails.application.config.x.customization.send(color.to_sym) %>;
+
+  <% else %>
+
+    $<%= color %>-color: map-get($theme-colors, '<%= color %>');
+
+  <% end %>
+
+<% end %>
+
+$theme-colors: (
+  "primary": $primary-color,
+  "secondary": $secondary-color,
+  "success": $success-color,
+  "danger": $danger-color,
+  "info": $info-color,
+  "warning": $warning-color,
+  "light": $light-color,
+  "dark": $dark-color
+);
+
+
+/* finally, import Bootstrap */
+@import "bootstrap";
+
+/* Fix zoom issue on iOS */
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
+}
+
+/* Mobile specific styles */
+
+@include media-breakpoint-up(xs) {
+  .display-4 {
+    font-size: 2rem;
+  }
+  .lead {
+    font-size: 1rem;
+  }
+}
+
+/* Hide the Trix toolbar undo/redo buttons */
+
+span.trix-button-group--history-tools {
+  display: none;
+}
+
+.trix-button--icon-strike, .trix-button--icon-decrease-nesting-level, .trix-button--icon-increase-nesting-level {
+  display: none;
+}

@@ -1,0 +1,49 @@
+
+<% title "Today's Reservations" %>
+
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Home", feed_items_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Today's Reservations</li>
+<% end %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Today's Reservations</h4>
+      <% end %>
+
+      <% @rooms.each do |room| %>
+        <%= list_item do %>
+          <div class="row mb-2">
+            <div class="col">
+              <h5 class="mb-0"><%= room[:room].name %></h5>
+              <span class="text-secondary"><%= room[:room].location.name %></span>
+              <h6 class="text-danger mt-2">
+                <%= render(HourLabel, hours: room[:hours]) %>
+              </h6>
+            </div>
+          </div>
+
+          <% room[:users].each do |user| %>
+            <div class="row mb-2">
+              <div class="col-2">
+                <%= render "shared/small_profile_photo", user: user[:user] %>
+              </div>
+              <div class="col pt-2">
+                <%= user[:user].name %>
+                <span class="text-secondary">
+                  <%= render(HourLabel, hours: user[:hours]) %>
+                </span>
+              </div>
+            </div>
+          <% end %>
+
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

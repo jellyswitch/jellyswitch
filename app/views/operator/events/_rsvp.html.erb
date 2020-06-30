@@ -1,0 +1,88 @@
+<% if policy(event).rsvp? %>
+  <% if logged_in? && rsvped?(current_user, event) %>
+    <% if rsvp(current_user, event).going?%>
+      <div class="row mt-3 mb-3">
+        <div class="col">
+          <h5 class="d-inline mr-3">
+            You are going
+          </h5>
+          <%= render "rsvp_count", event: event %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= link_to not_going_event_rsvps_path(event_id: event.id), class: "btn btn-block btn-secondary" do %>
+            <i class="fas fa-times"></i>
+            &nbsp;
+            I'm not going
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="row mt-3 mb-3">
+        <div class="col">
+          <h5 class="d-inline mr-3">
+            You are not going
+          </h5>
+          <%= render "rsvp_count", event: event %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= link_to going_event_rsvps_path(event_id: event.id), class: "btn btn-block btn-success" do %>
+            <i class="fas fa-check"></i>
+            &nbsp;
+            I'm going
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <% if logged_in? %>
+      <div class="row mt-3">
+        <div class="col">
+          <h5 class="d-inline mr-3">
+            Are you going?
+          </h5>
+          <%= render "rsvp_count", event: event %>
+        </div>
+      </div>
+      <div class="row mt-2 mb-3">
+        <div class="col">
+          <%= link_to going_event_rsvps_path(event_id: event.id), class: "btn btn-block btn-success" do %>
+            <i class="fas fa-check"></i>
+            &nbsp;
+            I'm going
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to not_going_event_rsvps_path(event_id: event.id), class: "btn btn-block btn-secondary" do %>
+            <i class="fas fa-times"></i>
+            &nbsp;
+            I'm not going
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="row mt-3">
+        <div class="col">
+          <h5 class="d-inline mr-3">
+            Are you going?
+          </h5>
+          <%= render "rsvp_count", event: event %>
+        </div>
+      </div>
+      <div class="row mt-2 mb-3">
+        <div class="col">
+          <%= link_to_modal "goingModal" do %>
+            <i class="fas fa-check"></i>
+            &nbsp;
+            I'm interested
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+

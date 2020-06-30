@@ -1,0 +1,7 @@
+<% if amount < 1 %>
+  <span class="text-danger">
+    <%= number_to_human(amount) %> <%= quantize(amount, "childcare reservation") %>
+  </span>
+<% else %>
+  <%= number_to_human(amount) %> <%= quantize(amount, "childcare reservation") %>
+<% end %>

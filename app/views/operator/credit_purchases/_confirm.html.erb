@@ -1,0 +1,25 @@
+<% title "Confirm Purchase" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Purchase Credits</h4>
+
+    <div class="row">
+      <div class="col">
+        You're about to purchase <%= @amount %> credits. You will be invoiced <%= number_to_currency(dollar_amount(@amount.to_i * current_location.credit_cost_in_cents)) %> immediately.
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-3">
+      <div class="col">
+        Are you sure?
+      </div>
+    </div>
+
+    <%= form_with(url: credit_purchases_path, method: :post) do |f| %>
+      <%= f.hidden_field :amount, value: @amount %>
+    
+      <%= f.submit "Confirm Purchase", class: "btn btn-block btn-primary", data: {disable_with: "Purchasing..."} %>
+    <% end %>
+  <% end %>
+<% end %>

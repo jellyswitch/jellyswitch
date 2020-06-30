@@ -1,0 +1,90 @@
+<% title @location.name %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Monetization: <%= @location.name %></h4>
+  <p class="lead text-center">(All numbers are monthly)</p>
+
+  <%= column_chart @report.chart_data, xtitle: "Space Type", ytitle: "Income per sq ft", prefix: "$", thousands: "," %>
+
+  <table class="table mt-5">
+    <tr>
+      <th>Office</th>
+      <th>Sq ft</th>
+      <th>Income</th>
+      <th>Income / sq ft</th>
+    </tr>
+    <tr>
+      <td><%= @report.total_office_income.name %></td>
+      <td class="text-right"><%= number_with_delimiter(@report.total_office_income.square_footage) %></td>
+      <td class="text-right"><%= number_to_currency(@report.total_office_income.income) %></td>
+      <td class="text-right"><%= number_to_currency(@report.total_office_income.income_per_square_foot) %></td>
+    </tr>
+
+    <tr>
+      <td><%= @report.total_flex_income.name %></td>
+      <td class="text-right"><%= number_with_delimiter(@report.total_flex_income.square_footage) %></td>
+      <td class="text-right"><%= number_to_currency(@report.total_flex_income.income) %></td>
+      <td class="text-right"><%= number_to_currency(@report.total_flex_income.income_per_square_foot) %></td>
+    </tr>
+
+    <tr>
+      <th>Total</th>
+      <th class="text-right"><%= number_with_delimiter(@report.total_income.square_footage) %></th>
+      <th class="text-right"><%= number_to_currency(@report.total_income.income) %></th>
+      <th class="text-right"><%= number_to_currency(@report.total_income.income_per_square_foot) %></th>
+    </tr>
+  </table>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Offices</h4>
+  <table class="table mt-3">
+    <tr>
+      <th>Office</th>
+      <th>Sq ft</th>
+      <th>Income</th>
+      <th>Income / sq ft</th>
+    </tr>
+    <% @report.office_income.each do |row| %>
+      <tr>
+        <td><%= link_to row.name, office_path(row.office) %></td>
+        <td class="text-right"><%= number_with_delimiter(row.square_footage) %></td>
+        <td class="text-right"><%= number_to_currency(row.income) %></td>
+        <td class="text-right"><%= number_to_currency(row.income_per_square_foot) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th><%= @report.total_office_income.name %></th>
+      <th class="text-right"><%= number_with_delimiter(@report.total_office_income.square_footage) %></th>
+      <th class="text-right"><%= number_to_currency(@report.total_office_income.income) %></th>
+      <th class="text-right"><%= number_to_currency(@report.total_office_income.income_per_square_foot) %></th>
+    </tr>
+  </table>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Flex Space</h4>
+  
+  <table class="table">
+    <tr>
+      <th>Membership Plan</th>
+      <th>Sq ft</th>
+      <th>Income</th>
+      <th>Income / sq ft</th>
+    </tr>
+    <% @report.flex_income.each do |row| %>
+      <tr>
+        <td><%= row.name %></td>
+        <td class="text-right">--</td>
+        <td class="text-right"><%= number_to_currency(row.income) %></td>
+        <td class="text-right">--</td>
+      </tr>
+    <% end %>
+    <tr>
+      <th><%= @report.total_flex_income.name %></th>
+      <th class="text-right"><%= number_with_delimiter(@report.total_flex_income.square_footage) %></th>
+      <th class="text-right"><%= number_to_currency(@report.total_flex_income.income) %></th>
+      <th class="text-right"><%= number_to_currency(@report.total_flex_income.income_per_square_foot) %></th>
+    </tr>
+  </table>
+<% end %>

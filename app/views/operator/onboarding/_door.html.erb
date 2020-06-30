@@ -1,0 +1,22 @@
+<li class="list-group-item">
+  <div class="row">
+    <div class="col">
+      <%= door["name"] %>
+    </div>
+    <div class="col">
+      <% if current_location.doors.find_by(kisi_id: door["id"]).present? %>
+        <%= form_with(url: destroy_door_operator_onboarding_index_path, remote: true) do |f| %>
+          <%= f.hidden_field :kisi_id, value: door["id"] %>
+          <%= f.hidden_field :door_name, value: door["name"] %>
+          <%= f.submit "Remove from Jellyswitch", class: "btn btn-block btn-danger" %>
+        <% end %>
+      <% else %>
+        <%= form_with(url: create_door_operator_onboarding_index_path, remote: true) do |f| %>
+          <%= f.hidden_field :kisi_id, value: door["id"] %>
+          <%= f.hidden_field :door_name, value: door["name"] %>
+          <%= f.submit "Add to Jellyswitch", class: "btn btn-block btn-primary" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</li>

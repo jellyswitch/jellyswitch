@@ -1,0 +1,25 @@
+
+<div class="row m-0">
+  <div class="col-lg">
+    <%= form_with(url: search_results_path, method: :post, remote: true) do |f| %>
+      <div class="form-group row mb-2">
+        
+        <div class="input-group">
+          <%- if @query.present? %>
+            <%= f.text_field :query, placeholder: "Search", class: "form-control form-control col-lg", value: @query %>
+          <%- else %>
+            <%= f.text_field :query, placeholder: "Search", class: "form-control form-control col-lg" %>
+          <%- end %>
+          <div class="input-group-append">
+            <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+              <i class="fas fa-search mr-2"></i>
+            <% end %>
+          </div>
+        </div>
+        
+      </div>
+      
+    <%- end %>
+  </div>
+  
+</div>

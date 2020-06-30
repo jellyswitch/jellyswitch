@@ -1,0 +1,19 @@
+<% if user.bill_to_organization? %>
+  <% if user.organization.present? %>
+    <%= link_to new_invoice_path(organization_id: user.organization.id), class: classes do %>
+      <%= content %>
+    <% end %>
+  <% else %>
+    <%= link_to "#", class: "#{classes} disabled" do %>
+      Cannot add invoice: User marked as "bill to group" but is not a member of a group.
+    <% end %>
+  <% end %>
+<% elsif user.out_of_band? || user.card_added? %>
+  <%= link_to new_invoice_path(user_id: user.id), class: classes do %>
+    <%= content %>
+  <% end %>
+<% else %>
+  <%= link_to "#", class: "#{classes} disabled" do %>
+    Cannot add invoice: no payment method
+  <% end %>
+<% end %>

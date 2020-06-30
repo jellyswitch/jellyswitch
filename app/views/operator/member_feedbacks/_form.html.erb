@@ -1,0 +1,23 @@
+<%= form_for(member_feedback, remote: true) do |f| %>
+  <%= render "shared/error_messages" , model: member_feedback %>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <div class="form-check col">
+      <%= f.check_box :anonymous, class: "form-check-input" %>
+      <%= f.label :anonymous, "Anonymous", {class: "form-check-label"} %>
+    </div>
+    <div class="col-1"></div>
+  </div>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.text_area :comment, placeholder: "Comment", class: "form-control col", id: "text" %>
+    <div class="col-1"></div>
+  </div>
+  <div class="form-group row">
+    <div class="col-1"></div>
+    <%= f.submit "Notify a staff member", class: "form-control btn btn-primary col", id: "submit" %>
+    <div class="col-1"></div>
+  </div>
+<%- end %>
+
+<%= render "shared/disable_button", submit_id: "#submit", text_id: "#text" %>

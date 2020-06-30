@@ -1,0 +1,19 @@
+<%= list_item do %>
+  <div class="row">
+    <div class="col">
+      <h5 class="display-5 text-center"><%= organization.name %></h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Owned by <%= link_to organization.owner.name, organization.owner %>
+    </div>
+  </div>
+  <% if view %>
+    <div class="row mt-3">
+      <div class="col">
+        <%= link_to 'View', organization, class: "btn btn-block btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

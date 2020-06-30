@@ -1,0 +1,30 @@
+<% title "Home" %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-2 order-2 order-lg-1"></div>
+  <div class="col-lg-6 order-3 order-lg-2 m-0 p-0">
+    <% if @feed_items.count > 0 %>
+      <%= list_wrapper do %>
+        <% @feed_items.each do |feed_item| %>
+          <div id="feed-item-<%= feed_item.id %>">
+            <%= render(FeedItemComponent, feed_item: feed_item, comments: false) %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%== pagy_bootstrap_responsive_nav(@pagy) %>
+    <% else %>
+      <%= list_wrapper do %>
+        <%= list_item do %>
+          No feed items yet!
+        <% end %>
+      <% end %>
+    <% end %>
+
+  </div>
+  <div class="col-lg-3 order-1 order-lg-3 mt-1 mb-2 p-0 pl-lg-2 pr-lg-2">
+    <%= render "sidebar" %>
+  </div>
+
+  <div class="col-lg-1 order-4"></div>
+</div>

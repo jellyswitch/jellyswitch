@@ -1,0 +1,15 @@
+<%- title "Password Reset" %>
+
+<%= wide_card do %>
+  <%= form_for(@user, url: password_reset_path(params[:id]), remote: true) do |f| %>
+    <%= render "shared/error_messages" , model: @user %>
+    <%= hidden_field_tag :email, @user.email %>
+
+    <%= f.label :password %>
+    <%= f.password_field :password, class: "form-control" %>
+    <%= f.label :password_confirmation, "Confirm password" %>
+    <%= f.password_field :password_confirmation, class: "form-control" %>
+    <br />
+    <%= f.submit "Update password", class: "form-control btn btn-block btn-primary" %>
+  <%- end %>
+<%- end %>

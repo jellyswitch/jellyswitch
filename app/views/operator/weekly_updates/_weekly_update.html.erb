@@ -1,0 +1,101 @@
+<h5 class="display-5 text-center mb-3 mt-3"><%= pretty_dates(weekly_update.week_start, weekly_update.week_end) %></h5>
+
+<p>Hope you had a good weekend! Here's a summary of what happened in your spaces last week:</p>
+
+<ul class="list-group list-group-flush">   
+  <li class="list-group-item">
+    <div class="row mb-3 mt-3">
+      <div class="col text-center">
+        <i class="fas fa-chart-line display-4"></i>
+      </div>
+    </div>
+    
+    <div class="row">
+      <p class="col">
+        Your members paid <strong><%= weekly_update.paid_invoices.count %> invoices</strong>, 
+        earning you <strong><%= number_to_currency(weekly_update.revenue) %></strong> in revenue. 
+        There are <%= weekly_update.unpaid_invoices.count %> unpaid invoices.
+      </p>
+    </div>
+  
+
+  
+    <div class="row">
+      <strong class="col-9">New paying members:</strong>
+      <span class="col"><%= comparison_tag(weekly_update.new_active_members, weekly_update.prev_new_active_members) %></span>
+    </div>
+    <div class="row">
+      <strong class="col-9">New free members:</strong><span class="col"><%= comparison_tag(weekly_update.new_free_members, weekly_update.prev_new_free_members) %></span>
+    </div>
+    <div class="row">
+      <strong class="col-9">Day Passes:</strong><span class="col"><%= comparison_tag(weekly_update.day_passes, weekly_update.prev_day_passes) %></span>
+    </div>
+    <div class="row">
+      <strong class="col-9">Checkins:</strong><span class="col"><%= comparison_tag(weekly_update.checkins, weekly_update.prev_checkins) %></span>
+    </div>
+  </li>
+
+  <li class="list-group-item">
+    <div class="row mb-3 mt-3">
+      <div class="col text-center">
+        <i class="fas fa-users display-4"></i>
+      </div>
+    </div>
+
+    <div class="row">
+      <strong class="col-9">Paying members:</strong><span class="col"><%= comparison_tag(weekly_update.active_member_count, weekly_update.prev_active_member_count) %></span>
+    </div>
+    <div class="row">
+      <strong class="col-9">Free members:</strong><span class="col"><%= comparison_tag(weekly_update.free_member_count, weekly_update.prev_free_member_count) %></span>
+    </div>
+    <div class="row">
+      <strong class="col-9">Lease members:</strong><span class="col"><%= comparison_tag(weekly_update.active_lease_member_count, weekly_update.prev_active_lease_member_count) %></span>
+    </div>
+  </li>
+
+  <li class="list-group-item">
+    <div class="row mb-3 mt-3">
+      <div class="col text-center">
+        <i class="fas fa-clock display-4"></i>
+      </div>
+    </div>
+    <div class="row">
+      <p class="col">
+        Your members made a total of <strong><%= weekly_update.reservations %> room reservations</strong> <%= up_down_arrow(weekly_update.reservations, weekly_update.prev_reservations).html_safe %> last week:
+        <ul>
+          <% weekly_update.rooms.each do |room| %>
+            <li>
+              <%= number_to_percentage(room['percent'].to_f * 100, precision: 0) %> of which were in <%= room['name'] %>
+            </li>
+          <% end %>
+        </ul>
+      </p>
+    </div>
+  </li>
+
+  <li class="list-group-item">
+    <div class="row mb-3 mt-3">
+      <div class="col text-center">
+        <i class="fas fa-clipboard display-4"></i>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        You and your staff posted <strong><%= weekly_update.management_notes.count %> management notes</strong> <%= up_down_arrow(weekly_update.management_notes.count, weekly_update.prev_management_notes.count).html_safe %> to the feed. <%= weekly_update.questions.count %> were questions, <%= weekly_update.unanswered_questions.count %> went unanswered.
+      </div>
+    </div>
+  </li>
+
+  <li class="list-group-item">
+    <div class="row mb-3 mt-3">
+      <div class="col text-center">
+        <i class="fas fa-users-cog display-4"></i>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        You have <strong><%= weekly_update.admins.count %> administrative roles</strong> on your account: <%= admins_in_english(weekly_update.admins).html_safe %>
+      </div>
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,35 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title display-4" id="exampleModalCenterTitle">Connect with Stripe</h4>
+      </div>
+      <% if mobile_app_request? %>
+        <div class="modal-body p-4">
+          Please use a laptop or desktop web browser to connect with Stripe.
+        </div>
+      <% else %>
+        <div class="modal-body p-4">
+          <div class="row mb-3">
+            <%= link_to "I already have a Stripe account", stripe_oauth_url(current_tenant, stripe_landing: "login"), class: "col btn btn-block btn-success" %>
+          </div>
+          <div class="row">
+            <%= link_to "I need to create a Stripe account", stripe_oauth_url(current_tenant, stripe_landing: "register"), class: "col btn btn-block btn-info" %>
+          </div>
+        </div>
+
+        <div class="modal-body p-4">
+          <strong>Why?</strong>
+          <p>
+            Jellyswitch uses Stripe Connect to perform all billing functions on your behalf. This includes membership plans, day passes, reservation charges, and all customer invoices.
+          </p>
+
+          <p>
+            This also lets <strong>you</strong> retain ownership of all of your customer data.
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

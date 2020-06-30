@@ -1,0 +1,13 @@
+<% title "New Announcement" %>
+
+<%= list_wrapper do %>
+  <%= list_item do %>
+    <%= render "form", announcement: @announcement %>
+
+    <p class="text-center mt-3">
+      <strong>NOTE:</strong>&nbsp;Your members will all receive push notifications on their mobile devices.
+    </p>
+  <% end %>
+  
+  
+<% end %>

@@ -1,0 +1,9 @@
+<% if user.visible? %>
+  <%= link_to user_archive_path(user), class: "btn btn-sm btn-outline-danger", data: {acc: 'unapprove-member', remote: true} do %>
+    <i class="fas fa-archive"></i>
+  <% end %>
+<% else %>
+  <%= link_to user_unarchive_path(user), class: "btn btn-sm btn-outline-success", data: {acc: 'approve-member', remote: true} do %>
+    <i class="fas fa-check"></i>
+  <% end %>
+<% end %>

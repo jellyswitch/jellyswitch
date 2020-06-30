@@ -1,0 +1,8 @@
+<%= form_with(model: room, url: url, remote: true) do |f| %>
+  <%= render "shared/error_messages", model: room %>
+
+  <%= render "operator/rooms/form_fields", f: f, room: room %>
+  
+  <%= f.submit "Add this room and add another", class: "btn btn-block btn-primary", name: "add_room_and_add_another" %>
+  <%= f.submit "Just add this room", class: "btn btn-block btn-outline-primary", name: "add_room" %>
+<%- end %>

@@ -1,0 +1,49 @@
+<%= list_item do %>
+  <h4 class="display-4"><%= post.title %></h4>
+<% end %>
+
+<%= list_item do %>
+  <div class="row">
+    <div class="col-2">
+      <%= render "shared/small_profile_photo", user: post.user %>
+    </div>
+    <div class="col-8 d-flex justify-content-left align-items-center">
+      <small>
+        By <%= post.user.name %> on <%= short_date(post.created_at) %>
+      </small>
+    </div>
+    <div class="col-2 d-flex justify-content-center align-items-center">
+      <% if post.post_replies.count > 0 %>
+        <span class="badge badge-primary"><%= post.post_replies.count %></span>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%= list_item do %>
+  <%= post.content %>
+
+  <h4 class="display-4 mt-4 mb-4">
+    <hr />
+    <%= post.post_replies.count %> replies
+  </h4>
+
+  <% replies.each do |post_reply| %>
+    <div class="row mt-3">
+      <div class="col-2">
+        <%= render "shared/small_profile_photo", user: post_reply.user %>
+      </div>
+      <div class="col bg-light shadow-sm rounded pl-4 pr-4 pt-2 pb-3">
+        <strong><%= post_reply.user.name %></strong>
+        <small class="text-muted"><%= time_ago_in_words(post_reply.created_at) %> ago</small>
+        <%= post_reply.content %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row mt-4">
+    <div class="col">
+      <%= render "operator/post_replies/form", post_reply: @post.post_replies.new %>
+    </div>
+  </div>
+<% end %>

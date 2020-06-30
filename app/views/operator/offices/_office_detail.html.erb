@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-4">
+    <% if office.photo.attached? %>
+      <%= image_tag office.thumbnail, class: "rounded img-fluid" %>
+    <% else %>
+      <%= image_tag "profile-125x125.jpg", class: "rounded img-fluid" %>
+    <% end %>
+  </div>
+  <div class="col-8">
+    <div class="row">
+      <h5 class="col"><%= office.name %></h5>
+    </div>
+    <div class="row">
+      <%= render "operator/offices/subheader", office: office %>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= simple_format(auto_link(office.description)) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row mt-2">
+  <div class="col">
+    <i class="fas fa-tachometer-alt"></i>
+    &nbsp;
+    Comfortably seats 
+    <strong>
+      <%= office.capacity %> <%= quantize(office.capacity, "person") %>
+    </strong>
+  </div>
+</div>
+
+<div class="row mt-2">
+  <div class="col">
+    <i class="fas fa-tachometer-alt"></i>
+    &nbsp;
+    Size: 
+    <strong>
+      <%= number_with_delimiter(office.square_footage) %> sq ft
+    </strong>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+    <%= link_to "Edit office details", edit_office_path(office), class: "btn btn-block btn-secondary" %>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+    <% if office.has_active_lease? %>
+      <% office.active_leases.each do |lease| %>
+        <%= link_to office_lease_path(lease), class: "btn btn-block btn-primary" do %>
+          <i class="fas fa-file-alt"></i>
+          &nbsp;
+          View lease
+        <% end %>
+      <% end %>
+    <% else %>
+      <%= link_to new_office_lease_path, class: "btn btn-block btn-primary" do %>
+        <i class="fas fa-file-alt"></i>
+        &nbsp;
+        Add a lease
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<hr />
+
+
+
+<div class="row">
+  <div class="col">
+    <h5 class="display-5 text-center">Expired Leases</h5>
+
+    <% if office.office_leases.inactive.count < 1 %>
+      No expired leases on file.
+    <% else %>
+      <% office.office_leases.inactive.each do |lease| %>
+        <div class="row">
+          <div class="col">
+            Leased by <%= link_to lease.group_name, organization_path(lease.organization) %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            (<%= pretty_price(lease) %> until <%= short_date(lease.end_date) %>)
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <%= link_to "View Lease", office_lease_path(lease), class: "btn btn-block btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

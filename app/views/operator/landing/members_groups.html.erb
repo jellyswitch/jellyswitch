@@ -1,0 +1,47 @@
+<% title  "Members & Groups" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Members</h4>
+
+  <p>
+    <%= current_tenant.name %> has:
+    <ul>
+      <li><%= @report.active_member_count %> active members</li>
+      <li><%= @report.active_lease_member_count %> members on office leases</li>
+      <li><%= @report.last_30_day_pass_count %> day passers (last 30 days)</li>
+      <li><%= @report.checkins_last_30_days_count %> checkins (last 30 days)</li>
+    </ul>
+  </p>
+  <%= link_to "View Member Directory", users_path, class: "btn btn-block btn-primary" %>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Groups</h4>
+
+  <p>
+    <%= current_tenant.name %> has <%= @report.organization_count %> groups.
+  </p>
+  <%= link_to "View Groups", organizations_path, class: "btn btn-block btn-primary" %>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Approval Queue</h4>
+  <% if current_tenant.approval_required? %>  
+    <p>
+      <%= current_tenant.name %> has <%= current_tenant.users.members.unapproved.visible.count %> members awaiting approval.
+    </p>
+
+    <%= link_to "View approval queue", unapproved_users_path, class: "btn btn-block btn-primary" %>
+  <% else %>
+    <i><%= current_tenant.name %> has not enabled the approval queue.</i>
+  <% end %>
+<% end %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Member Feedback</h4>
+  <p>
+    <%= current_tenant.name %> has <%= current_tenant.member_feedbacks.count %> feedback submissions from members.
+  </p>
+
+  <%= link_to "View member feedback", member_feedbacks_path, class: "btn btn-block btn-primary" %>
+<% end %>

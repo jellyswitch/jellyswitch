@@ -1,0 +1,67 @@
+ <div class="form-group">
+    <%= f.label :name, "What is this room called?" %>
+    <%= f.text_field :name, placeholder: "Conference Room", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, placeholder: "Awesome space for productive people", class: "form-control" %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :capacity, "Roughly how many people can sit comfortably in this room?" %>
+    <%= f.text_field :capacity, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :square_footage, "How big is this room (sq ft)?" %>
+    <%= f.number_field :square_footage, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <%= f.check_box :whiteboard, class: "form-check-input" %>
+      <%= f.label :whiteboard, "Check this box if this room has a whiteboard", class: "form-check-label" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <%= f.check_box :av, class: "form-check-input" %>
+      <%= f.label :av, "Check this box if this room has AV equipment", {class: "form-check-label"} %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <%= f.check_box :visible, class: "form-check-input" %>
+      <%= f.label :visible, "Check this box to make this room visible right away", {class: "form-check-label"} %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <%= f.check_box :rentable, class: "form-check-input" %>
+      <%= f.label :rentable, "Check this box to make this room available to rent for non-members", {class: "form-check-label"} %>
+    </div>
+  </div>
+
+  <% if policy(:credit).enabled? %>
+    <div class="form-group">
+      <%= f.label :credit_cost, "What is the credit cost per hour for this room?" %>
+      <%= f.number_field :credit_cost, class: "form-control" %>
+    </div>
+  <% end %>
+
+  <%= f.label :amount_in_cents, "(For non-members) How much does this room cost per hour?" %>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">$</span>
+    </div>
+    <%= f.text_field :hourly_rate_in_cents, class: "form-control", value: number_with_precision(room.hourly_rate_in_cents / 100.0, precision: 2)  %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :photo %>
+    <%= f.file_field :photo, class: "form-control-file" %>
+  </div>

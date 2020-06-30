@@ -1,0 +1,25 @@
+<% title "New Reservation" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">New Childcare Reservation</h4>
+
+    <%= form_with(model: @childcare_reservation, url: childcare_reservations_path, method: :post, remote: true) do |f| %>
+      <%= f.hidden_field :date, value: @date %>
+
+      <div class="form-group">
+        <%= f.label :childcare_slot_id, "Select a slot" %>
+        <%= render Childcare::SlotSelectTag, f: f, slots: @slots, date: @date %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :child_profile_id, "Select a child profile" %>
+        <%= f.collection_select :child_profile_id, current_user.child_profiles, :id, :name, {}, {class: "form-control"} %>
+      </div>
+
+      <%= f.submit "Confirm", class: "btn btn-primary btn-block" %>
+    <% end %>
+  <% end %>
+<% end %>
+
+      

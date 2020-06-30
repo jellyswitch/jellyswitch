@@ -1,0 +1,18 @@
+<% title "Childcare Reservation" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Childcare", childcare_index_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Reservation</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Childcare Reservation</h4>
+
+    <%= render(Childcare::Reservation, childcare_reservation: @childcare_reservation) %>
+
+    <% if policy(@childcare_reservation).destroy? %>
+      <%= link_to "Cancel reservation", childcare_reservation_path(@childcare_reservation), method: :delete, remote: true, class: "btn btn-block btn-danger" %>
+    <% end %>
+  <% end %>
+<% end %>

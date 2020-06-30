@@ -1,0 +1,17 @@
+<% title "Become a member" %>
+
+<div class="row mt-3">
+  <div class="col-sm-3"></div>
+  <div class="col-sm">
+    <div class="jumbotron bg-white pb-2 pt-2">
+      <h4 class="display-4 text-center mt-4">Become a Member</h4>
+      <p class="lead text-center mb-3 mt-3">Please select a membership</p>
+      <%= render "form", subscription: @subscription, label: "Join #{current_tenant.name}!", cc: !current_user.has_billing?, plan: @plan %>
+      <%= render "shared/terms_of_service" %>
+      <p class="text-muted">
+        <%= link_to "Go Back", choose_path, data: {"turbolinks-action" => "restore"} %>
+      </p>
+    </div>
+  </div>
+  <div class="col-sm-3"></div>
+</div>

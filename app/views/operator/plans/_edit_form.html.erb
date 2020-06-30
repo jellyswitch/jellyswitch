@@ -1,0 +1,12 @@
+  <%= form_with(model: plan, url: url, method: :put, remote: true) do |f| %>
+    <%= render "shared/error_messages" , model: plan %>
+
+    <%= render "operator/plans/form_fields", plan: plan, f: f %>
+    
+    <br />
+    <%= f.submit "Update", class: "form-control btn btn-primary mb-2" do %>
+      <i class="fas fa-pencil-alt"></i>
+      &nbsp;
+      Update
+    <% end %>
+  <% end %>

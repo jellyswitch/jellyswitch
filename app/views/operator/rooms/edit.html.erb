@@ -1,0 +1,28 @@
+<%- title "Edit #{@room.name}" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Rooms", rooms_path %></li>
+  <li class="breadcrumb-item"><%= link_to @room.name, room_path(@room) %></li>
+  <li class="breadcrumb-item active">Edit</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center mt-4">Edit Room</h4>
+    <%= form_with(model: @room, url: room_path(@room), remote: true) do |f| %>
+      <%= render "shared/error_messages", model: room %>
+
+      <%= render "operator/rooms/form_fields", f: f %>
+      
+      <%= f.submit "Update room", class: "btn btn-block btn-primary" %>
+    <%- end %>
+
+    <div class="row mt-3">
+      <div class="col-12">
+        <%- if !ios_request? %>
+          <%= link_to "Cancel", room_path(@room), class: "btn btn-block btn-warning", data: {"turbolinks-action" => "replace"} %>
+        <%- end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

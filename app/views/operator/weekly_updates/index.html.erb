@@ -1,0 +1,20 @@
+<% title "Weekly Updates" %>
+
+<%= wide_card do %>
+  <h4 class="display-4 text-center">Weekly Updates</h4>
+  <% if policy(WeeklyUpdate).new? %>
+    <div class="row mb-2">
+      <div class="col">
+        <%= link_to "Create a new update for this week", weekly_updates_path, remote: true, method: :post, class: "btn btn-block btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+  
+  <% @weekly_updates.each do |weekly_update| %>
+    <div class="row mb-2">
+      <div class="col">
+        <%= link_to "#{pretty_dates(weekly_update.week_start, weekly_update .week_end)}", weekly_update_path(weekly_update), class: "btn btn-block btn-info" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

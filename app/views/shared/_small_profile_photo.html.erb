@@ -1,0 +1,11 @@
+<div style="height: 40px; width: 40px;">
+  <%- if user.has_profile_photo? %>
+    <%- if user.admin? %>
+      <%= image_tag user.small_square_profile_photo, class: "img-fluid rounded-circle border border-success" %>
+    <%- else %>
+      <%= image_tag user.small_square_profile_photo, class: "img-fluid rounded-circle" %>
+    <%- end %>
+  <%- else %>
+    <%= image_tag "profile-125x125.jpg", class: "img-fluid rounded-circle", style: "width: 40px; height: 40px;" %>
+  <%- end %>
+</div>

@@ -1,0 +1,44 @@
+<% title "Upcoming Renewals" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Offices", offices_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Upcoming Renewals</li>
+<% end %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Upcoming Renewals</h4>
+
+        <div class="text-center">
+          <small>
+            Showing offices for <strong><%= current_location.name %></strong>. Switch locations to manage offices at other locations.
+          </small>
+        </div>
+
+        <% if policy(Office).new? %>
+          <%= link_to new_office_path, class: "btn btn-block btn-primary" do %>
+            <i class="fas fa-store-alt"></i>
+            &nbsp;
+            Add an office
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% if @offices.count < 1 %>
+        <%= list_item do %>
+          <p class="lead text-center">No upcoming renewals.</p>
+        <% end %>
+      <% else %>
+        <% @offices.each do |office| %>
+          <%= link_to office_path(office), class: "list-group-item list-group-item-action" do %>
+            <%= render office %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

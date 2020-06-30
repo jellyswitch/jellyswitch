@@ -1,0 +1,43 @@
+<%= list_item do %>
+  <div class="row">
+    <div class="col-3 p-0">
+      <%= image_tag(google_map(location.full_address), class: "img-fluid") %>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <h5 class="">
+            <%= location.name %>
+          </h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <small><%= location.full_address %></small>
+        </div>
+      </div>
+
+      <% if admin? %>
+        <div class="row">
+          <div class="col">
+            <%= link_to "Manage #{location.name}", location, class: "btn btn-info btn-block" %>
+          </div>
+        </div>
+      <% end %>      
+      
+      <div class="row mt-2">
+        <div class="col">
+          <%= form_for(:location, url: set_location_path, method: :put, remote: true, html: {class: "form"}) do |f| %>
+            <%= f.hidden_field :id, value: location.id %>
+            <% if current_location.present? && current_location == location %>
+              <%= f.submit "You're at #{location.name}", class: "btn btn-primary btn-block disabled", disabled: true %>
+            <% else %>
+              <%= f.submit "#{label} #{location.name}", class: "btn btn-primary btn-block" %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

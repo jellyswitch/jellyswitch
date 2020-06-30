@@ -1,0 +1,2 @@
+module FeedItems
+end

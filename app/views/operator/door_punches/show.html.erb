@@ -1,0 +1,37 @@
+<% title "Door Punches" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Doors", doors_path %></li>
+  <li class="breadcrumb-item"><%= link_to @door_punch.door.name, door_path(@door_punch.door) %></li>
+  <li class="breadcrumb-item active">Details</li>
+<% end %>
+
+<%= render(Layout::FullWidth) do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Door Punch</h4>
+
+    <dl class="row">
+      <dt class="col-lg-6">When</dt>
+      <dd class="col"><%= @door_punch.pretty_datetime %></dd>
+    </dl>
+
+    <dl class="row">
+      <dt class="col-lg-6">Who</dt>
+      <dd class="col"><%= link_to @door_punch.user.name, user_path(@door_punch.user) %>
+    </dl>
+
+  <% end %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Debug Data</h4>
+    <% if @door_punch.json.present? %>
+      <pre>
+        <%= simple_format(JSON.pretty_generate(@door_punch.json)) %>
+      </pre>
+    <% else %>
+      <pre>    
+        No JSON data present.
+      </pre>
+    <% end %>
+    
+  <% end %>
+<% end %>

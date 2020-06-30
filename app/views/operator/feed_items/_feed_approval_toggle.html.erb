@@ -1,0 +1,7 @@
+<small class="ml-2">
+  <%- if feed_item.user.approved? %>
+    <%= link_to "Unapprove", user_unapprove_path(user, feed_item: feed_item), remote: true, class: "text-danger", data: {acc: "unapprove-member"} %>
+  <%- else %>
+    <%= link_to "Approve", user_approve_path(user, feed_item: feed_item), remote: true, class: "text-success", data: {acc: "approve-member"} %>
+  <%- end %>
+</small>

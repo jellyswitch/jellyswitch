@@ -1,0 +1,21 @@
+<%= card do %>
+  <div class="row">
+    <div class="ml-3">
+      <%= render "shared/small_profile_photo", user: user %>
+    </div>
+    <div class="ml-2">
+      <h5 class="mb-1">
+        <%= link_to user.name, user_path(user) %>
+      </h5>
+      <small>
+        Joined
+        <%= time_ago_in_words(user.created_at) %>
+        ago
+        (<%= user.created_at.strftime("%F") %>)
+      </small>
+    </div>
+  </div>
+  <% if view %>
+    <%= link_to 'View', user, class: "btn btn-block btn-primary mt-3" %>
+  <% end %>
+<% end %>

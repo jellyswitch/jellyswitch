@@ -1,0 +1,25 @@
+<%- title "Day Passes" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">
+      <i class="fas fa-ticket-alt"></i>
+      &nbsp;
+      Day Passes
+    </h4>
+  <% end %>
+  <% if current_tenant.day_pass_types.visible.available.count == 1 %>
+    <%= list_item do %>
+      <%= render(MemberOnboarding::DayPassItem, day_pass_type: current_tenant.day_pass_types.visible.available.first) %>
+    <% end %>
+  <% else %>
+    <% current_tenant.day_pass_types.visible.available.order(:amount_in_cents).each do |day_pass_type| %>
+      <%= list_item do %>
+        <%= render(MemberOnboarding::DayPassItem, day_pass_type: day_pass_type) %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= list_item do %>
+    <%= link_to "I have a discount code", code_day_passes_path, class: "btn btn-block btn-info" %>
+  <% end %>
+<% end %>

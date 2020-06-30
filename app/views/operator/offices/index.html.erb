@@ -1,0 +1,67 @@
+<% title "Offices" %>
+
+<div class="row mt-1 mb-0 p-0">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 m-0 p-0">
+    <%= list_wrapper do %>
+      <%= list_item do %>
+        <h4 class="display-4 text-center">Offices</h4>
+
+        <div class="text-center">
+          <small>
+            Showing offices for <strong><%= current_location.name %></strong>. Switch locations to manage offices at other locations.
+          </small>
+        </div>
+
+        <% if policy(Office).new? %>
+          <%= link_to new_office_path, class: "btn btn-block btn-primary" do %>
+            <i class="fas fa-store-alt"></i>
+            &nbsp;
+            Add an office
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= link_to available_offices_path, class: "list-group-item list-group-item-action d-flx m-0", style: "border-top: 0;" do %>
+        <div class="row">
+          <div class="col-11">
+            <i class="fas fa-door-open"></i>
+            &nbsp;
+            <%= @available_offices.count %> <%= quantize(@available_offices.count, "office") %> available for lease
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+
+      
+      <%= link_to upcoming_renewals_offices_path, class: "list-group-item list-group-item-action d-flx m-0", style: "border-top: 0; border-bottom: 0;" do %>
+        <div class="row">
+          <div class="col-11">
+            <i class="fas fa-user-clock"></i>
+            &nbsp;
+            <%= @upcoming_renewals.count %> <%= quantize(@upcoming_renewals.count, "upcoming renewal") %>
+          </div>
+          <div class="col-1">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      <% end %>
+      
+
+      <% if @offices.count < 1 %>
+        <%= list_item do %>
+          <p class="lead text-center">No occupied offices.</p>
+        <% end %>
+      <% else %>
+        <% @offices.each do |office| %>
+          <%= link_to office_path(office), class: "list-group-item list-group-item-action" do %>
+            <%= render office %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

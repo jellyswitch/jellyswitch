@@ -1,0 +1,18 @@
+<%- title "Day Pass Types" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Plans & Day Passes", plans_day_passes_path %></li>
+  <li class="breadcrumb-item active" aria-current="page">Day Passes</li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center mt-4 mb-4">Day Pass Types</h4>
+
+    <%= link_to "Add a new day pass type", new_day_pass_type_path, class: "btn btn-primary btn-block" %>
+
+    <div class="list-group list-group-flush mt-4">
+      <%= render @day_pass_types, view: true %>
+    </div>
+  <% end %>
+<% end %>

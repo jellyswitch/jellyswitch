@@ -1,0 +1,29 @@
+<% title "Edit Lead" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="dislay-4 text-center">Edit Lead</h4>
+
+      <p class="text-center"><%= @lead.user.name %></p>
+
+      <div class="d-flex justify-content-center align-items-center mt-2">
+        <%= image_tag @lead.gravatar, class: "img-fluid rounded-circle" %>
+      </div>
+
+
+    <%= form_with(model: @lead, url: lead_path(@lead), remote: true) do |f| %>
+      <div class="form-group">
+        <%= f.label :status %>
+        <%= f.select :status, Lead::STATUSES.values, {}, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :source %>
+        <%= f.select :source, Lead::SOURCES.values, {}, class: "form-control" %>
+      </div>
+
+      <%= f.submit "Update Lead", class: "btn btn-primary btn-block" %>
+    <% end %>
+
+  <% end %>
+<% end %>

@@ -1,0 +1,124 @@
+<%= list_item do %>
+  <h4 class="display-4 text-center">Global Settings</h4>
+
+  <h5>Configuration</h5>
+  <dl>
+    <%= render(OnOffSwitch, predicate: operator.approval_required?, path: operator_operator_approval_required_path(operator)) do %>
+      Approval required for new members
+    <% end %>
+
+    <%= render(OnOffSwitch, predicate: operator.checkin_required?, path: operator_operator_checkin_required_path(operator)) do %>
+      Require check-in (even for day passers and members)
+    <% end %>
+
+  </dl>
+
+  <hr />
+  <h5>About</h5>
+  <dl>
+    <dt>Name</dt>
+    <dd><%= operator.name %></dd>
+
+    <dt>Homepage description</dt>
+    <dd><%= operator.snippet %></dd>
+
+    <dt>Membership Text</dt>
+    <dd>
+      <% if operator.membership_text.present? %>
+        <%= operator.membership_text %>
+      <% else %>
+        <i>None</i>
+      <% end %>
+    </dd>
+    
+    <dt>Contact Name (for members)</dt>
+    <dd><%= operator.contact_name %></dd>
+
+    <dt>Contact email (for members)</dt>
+    <dd><%= operator.contact_email %></dd>
+
+    <dt>Contact phone (for members)</dt>
+    <dd><%= operator.contact_phone %></dd>
+
+    <dt>Square Footage</dt>
+    <dd><%= operator.square_footage %></dd>
+
+    <dt>Wifi Name</dt>
+    <dd><%= operator.wifi_name %></dd>
+
+    <dt>Wifi Password</dt>
+    <dd><%= operator.wifi_password %></dd>
+
+    <dt>Building Address</dt>
+    <dd><%= operator.building_address %></dd>
+
+    <dt>Stripe Account ID</dt>
+    <dd>
+      <%- if operator.production? %>
+        <pre><%= operator.stripe_user_id %></pre>
+      <%- else %>
+        <i>Not set. Enable Billing & Payments in Modules</i>
+      <%- end %>
+    </dd>
+
+    <dt>Subdomain</dt>
+    <dd><pre><%= operator.subdomain %></pre></dd>
+
+    <dt>iOS App Store Link</dt>
+    <dd>
+      <%- if operator.ios_url.present? %>
+        <%= link_to "View in App Store", operator.ios_url, target: "_blank" %>
+      <%- else %>
+        <i>Not Entered</i>
+      <%- end %>
+    </dd>
+
+      <dt>Android App Store Link</dt>
+    <dd>
+      <%- if operator.android_url.present? %>
+        <%= link_to "View in Google Play", operator.android_url, target: "_blank" %>
+      <%- else %>
+        <i>Not Entered</i>
+      <%- end %>
+    </dd>
+
+    <dt>Terms of Service</dt>
+    <dd>
+      <%- if operator.terms_of_service.attached? %>
+        <%= link_to "Download", rails_blob_path(operator.terms_of_service, disposition: 'attachment') %>
+      <%- else %>
+        <i>Not uploaded</i>
+      <%- end %>
+    </dd>
+
+    <dt>Kisi API Key</dt>
+    <dd>
+      <%- if operator.kisi_api_key.present? %>
+        <%= operator.kisi_api_key %>
+      <%- else %>
+        <i>Not set</i>
+      <%- end %>
+    </dd>
+
+    <dt>Logo</dt>
+    <dd>
+      <%- if operator.logo_image.attached? %>
+        <%= %>
+        <%= link_to "Download", rails_blob_path(operator.logo_image, disposition: "attachment") %>
+      <%- else %>
+        <i>Not uploaded</i>
+      <%- end %>
+    </dd>
+
+    <dt>Background</dt>
+    <dd>
+      <%- if operator.background_image.attached? %>
+        <%= link_to "Download", rails_blob_path(operator.background_image, disposition: "attachment") %>
+      <%- else %>
+        <i>Not uploaded</i>
+      <%- end %>
+    </dd>
+  </dl>
+
+  <%= link_to "Customize Jellyswitch", edit_operator_path(operator, subdomain: operator.subdomain), class: "btn btn-block btn-info" %>
+<% end %>

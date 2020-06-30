@@ -1,0 +1,94 @@
+<% title "Lease" %>
+
+<%= breadcrumb do %>
+  <li class="breadcrumb-item"><%= link_to "Offices", offices_path %></li>
+  <li class="breadcrumb-item"><%= link_to @office_lease.office.name, office_path(@office_lease.office) %></li>
+  <li class="breadcrumb-item active" aria-current="page">Lease for <%= @office_lease.office.name %></li>
+<% end %>
+
+<%= render Layout::FullWidth do %>
+
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Lease for <%= @office_lease.office.name %></h4>
+
+    <dl class="row">
+      <dt class="col-sm-3">Group</dt>
+      <dd class="col-sm">
+        <%= link_to @office_lease.group_name, organization_path(@office_lease.organization) %>
+      </dd>
+    </dl>
+
+    <dl class="row">
+      <dt class="col-sm-3">Office</dt>
+      <dd class="col-sm">
+        <%= link_to @office_lease.office_name, office_path(@office_lease.office) %>
+      </dd>
+    </dl>
+
+    <dl class="row">
+      <dt class="col-sm-3">Plan</dt>
+      <dd class="col-sm">
+        <%= pretty_price(@office_lease) %>
+      </dd>
+    </dl>
+
+    <dl class="row">
+      <dt class="col-sm-3">Lease Start Date</dt>
+      <dd class="col-sm">
+        <%= short_date(@office_lease.start_date) %>
+      </dd>
+    </dl>
+
+    <dl class="row">
+      <dt class="col-sm-3">Lease End Date</dt>
+      <dd class="col-sm">
+        <div class="row">
+          <div class="col">
+            <%= short_date(@office_lease.end_date) %>
+          </div>
+        </div>
+      </dd>
+    </dl>
+
+    <dl class="row">
+      <dt class="col-sm-3">Initial Invoice Date</dt>
+      <dd class="col-sm">
+        <%= short_date(@office_lease.initial_invoice_date) %>
+      </dd>
+    </dl>
+
+    <dl class="row">
+      <dt class="col-sm-3">Always allow building access?</dt>
+      <dd class="col-sm"><%= boolean_to_yesno(@office_lease.always_allow_building_access?) %></dd>
+    </dl>
+
+    <% if @office_lease.has_lease? %>
+      <%= link_to "Download Lease", rails_blob_path(@office_lease.lease_agreement, disposition: 'attachment'), class: "btn btn-block btn-primary" %>
+    <% end %>
+
+    <% if @office_lease.subscription_active? %>
+      <%= link_to "Terminate Lease", office_lease_path(@office_lease), method: :delete, remote: true, class: "btn btn-block btn-danger" %>
+    <% end %>
+
+  <% end %>
+
+  <% if superadmin? %>
+    <%= list_item do %>
+      <h4 class="display-4 text-center">Debug</h4>
+
+      <dl>
+        <dt>ID</dt>
+        <dd><%= @office_lease.subscription.stripe_subscription_id %></dd>
+
+        <dt>End Date</dt>
+        <dd>
+          <% if @office_lease.subscription.has_end_date? %>
+            <%= short_date(@office_lease.subscription.end_date) %>
+          <% else %>
+            None
+          <% end %>
+        </dd>
+      </dl>
+    <% end %>
+  <% end %>
+<% end %>

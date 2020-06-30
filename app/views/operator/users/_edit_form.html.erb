@@ -1,0 +1,62 @@
+<%= form_for(@user, html: {multipart: true}, remote: true, data: { type: :html }) do |f| %>
+  <%= render "shared/error_messages" , model: @user %>
+
+  <h2>Basic Information</h2>
+  <div class="form-group">
+    <%= f.label :name %><small class="text-muted"> (required)</small>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email %><small class="text-muted"> (required)</small>
+    <%= f.email_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password %><small class="text-muted"> (required)</small>
+    <%= f.password_field :password, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :password_confirmation, "Confirm password" %><small class="text-muted"> (required)</small>
+    <%= f.password_field :password_confirmation, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :profile_photo %>
+    <%= f.file_field :profile_photo, class: "form-control-file" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :bio %>
+    <%= f.text_area :bio, class: "form-control" %>
+  </div>
+  <%- if admin? %>
+    <div class="form-group">
+      <%= f.label :approved, class: "form-check-label" %>
+      <%= f.check_box :approved, class: "form-check-box" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :admin, class: "form-check-label" %>
+      <%= f.check_box :admin, class: "form-check-box" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :always_allow_building_access, class: "form-check-label" %>
+      <%= f.check_box :always_allow_building_access, class: "form-check-box" %>
+    </div>
+  <% end %>
+
+  <h2>Contact Information</h2>
+
+  <div class="form-group">
+    <%= f.label :linkedin %>
+    <%= f.text_field :linkedin, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :twitter %>
+    <%= f.text_field :twitter, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :website %>
+    <%= f.text_field :website, class: "form-control" %>
+  </div>
+  <%= f.submit label, class: "form-control btn btn-primary" %>
+<% end %>

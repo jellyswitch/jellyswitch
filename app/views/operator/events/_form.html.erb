@@ -1,0 +1,101 @@
+
+<%= render "shared/error_messages" , model: event %>
+<div class="form-group">
+  <%= f.label :title %>
+  <%= f.text_field :title, placeholder: "Title", class: "form-control" %>
+</div>
+
+<div class="form-group row m-0 p-0 mt-2">
+  
+  <div class="col pl-0 m-0">
+    <%= f.label :image, "Add an image" do %>
+      <span class="btn btn-sm btn-info">Add an image</span>
+      <%= f.file_field :image,
+                        multiple: false,
+                        direct_upload: false,
+                        accept: 'image/png,image/gif,image/jpeg,image/jpg',
+                        class: "form-control-file d-none"
+      %>
+    <%- end %>
+  </div>
+  
+</div>
+
+<div class="form-group">
+  <%= f.label :starts_at %>
+  <%= f.text_field :starts_at, value: nil, class: "form-control datetimepicker-input", id: "starts_at", data: {toggle: "datetimepicker", target: "#starts_at", value: event.starts_at.to_i } %>
+</div>
+
+<div class="form-group">
+  <%= f.label :end_at, "Ends at (optional)" %>
+  <%= f.text_field :ends_at, value: nil, class: "form-control datetimepicker-input", id: "ends_at", data: {toggle: "datetimepicker", target: "#ends_at", value: event.ends_at.to_i } %>
+</div>
+
+<div class="form-group">
+  <%= f.label :location_string, "Location (leave blank to use #{current_location.name})" %>
+  <%= f.text_field :location_string, class: "form-control", placeholder: current_location.name %>
+</div>
+
+<div class="form-group">
+  <%= f.label :description %>
+  <%= f.text_area :description, placeholder: "Description", class: "form-control" %>
+</div>
+
+
+<script type="text/javascript">
+  
+  document.addEventListener("turbolinks:load", () => {
+    var callback = function(e) {
+      $("#ends_at").datetimepicker('minDate', $("#starts_at").datetimepicker('viewDate'));
+    };
+    
+    var starts_at_val = $("#starts_at").attr("data-value");
+    if (starts_at_val !== "0") {
+      starts_at_val = moment.unix(starts_at_val)
+    } else {
+      starts_at_val = null
+    }
+
+    $('#starts_at').datetimepicker({
+        defaultDate: starts_at_val,
+        sideBySide: true,
+        stepping: 5,
+        widgetPositioning: {
+          horizontal: 'auto',
+          vertical: 'auto'
+        },
+        buttons: {
+          showClose: false
+        },
+        icons: {
+          close: 'fas fa-check'
+        }
+    });
+
+    $("#starts_at").on("change.datetimepicker", callback);
+
+    var ends_at_val = $("#ends_at").attr("data-value");
+    if (ends_at_val !== "0") {
+      ends_at_val = moment.unix(ends_at_val)
+    } else {
+      ends_at_val = null
+    }
+
+    $('#ends_at').datetimepicker({
+        defaultDate: ends_at_val,
+        userCurrent: false,
+        sideBySide: true,
+        stepping: 5,
+        widgetPositioning: {
+          horizontal: 'auto',
+          vertical: 'auto'
+        },
+        buttons: {
+          showClose: false
+        },
+        icons: {
+          close: 'fas fa-check'
+        }
+    });
+  });
+</script>

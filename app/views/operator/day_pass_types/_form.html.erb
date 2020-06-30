@@ -1,0 +1,50 @@
+<%= form_with(model: day_pass_type, url: url, remote: true) do |form| %>
+  <%= render "shared/error_messages" , model: day_pass_type %>
+
+  <div class="form-group">
+    <%= form.label :name, "What is this day pass type called?" %>
+    <%= form.text_field :name, placeholder: "Standard Day Pass", class: "form-control" %>
+  </div>
+
+  <%= form.label :amount_in_cents, "How much does this day pass cost?" %>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">$</span>
+    </div>
+    <%= form.text_field :amount_in_cents, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :code, "Discount Code (Optional)" %>
+    <%= form.text_field :code, class: "form-control", placeholder: "CODE123" %>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <%= form.check_box :available, class: "form-check-input" %>
+      <%= form.label :available, "Check this box if you want this day pass type to be available right away", class: "form-check-label" %>
+    </div>
+
+    <div class="form-check">
+      <%= form.check_box :visible, class: "form-check-input" %>
+      <%= form.label :visible, "Check this box if you want this day pass type to be visible to new members", class: "form-check-label" %>
+    </div>
+
+    <div class="form-check">
+      <%= form.check_box :always_allow_building_access,   class: "form-check-input" %>
+      <%= form.label :always_allow_building_access, "Check this box if members on this plan should be granted 24/7 building access", class: "form-check-label" %>
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.rich_text_area :description %>
+  </div>
+
+  <%= form.submit "Add day pass type and add another", class: "form-control btn btn-primary mb-2", name: "add_day_pass_type_and_add_another" %>
+  <%= form.submit "Just add this day pass type", class: "form-control btn btn-outline-primary", name: "add_day_pass_type" %>
+<% end %>
+
+
+

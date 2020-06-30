@@ -1,0 +1,54 @@
+<% title "App Config" %>
+
+<%= render Layout::FullWidth do %>
+  <%= list_item do %>
+    <h4 class="display-4 text-center">Mobile App Config</h4>
+
+    <dl>
+      <dt>iOS Push Notification Certificate</dt>
+      <dd>
+        <%- if current_tenant.push_notification_certificate.attached? %>
+          Uploaded
+        <%- else %>
+          Not Uploaded
+        <%- end %>
+      </dd>
+
+      <dt>iOS Push Notification Certificate</dt>
+      <dd>
+        <%- if current_tenant.android_server_key.present? %>
+          Present
+        <%- else %>
+          Not Entered
+        <%- end %>
+      </dd>
+
+      <dt>Logo</dt>
+      <dd>
+        <%- if current_tenant.logo_image.attached? %>
+          <%= %>
+          <%= link_to "Download", rails_blob_path(current_tenant.logo_image, disposition: "attachment") %>
+        <%- else %>
+          <i>No logo uploaded</i>
+        <%- end %>
+      </dd>
+
+      <dt>Promo text (operator)</dt>
+      <dd>
+        <%= simple_format(current_tenant.snippet) %>
+      </dd>
+
+      <% current_tenant.locations.each do |loc| %>
+        <dt>Promo text (<%= loc.name %>)</dt>
+        <dd>
+          <%= simple_format(loc.snippet) %>
+        </dd>
+      <% end %>
+
+      <dt>Keywords</dt>
+      <dd>
+        <%= [current_tenant.name, "coworking", "jellyswitch"].join(" ") %>
+      </dd>
+    </dl>
+  <% end %>
+<% end %>

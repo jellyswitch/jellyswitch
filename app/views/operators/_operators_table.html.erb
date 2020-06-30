@@ -1,0 +1,57 @@
+<table class="table table-sm mt-2">
+  <tr>
+    <th><small>Instance</small></th>
+    <th><small>Added</small></th>
+    <th><small>Active Members</small></th>
+    <th><small>Lease members</small></th>
+    <th><small>Billing Status</small></th>
+    <th><small>iOS/Android apps</small></th>
+    <th><small>Push Notification<small></th>
+    <th><small>Actions</small></th>
+  </tr>
+  <% reports.each do |report| %>
+    <tr>
+      <td>
+        <%= link_to report.name, landing_url(subdomain: report.operator.subdomain), target: "_blank" %>
+        <i class="fas fa-external-link-alt"></i>
+      </td>
+      <td>
+        <%= short_date(report.operator.created_at) %>
+      </td>
+      <td><%= report.active_member_count %></td>
+      <td><%= report.active_lease_member_count %></td>
+      <td>
+        <% if report.operator.production? %>
+          <span class="badge badge-success">Stripe connected</span>
+        <% else %>
+          <span class="badge badge-warning">Billing disabled</span>
+        <% end %>
+      </td>
+      <td>
+        <% if report.operator.ios_url.present? %>
+          <span class="badge badge-success">iOS</span>
+        <% end %>
+
+        <% if report.operator.android_url.present? %>
+          <span class="badge badge-success">Android</span>
+        <% end %>
+      </td>
+      <td>
+        <% if report.operator.push_notification_certificate.attached? %>
+          <span class="badge badge-success">iOS Ready</span>
+        <% else %>
+          <span class="badge badge-danger">iOS Not ready</span>
+        <% end %>
+
+        <% if report.operator.android_server_key.present? %>
+          <span class="badge badge-success">Android Ready</span>
+        <% else %>
+          <span class="badge badge-danger">Android Not ready</span>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to "Edit", edit_operator_path(report.operator), class: "btn btn-sm btn-info" %>
+      </td>
+    </tr>
+  <% end %>
+</table>

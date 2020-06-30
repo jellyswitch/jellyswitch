@@ -1,0 +1,14 @@
+    <dl>
+      <dt>Profile</dt>
+      <dd><%= link_to childcare_reservation.child_profile.name, child_profile_path(childcare_reservation.child_profile) %></dd>
+
+      <dt>Date</dt>
+      <dd>
+        <%= short_date(childcare_reservation.date) %>
+      </dd>
+
+      <dt>Slot</dt>
+      <dd>
+        <%= childcare_reservation.childcare_slot.pretty_name %>
+      </dd>
+    </dl>

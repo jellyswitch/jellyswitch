@@ -1,0 +1,60 @@
+<ul class="list-group-item row">
+  <div class="col">
+    <h4 class="display-4 text-center"><%= day_pass_type.name %></h4>
+
+    <div class="row">
+      <div class="col">
+        <span class="text-success">
+          <%= number_to_currency(dollar_amount(day_pass_type.amount_in_cents)) %>
+        </span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        Code:
+        <% if day_pass_type.code.present? %>
+          <code><%= day_pass_type.code %></code>
+        <% else %>
+          <i>None</i>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <%= render(OnOffSwitch, predicate: day_pass_type.visible?, path: day_pass_type_visible_path(day_pass_type)) do %>
+          Visible to new members
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <%= render(OnOffSwitch, predicate: day_pass_type.available?, path: day_pass_type_available_path(day_pass_type)) do %>
+          Available
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <%= render(OnOffSwitch, predicate: day_pass_type.always_allow_building_access?, path: day_pass_type_always_allow_building_access_path(day_pass_type)) do %>
+          24/7 building access
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <%= day_pass_type.description %>
+      </div>
+    </div>
+
+    <% if view %>
+      <%= link_to 'View', day_pass_type_path(day_pass_type), class: "btn btn-block btn-primary mt-3" %>
+    <% else %>
+      <%= link_to "Edit", edit_day_pass_type_path(day_pass_type), class: "btn btn-block btn-info mt-3 "%>
+    <% end %>
+  </div>
+</ul>

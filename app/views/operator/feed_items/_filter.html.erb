@@ -1,0 +1,28 @@
+<div class="accordian" id="feed-item-filter-container">
+  <div class="card mb-1 mt-1">
+
+    <a class="btn btn-link" role="button" data-toggle="collapse" href="#feed-item-filter" aria-expanded="true" aria-controls="feed-item-filter">
+      Tap to filter
+    </a>
+    
+    <div class="collapse hide" id="feed-item-filter" aria-labelledby="#filter-header" data-parent="#feed-item-filter-container">
+      <div class="d-flex justify-content-center">
+        <div class="btn-group btn-group-block" role="group">
+          <%= link_to "All", "#", class: "btn btn-primary" %>
+          <%= link_to "Expenses", "#", class: "btn btn-primary" %>
+          <%= link_to "Questions", "#", class: "btn btn-primary" %>
+        </div>
+      </div>
+      
+      <div class="d-flex justify-content-center">
+      
+        <div class="btn-group btn-group-sm" role="group">
+          <%= link_to "All", "#", class: "btn btn-info" %>
+          <% current_tenant.locations.each do |location| %>
+            <%= link_to location.name, "#", class: "btn btn-info" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

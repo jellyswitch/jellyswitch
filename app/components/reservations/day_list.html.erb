@@ -1,0 +1,28 @@
+<%= list_item do %>
+  <div class="row">
+    <div class="col">
+      <%= render "operator/events/time_bucket_header", date: reservation_hash.first %>
+    </div>
+  </div>
+  <%= list_wrapper do %>
+    <% reservation_hash.last.each do |reservation| %>
+      <div class="row mt-2 mb-5">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <span class="text-danger">
+                <%= pretty_time(reservation.datetime_in) %>
+              </span>
+              for <%= render(HourLabel, hours: reservation.minutes / 60.0) %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              Location: <%= link_to reservation.room.name, room_path(reservation.room) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
